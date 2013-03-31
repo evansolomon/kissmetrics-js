@@ -189,7 +189,8 @@ class KissmetricsStorage
 
 class AnonKissmetricsClient extends KissmetricsClient
   constructor: (key, options = {key: 'kissmetricsAnon'}) ->
-    @storage = new KissmetricsStorage options.key unless @storage = options.storage
+    unless @storage = options.storage
+      @storage = new KissmetricsStorage options.key
 
     @storage.set(person = @createID()) unless person = @storage.get()
 
