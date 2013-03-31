@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+PROJECT_DIR=$(git rev-parse --show-toplevel)
+
+# Install Grunt
+npm install -g grunt-cli
+
+# Link scripts
+if [ -f "$PROJECT_DIR/.git/hooks/pre-push" ]; then
+	echo
+	echo
+	read -p "You have a Git pre-push script, should I overwrite it? " yn
+	case $yn in
+		[Yy]* ) echo "Okay, overwriting it.";;
+		[Nn]* ) exit 0;;
+	esac
+fi
+
+ln -nfs $PROJECT_DIR/scripts/git/pre-push $PROJECT_DIR/.git/hooks/pre-push
