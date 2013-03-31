@@ -3,17 +3,11 @@ ENV = if typeof exports isnt 'undefined' then 'node' else 'browser'
 https = require 'https' if ENV is 'node'
 
 
-httpRequest = (args) ->
-	args.port ?= 80
-	args.path ?= ''
-	url        = "https://#{args.host}:#{args.port}/#{args.path}"
-
+httpRequest = (url) ->
 	if ENV is 'node'
 		https.get url
 	else
 		(new Image()).src = url
-
-	return url
 
 
 class KissmetricsClient
@@ -52,10 +46,7 @@ class KissmetricsClient
 		@request "#{@query_types[type]}?#{queryString}"
 
 	request: (endpoint) ->
-		httpRequest
-			host : @host
-			port : @port
-			path : endpoint
+		httpRequest "https://#{@host}:#{@port}/#{endpoint}"
 
 
 if ENV is 'node'
