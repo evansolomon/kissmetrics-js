@@ -140,14 +140,14 @@ requests made in Node and in a browser.</p>
 for the person you&#39;re recording data about. A new client must be created
 for each person you record data about.</p>
 <h5>Arguments</h5>
-<p><code>key</code> (String): Your API key from Kissmetrics</p>
+<p><code>apiKey</code> (String): Your API key from Kissmetrics</p>
 <p><code>person</code> (String): An identifier for the person you&#39;ll record data about</p>
 <pre><code>km = new KissmetricsClient(API_KEY, &#39;evan@example.com&#39;)</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">KissmetricsClient</span></span>
-  constructor: (<span class="property">@key</span>, <span class="property">@person</span>) -&gt;
+  constructor: (<span class="property">@apiKey</span>, <span class="property">@person</span>) -&gt;
     <span class="property">@host</span>        = <span class="string">'trk.kissmetrics.com'</span>
     <span class="property">@port</span>        = <span class="number">80</span>
     <span class="property">@query_types</span> =
@@ -308,7 +308,7 @@ it to Kissmetrics.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
-    data._k = <span class="property">@key</span>
+    data._k = <span class="property">@apiKey</span>
     data._p = <span class="property">@person</span>
 
     queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
