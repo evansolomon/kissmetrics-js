@@ -23,7 +23,7 @@ describe 'KM instance', ->
 
 	it 'should record events', ->
 		expectedOutput  = 'GET /e?_n=test%20event&_k=apiKey&_p=evan%40example.com HTTP/1.1\r\n'
-		expectedOutput += 'Host: trk.kissmetrics.com:80\r\n'
+		expectedOutput += 'Host: trk.kissmetrics.com\r\n'
 		expectedOutput += 'Connection: keep-alive\r\n\r\n'
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
@@ -31,7 +31,7 @@ describe 'KM instance', ->
 
 	it 'should set properties', ->
 		expectedOutput  = 'GET /s?place=home&_k=apiKey&_p=evan%40example.com HTTP/1.1\r\n'
-		expectedOutput += 'Host: trk.kissmetrics.com:80\r\n'
+		expectedOutput += 'Host: trk.kissmetrics.com\r\n'
 		expectedOutput += 'Connection: keep-alive\r\n\r\n'
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
@@ -39,7 +39,7 @@ describe 'KM instance', ->
 
 	it 'should alias people', ->
 		expectedOutput  = 'GET /a?_n=notevan%40example.com&_k=apiKey&_p=evan%40example.com HTTP/1.1\r\n'
-		expectedOutput += 'Host: trk.kissmetrics.com:80\r\n'
+		expectedOutput += 'Host: trk.kissmetrics.com\r\n'
 		expectedOutput += 'Connection: keep-alive\r\n\r\n'
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
