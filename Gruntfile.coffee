@@ -61,5 +61,18 @@ module.exports = ( grunt ) ->
       docco:
         cmd: 'docco src/*.coffee -o docs'
 
+  grunt.registerTask 'mocha', 'Run mocha unit tests.', ->
+    done = @async()
+    mocha =
+      cmd: 'mocha'
+      args: ['--compilers','coffee:coffee-script','--colors','--reporter','spec']
+    grunt.util.spawn mocha, (error, result) ->
+      if error
+        grunt.log.ok( result.stdout ).error( result.stderr ).writeln()
+        done new Error('Error running mocha unit tests.')
+      else
+        grunt.log.ok( result.stdout ).writeln()
+        done()
+
   # Default task.
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec']
+  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'mocha']

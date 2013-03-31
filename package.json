@@ -10,6 +10,9 @@
   "keywords": [
     "kissmetrics"
   ],
+  "scripts": {
+    "test": "grunt mocha"
+  },
   "author": "Evan Solomon",
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -21,6 +24,8 @@
     "grunt-contrib-watch": "~0.3.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-coffeelint": "0.0.6",
-    "grunt-exec": "~0.4.0"
+    "grunt-exec": "~0.4.0",
+    "mocha": "~1.8.2",
+    "should": "~1.2.2"
   }
 }
