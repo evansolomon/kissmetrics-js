@@ -176,7 +176,7 @@ class KissmetricsStorage
 #
 # ##### Arguments
 #
-# `key` (String): Your Kissmetrics API key
+# `apiKey` (String): Your Kissmetrics API key
 #
 # `options` (Object): Optionally provide a key and storage engine
 #
@@ -186,13 +186,13 @@ class KissmetricsStorage
 # ```
 
 class AnonKissmetricsClient extends KissmetricsClient
-  constructor: (key, options = {key: 'kissmetricsAnon'}) ->
+  constructor: (apiKey, options = {storageKey: 'kissmetricsAnon'}) ->
     unless @storage = options.storage
-      @storage = new KissmetricsStorage options.key
+      @storage = new KissmetricsStorage options.storageKey
 
     @storage.set(person = @createID()) unless person = @storage.get()
 
-    super key, person
+    super apiKey, person
 
 
   # ### Create ID

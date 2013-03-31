@@ -8,7 +8,7 @@ describe 'KM module', ->
 describe 'KM instance', ->
 	it 'should initialize', ->
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
-		km.key.should.equal 'apiKey'
+		km.apiKey.should.equal 'apiKey'
 		km.person.should.equal 'evan@example.com'
 
 	it 'should be instance of KissmetricsClient', ->

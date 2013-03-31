@@ -38,7 +38,7 @@ httpRequest = (url) ->
 #
 # ##### Arguments
 #
-# `key` (String): Your API key from Kissmetrics
+# `apiKey` (String): Your API key from Kissmetrics
 #
 # `person` (String): An identifier for the person you'll record data about
 #
@@ -47,7 +47,7 @@ httpRequest = (url) ->
 # ```
 
 class KissmetricsClient
-  constructor: (@key, @person) ->
+  constructor: (@apiKey, @person) ->
     @host        = 'trk.kissmetrics.com'
     @port        = 80
     @query_types =
@@ -140,7 +140,7 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _generateQuery: (type, data) ->
-    data._k = @key
+    data._k = @apiKey
     data._p = @person
 
     queryParts = for key, val of data
@@ -366,7 +366,7 @@ class KissmetricsStorage
 #
 # ##### Arguments
 #
-# `key` (String): Your Kissmetrics API key
+# `apiKey` (String): Your Kissmetrics API key
 #
 # `options` (Object): Optionally provide a key and storage engine
 #
@@ -376,13 +376,13 @@ class KissmetricsStorage
 # ```
 
 class AnonKissmetricsClient extends KissmetricsClient
-  constructor: (key, options = {key: 'kissmetricsAnon'}) ->
+  constructor: (apiKey, options = {storageKey: 'kissmetricsAnon'}) ->
     unless @storage = options.storage
-      @storage = new KissmetricsStorage options.key
+      @storage = new KissmetricsStorage options.storageKey
 
     @storage.set(person = @createID()) unless person = @storage.get()
 
-    super key, person
+    super apiKey, person
 
 
   # ### Create ID

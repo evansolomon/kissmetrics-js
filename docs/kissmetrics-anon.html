@@ -470,7 +470,7 @@ and browser cookies will be used as a fallback.</p>
 only difference from <code>KissmetricsClient</code> is that an identifier for thie user
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
-<p><code>key</code> (String): Your Kissmetrics API key</p>
+<p><code>apiKey</code> (String): Your Kissmetrics API key</p>
 <p><code>options</code> (Object): Optionally provide a key and storage engine</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
 km.record(&#39;Visited signup form&#39;)</code></pre>
@@ -478,13 +478,13 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
-  constructor: (key, options = {key: <span class="string">'kissmetricsAnon'</span>}) -&gt;
+  constructor: (apiKey, options = {storageKey: <span class="string">'kissmetricsAnon'</span>}) -&gt;
     <span class="keyword">unless</span> <span class="property">@storage</span> = options.storage
-      <span class="property">@storage</span> = <span class="keyword">new</span> KissmetricsStorage options.key
+      <span class="property">@storage</span> = <span class="keyword">new</span> KissmetricsStorage options.storageKey
 
     <span class="property">@storage</span>.set(person = <span class="property">@createID</span>()) <span class="keyword">unless</span> person = <span class="property">@storage</span>.get()
 
-    <span class="keyword">super</span> key, person</pre></div></div>
+    <span class="keyword">super</span> apiKey, person</pre></div></div>
             
         </li>
         
