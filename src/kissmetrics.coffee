@@ -5,7 +5,7 @@
 
 # Keep track of what environment we're running in, Node.js or a browser.
 
-ENV = if typeof exports isnt 'undefined' then 'node' else 'browser'
+NODEJS = typeof exports isnt 'undefined'
 
 
 # If we're in Node, require the `https` module for our network requests.
@@ -14,7 +14,7 @@ ENV = if typeof exports isnt 'undefined' then 'node' else 'browser'
 # `Image().src`. Kissmetrics responds to API requests with an `image/gif`
 # content type, so the browser won't throw up any warnings.
 
-https = require 'https' if ENV is 'node'
+https = require 'https' if NODEJS is on
 
 
 # ## HTTP Request
@@ -24,10 +24,7 @@ https = require 'https' if ENV is 'node'
 # requests made in Node and in a browser.
 
 httpRequest = (url) ->
-	if ENV is 'node'
-		https.get url
-	else
-		(new Image()).src = url
+	if NODEJS is on then https.get url else (new Image()).src = url
 
 
 # ## Kissmetrics Client
@@ -188,7 +185,5 @@ class KissmetricsClient
 # kmClient = new window.KissmetricsClient('apiKey', 'evan')
 # ```
 
-if ENV is 'node'
-	exports.KissmetricsClient = KissmetricsClient
-else
-	@KissmetricsClient = KissmetricsClient
+global = if NODEJS is on then exports else @
+global.KissmetricsClient = KissmetricsClient
