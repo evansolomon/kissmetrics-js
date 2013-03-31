@@ -25,7 +25,7 @@ git clean -fdx >/dev/null 2>&1
 
 # Bring back the docs
 cp -r $TEMP_PATH/* .
-mv kissmetrics.html index.html
+cp kissmetrics.html index.html
 
 # Commit and push
 git add .
