@@ -2,6 +2,7 @@ ENV = if typeof exports isnt 'undefined' then 'node' else 'browser'
 
 https = require 'https' if ENV is 'node'
 
+
 httpRequest = (args) ->
 	args.port ?= 80
 	args.path ?= ''
@@ -23,7 +24,6 @@ class KissmetricsClient
 			record : 'e'
 			set    : 's'
 			alias  : 'a'
-
 
 	record: (action, properties = {}) ->
 		properties._n = action
@@ -56,6 +56,7 @@ class KissmetricsClient
 			host : @host
 			port : @port
 			path : endpoint
+
 
 if ENV is 'node'
 	exports.KissmetricsClient = KissmetricsClient
