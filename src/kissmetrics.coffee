@@ -12,6 +12,8 @@ httpRequest = (args) ->
 	else
 		(new Image()).src = url
 
+	return url
+
 
 class KissmetricsClient
 	constructor: (@key, @person) ->
