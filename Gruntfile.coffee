@@ -44,14 +44,14 @@ module.exports = ( grunt ) ->
 
     watch:
       scripts:
-        files: 'src/**/*.coffee'
-        tasks: ['default']
-        options:
+        files   : 'src/**/*.coffee'
+        tasks   : ['default']
+        options :
           interrupt: true
 
     coffeelint:
-      files: 'src/**/*.coffee'
-      options:
+      files   : 'src/**/*.coffee'
+      options :
         no_tabs             : {level: 'ignore'}
         no_empty_param_list : {level: 'error'}
         indentation         : {level: 'ignore'}  # Indentation linting is buggy https://github.com/clutchski/coffeelint/issues/4

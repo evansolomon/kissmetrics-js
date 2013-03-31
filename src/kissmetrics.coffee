@@ -18,8 +18,8 @@ httpRequest = (args) ->
 
 class KissmetricsClient
 	constructor: (@key, @person) ->
-		@host = 'trk.kissmetrics.com'
-		@port = 80
+		@host        = 'trk.kissmetrics.com'
+		@port        = 80
 		@query_types =
 			record : 'e'
 			set    : 's'
@@ -32,7 +32,7 @@ class KissmetricsClient
 	set: (properties) ->
 		# Each property has to be sent in its own query
 		for name, value of properties
-			data = {}
+			data       = {}
 			data[name] = value
 			@generateQuery 'set', data
 
