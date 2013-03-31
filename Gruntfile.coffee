@@ -31,10 +31,12 @@ module.exports = ( grunt ) ->
 
     uglify:
       options:
-        banner: '<%= meta.banner %>'
+        banner      : '<%= meta.banner %>'
+        sourceMapIn : 'lib/kissmetrics.map'
+        sourceMap   : 'min/kissmetrics.min.map'
       dist:
         src  : 'lib/kissmetrics.js'
-        dest : 'lib/kissmetrics.min.js'
+        dest : 'min/kissmetrics.min.js'
 
     coffee:
       options:
