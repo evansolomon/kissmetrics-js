@@ -50,11 +50,11 @@ module.exports = ( grunt ) ->
           interrupt: true
 
     coffeelint:
-      all:
-        files: 'src/**/*.coffee'
-        options:
-          no_tabs: false
-          no_empty_param_list: true
+      files: 'src/**/*.coffee'
+      options:
+        no_tabs             : {level: 'ignore'}
+        no_empty_param_list : {level: 'error'}
+        indentation         : {level: 'ignore'}  # Indentation linting is buggy https://github.com/clutchski/coffeelint/issues/4
 
   # Default task.
   grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify']
