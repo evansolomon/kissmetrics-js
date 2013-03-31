@@ -69,7 +69,7 @@ class KissmetricsClient
 	# ```
 	record: (action, properties = {}) ->
 		properties._n = action
-		@generateQuery 'record', properties
+		@_generateQuery 'record', properties
 
 	# ### Set
 	# -------
@@ -91,7 +91,7 @@ class KissmetricsClient
 		for name, value of properties
 			data       = {}
 			data[name] = value
-			@generateQuery 'set', data
+			@_generateQuery 'set', data
 
 	# ### Alias
 	# ---------
@@ -106,10 +106,11 @@ class KissmetricsClient
 	# km.alias('evan+newemail@example.com')
 	# ```
 	alias: (to) ->
-		@generateQuery 'alias', _n: to
+		@_generateQuery 'alias', _n: to
 
 
 	# ### Generate Query
+	# #### (Private)
 	# ------------------
 
 	# Prepare data to be sent to Kissmetrics by turning it into a URL path
@@ -119,7 +120,7 @@ class KissmetricsClient
 	# * `type` (String): Type of data being sent (`record`, `set` or `alias`).
 	#
 	# * `data` (Object): Specific data being recorded about this person.
-	generateQuery: (type, data) ->
+	_generateQuery: (type, data) ->
 		data._k = @key
 		data._p = @person
 
@@ -129,16 +130,17 @@ class KissmetricsClient
 
 		queryString = queryParts.join '&'
 
-		@request "#{@query_types[type]}?#{queryString}"
+		@_request "#{@query_types[type]}?#{queryString}"
 
 	# ### Record
-	# ----------
+	# #### (Private)
+	# --------------
 
 	# Query the Kissmetrics API
 	#
 	# `endpoint` (String): URL path (without a leading slash) that will be used
 	#   as a Kissmetrics API endpoint.
-	request: (endpoint) ->
+	_request: (endpoint) ->
 		httpRequest "https://#{@host}:#{@port}/#{endpoint}"
 
 
