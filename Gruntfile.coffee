@@ -45,7 +45,7 @@ module.exports = ( grunt ) ->
 
     watch:
       scripts:
-        files   : 'src/**/*.coffee'
+        files   : ['src/**/*.coffee', 'Gruntfile.coffee']
         tasks   : ['default']
         options :
           interrupt: true
