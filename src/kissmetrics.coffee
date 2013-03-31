@@ -132,7 +132,7 @@ class KissmetricsClient
 
 		@_request "#{@query_types[type]}?#{queryString}"
 
-	# ### Record
+	# ### Request
 	# #### (Private)
 	# --------------
 
