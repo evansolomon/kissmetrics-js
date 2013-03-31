@@ -366,10 +366,8 @@ kmClient = new window.KissmetricsClient(&#39;apiKey&#39;, &#39;evan&#39;)</code>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span>
-	exports.KissmetricsClient = KissmetricsClient
-<span class="keyword">else</span>
-	<span class="property">@KissmetricsClient</span> = KissmetricsClient</pre></div></div>
+            <div class="content"><div class='highlight'><pre>global = <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> exports <span class="keyword">else</span> @
+global.KissmetricsClient = KissmetricsClient</pre></div></div>
             
         </li>
         
