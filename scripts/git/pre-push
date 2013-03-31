@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Unused, just a reminder of what Git passes in
+REMOTE="$1"
+URL="$2"
+
+# Only update docs from master
+git branch | ack "^\* master" > /dev/null
+if [ $? -eq 0 ]; then
+	echo
+	echo "On master, updating docs"
+	echo
+else
+	exit 0
+fi
+
+# Save the updated docs
+TEMP_PATH=/tmp/kissmetrics-js-pre-push-docs
+rm -rf $TEMP_PATH
+cp -r "$(git rev-parse --show-toplevel)/docs" $TEMP_PATH
+
+# Go to the GH pages branch
+git checkout gh-pages >/dev/null 2>&1
+git clean -fdx >/dev/null 2>&1
+
+# Bring back the docs
+cp -r $TEMP_PATH/* .
+mv kissmetrics.html index.html
+
+# Commit and push
+git add .
+git commit -m "Updating docs"
+git push origin gh-pages
+
+echo
+echo "Updated docs"
+echo
+
+# Cleanup
+git checkout master >/dev/null 2>&1
+npm install && grunt
+rm -rf $TEMP_PATH
+
+exit 0
