@@ -11,6 +11,10 @@ describe 'KM instance', ->
 		km.key.should.equal 'apiKey'
 		km.person.should.equal 'evan@example.com'
 
+	it 'should be instance of KissmetricsClient', ->
+		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
+		km.should.be.an.instanceOf KM.KissmetricsClient
+
 	it 'should have API methods', ->
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
 		km.should.have.property 'record'
