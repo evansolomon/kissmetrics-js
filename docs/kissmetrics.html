@@ -89,7 +89,7 @@ requests made in Node and in a browser.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="function"><span class="title">httpRequest</span></span> = (url) -&gt;
-	<span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> https.get url <span class="keyword">else</span> (<span class="keyword">new</span> Image()).src = url</pre></div></div>
+  <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> https.get url <span class="keyword">else</span> (<span class="keyword">new</span> Image()).src = url</pre></div></div>
             
         </li>
         
@@ -126,13 +126,13 @@ for each person you record data about.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">KissmetricsClient</span></span>
-	constructor: (<span class="property">@key</span>, <span class="property">@person</span>) -&gt;
-		<span class="property">@host</span>        = <span class="string">'trk.kissmetrics.com'</span>
-		<span class="property">@port</span>        = <span class="number">80</span>
-		<span class="property">@query_types</span> =
-			record : <span class="string">'e'</span>
-			set    : <span class="string">'s'</span>
-			alias  : <span class="string">'a'</span></pre></div></div>
+  constructor: (<span class="property">@key</span>, <span class="property">@person</span>) -&gt;
+    <span class="property">@host</span>        = <span class="string">'trk.kissmetrics.com'</span>
+    <span class="property">@port</span>        = <span class="number">80</span>
+    <span class="property">@query_types</span> =
+      record : <span class="string">'e'</span>
+      set    : <span class="string">'s'</span>
+      alias  : <span class="string">'a'</span></pre></div></div>
             
         </li>
         
@@ -169,9 +169,9 @@ for each person you record data about.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	record: (action, properties = {}) -&gt;
-		properties._n = action
-		<span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  record: (action, properties = {}) -&gt;
+    properties._n = action
+    <span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties</pre></div></div>
             
         </li>
         
@@ -208,11 +208,11 @@ that it is required and that each property has to be sent in its own query.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	set: (properties) -&gt;
-		<span class="keyword">for</span> name, value <span class="keyword">of</span> properties
-			data       = {}
-			data[name] = value
-			<span class="property">@_generateQuery</span> <span class="string">'set'</span>, data</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  set: (properties) -&gt;
+    <span class="keyword">for</span> name, value <span class="keyword">of</span> properties
+      data       = {}
+      data[name] = value
+      <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data</pre></div></div>
             
         </li>
         
@@ -246,8 +246,8 @@ the current instance.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	alias: (to) -&gt;
-		<span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  alias: (to) -&gt;
+    <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to</pre></div></div>
             
         </li>
         
@@ -286,18 +286,18 @@ it to Kissmetrics.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	_generateQuery: (type, data) -&gt;
-		data._k = <span class="property">@key</span>
-		data._p = <span class="property">@person</span>
+            <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
+    data._k = <span class="property">@key</span>
+    data._p = <span class="property">@person</span>
 
-		queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
-			key = encodeURIComponent key
-			val = encodeURIComponent val
-			<span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
+    queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
+      key = encodeURIComponent key
+      val = encodeURIComponent val
+      <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
 
-		queryString = queryParts.join <span class="string">'&amp;'</span>
+    queryString = queryParts.join <span class="string">'&amp;'</span>
 
-		<span class="property">@_request</span> <span class="string">"<span class="subst">#{@query_types[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+    <span class="property">@_request</span> <span class="string">"<span class="subst">#{@query_types[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
             
         </li>
         
@@ -330,8 +330,8 @@ it to Kissmetrics.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	_request: (endpoint) -&gt;
-		httpRequest <span class="string">"https://<span class="subst">#{@host}</span>:<span class="subst">#{@port}</span>/<span class="subst">#{endpoint}</span>"</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>  _request: (endpoint) -&gt;
+    httpRequest <span class="string">"https://<span class="subst">#{@host}</span>:<span class="subst">#{@port}</span>/<span class="subst">#{endpoint}</span>"</span></pre></div></div>
             
         </li>
         
