@@ -43,7 +43,7 @@ module.exports = ( grunt ) ->
         sourceMap: true
       compile:
         files:
-          'lib/kissmetrics.js' : 'src/kissmetrics.coffee'
+          'lib/kissmetrics.js' : ['src/kissmetrics.coffee', 'src/kissmetrics-anon.coffee']
 
     watch:
       scripts:
