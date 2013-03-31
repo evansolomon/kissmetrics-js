@@ -11,7 +11,7 @@
     "kissmetrics"
   ],
   "scripts": {
-    "test": "mocha test/**/*.coffee --compilers coffee:coffee-script"
+    "test": "mocha test/*.coffee --compilers coffee:coffee-script"
   },
   "author": "Evan Solomon",
   "license": "MIT",
