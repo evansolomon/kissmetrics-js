@@ -24,7 +24,7 @@ https = require 'https' if NODEJS is on
 # requests made in Node and in a browser.
 
 httpRequest = (url) ->
-	if NODEJS is on then https.get url else (new Image()).src = url
+  if NODEJS is on then https.get url else (new Image()).src = url
 
 
 # ## Kissmetrics Client
@@ -47,125 +47,125 @@ httpRequest = (url) ->
 # ```
 
 class KissmetricsClient
-	constructor: (@key, @person) ->
-		@host        = 'trk.kissmetrics.com'
-		@port        = 80
-		@query_types =
-			record : 'e'
-			set    : 's'
-			alias  : 'a'
+  constructor: (@key, @person) ->
+    @host        = 'trk.kissmetrics.com'
+    @port        = 80
+    @query_types =
+      record : 'e'
+      set    : 's'
+      alias  : 'a'
 
 
-	# ### Record
-	# ----------
+  # ### Record
+  # ----------
 
-	# Record an "event" in Kissmetrics.
-	# http://support.kissmetrics.com/apis/common-methods#record
-	#
-	# ##### Arguments
-	#
-	# `action` (String): Name of the event you're recording. This is
-	#   usually something a person did or something that affects them.
-	#
-	# `properties` (Object) *Optional*: Properties to associate with
-	#   the person's event. Keys will be used as property names and values
-	#   as property values.
-	#
-	# ```
-	# km.record('Signed up', {page: 'home'})
-	# ```
+  # Record an "event" in Kissmetrics.
+  # http://support.kissmetrics.com/apis/common-methods#record
+  #
+  # ##### Arguments
+  #
+  # `action` (String): Name of the event you're recording. This is
+  #   usually something a person did or something that affects them.
+  #
+  # `properties` (Object) *Optional*: Properties to associate with
+  #   the person's event. Keys will be used as property names and values
+  #   as property values.
+  #
+  # ```
+  # km.record('Signed up', {page: 'home'})
+  # ```
 
-	record: (action, properties = {}) ->
-		properties._n = action
-		@_generateQuery 'record', properties
-
-
-	# ### Set
-	# -------
-
-	# Set a "property" in Kissmetrics.
-	# http://support.kissmetrics.com/apis/common-methods#set
-	#
-	# ##### Arguments
-	#
-	# `properties` (Object): Properties to associate with
-	#   the person's event. Keys will be used as property names and values
-	#   as property values.
-	#
-	# This behaves exactly like the `properties` argument in `record` except
-	# that it is required and that each property has to be sent in its own query.
-	#
-	# ```
-	# km.set({location: 'San Francisco', gender: 'male'})
-	# ```
-
-	set: (properties) ->
-		for name, value of properties
-			data       = {}
-			data[name] = value
-			@_generateQuery 'set', data
+  record: (action, properties = {}) ->
+    properties._n = action
+    @_generateQuery 'record', properties
 
 
-	# ### Alias
-	# ---------
+  # ### Set
+  # -------
 
-	# Alias a person to another "identity" in Kissmetrics.
-	# http://support.kissmetrics.com/apis/common-methods#alias
-	#
-	# ##### Arguments
-	#
-	# `to` (String): A new identifier to map to the `@person` set on
-	# the current instance.
-	#
-	# ```
-	# km.alias('evan+newemail@example.com')
-	# ```
+  # Set a "property" in Kissmetrics.
+  # http://support.kissmetrics.com/apis/common-methods#set
+  #
+  # ##### Arguments
+  #
+  # `properties` (Object): Properties to associate with
+  #   the person's event. Keys will be used as property names and values
+  #   as property values.
+  #
+  # This behaves exactly like the `properties` argument in `record` except
+  # that it is required and that each property has to be sent in its own query.
+  #
+  # ```
+  # km.set({location: 'San Francisco', gender: 'male'})
+  # ```
 
-	alias: (to) ->
-		@_generateQuery 'alias', _n: to
-
-
-	# ### Generate Query
-	# #### (Private)
-	# ------------------
-
-	# Prepare data to be sent to Kissmetrics by turning it into a URL path
-	# and query string. Once the query is formed, call `record()` to send
-	# it to Kissmetrics.
-	#
-	# ##### Arguments
-	#
-	# * `type` (String): Type of data being sent (`record`, `set` or `alias`).
-	#
-	# * `data` (Object): Specific data being recorded about this person.
-
-	_generateQuery: (type, data) ->
-		data._k = @key
-		data._p = @person
-
-		queryParts = for key, val of data
-			key = encodeURIComponent key
-			val = encodeURIComponent val
-			"#{key}=#{val}"
-
-		queryString = queryParts.join '&'
-
-		@_request "#{@query_types[type]}?#{queryString}"
+  set: (properties) ->
+    for name, value of properties
+      data       = {}
+      data[name] = value
+      @_generateQuery 'set', data
 
 
-	# ### Request
-	# #### (Private)
-	# --------------
+  # ### Alias
+  # ---------
 
-	# Query the Kissmetrics API
-	#
-	# ##### Arguments
-	#
-	# `endpoint` (String): URL path (without a leading slash) that will be used
-	#   as a Kissmetrics API endpoint.
+  # Alias a person to another "identity" in Kissmetrics.
+  # http://support.kissmetrics.com/apis/common-methods#alias
+  #
+  # ##### Arguments
+  #
+  # `to` (String): A new identifier to map to the `@person` set on
+  # the current instance.
+  #
+  # ```
+  # km.alias('evan+newemail@example.com')
+  # ```
 
-	_request: (endpoint) ->
-		httpRequest "https://#{@host}:#{@port}/#{endpoint}"
+  alias: (to) ->
+    @_generateQuery 'alias', _n: to
+
+
+  # ### Generate Query
+  # #### (Private)
+  # ------------------
+
+  # Prepare data to be sent to Kissmetrics by turning it into a URL path
+  # and query string. Once the query is formed, call `record()` to send
+  # it to Kissmetrics.
+  #
+  # ##### Arguments
+  #
+  # * `type` (String): Type of data being sent (`record`, `set` or `alias`).
+  #
+  # * `data` (Object): Specific data being recorded about this person.
+
+  _generateQuery: (type, data) ->
+    data._k = @key
+    data._p = @person
+
+    queryParts = for key, val of data
+      key = encodeURIComponent key
+      val = encodeURIComponent val
+      "#{key}=#{val}"
+
+    queryString = queryParts.join '&'
+
+    @_request "#{@query_types[type]}?#{queryString}"
+
+
+  # ### Request
+  # #### (Private)
+  # --------------
+
+  # Query the Kissmetrics API
+  #
+  # ##### Arguments
+  #
+  # `endpoint` (String): URL path (without a leading slash) that will be used
+  #   as a Kissmetrics API endpoint.
+
+  _request: (endpoint) ->
+    httpRequest "https://#{@host}:#{@port}/#{endpoint}"
 
 
 # ### Exports
