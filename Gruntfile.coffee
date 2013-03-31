@@ -5,6 +5,7 @@ module.exports = ( grunt ) ->
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-exec'
 
   # Project configuration.
   grunt.initConfig
@@ -56,5 +57,9 @@ module.exports = ( grunt ) ->
         no_empty_param_list : {level: 'error'}
         indentation         : {level: 'ignore'}  # Indentation linting is buggy https://github.com/clutchski/coffeelint/issues/4
 
+    exec:
+      docco:
+        cmd: 'docco src/*.coffee -o docs'
+
   # Default task.
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec']
