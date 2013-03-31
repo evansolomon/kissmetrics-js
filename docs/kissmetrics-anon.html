@@ -484,14 +484,16 @@ only difference from <code>KissmetricsClient</code> is that an identifier for th
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
 <p><code>key</code> (String): Your Kissmetrics API key</p>
+<p><code>options</code> (Object): Optionally provide a key and storage engine</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
 km.record(&#39;Visited signup form&#39;)</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
-  constructor: (key) -&gt;
-    <span class="property">@storage</span> = <span class="keyword">new</span> KissmetricsStorage <span class="string">'kissmetricsAnon'</span>
+  constructor: (key, options = {key: <span class="string">'kissmetricsAnon'</span>}) -&gt;
+    <span class="keyword">unless</span> <span class="property">@storage</span> = options.storage
+      <span class="property">@storage</span> = <span class="keyword">new</span> KissmetricsStorage options.key
 
     <span class="property">@storage</span>.set(person = <span class="property">@createID</span>()) <span class="keyword">unless</span> person = <span class="property">@storage</span>.get()
 

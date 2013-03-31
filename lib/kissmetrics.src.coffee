@@ -370,14 +370,17 @@ class KissmetricsStorage
 #
 # `key` (String): Your Kissmetrics API key
 #
+# `options` (Object): Optionally provide a key and storage engine
+#
 # ```
 # km = new AnonKissmetricsClient(API_KEY)
 # km.record('Visited signup form')
 # ```
 
 class AnonKissmetricsClient extends KissmetricsClient
-  constructor: (key) ->
-    @storage = new KissmetricsStorage 'kissmetricsAnon'
+  constructor: (key, options = {key: 'kissmetricsAnon'}) ->
+    unless @storage = options.storage
+      @storage = new KissmetricsStorage options.key
 
     @storage.set(person = @createID()) unless person = @storage.get()
 
