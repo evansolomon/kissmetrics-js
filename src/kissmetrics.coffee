@@ -134,11 +134,10 @@ class KissmetricsClient
 		data._k = @key
 		data._p = @person
 
-		queryParts = []
-		for key, val of data
+		queryParts = for key, val of data
 			key = encodeURIComponent key
 			val = encodeURIComponent val
-			queryParts.push "#{key}=#{val}"
+			"#{key}=#{val}"
 
 		queryString = queryParts.join '&'
 
