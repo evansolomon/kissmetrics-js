@@ -109,6 +109,7 @@ requests made in Node and in a browser.</p>
 <p>Instantiates a new client with your Kissmetrics API key and an identifier
 for the person you&#39;re recording data about. A new client must be created
 for each person you record data about.</p>
+<h5>Arguments</h5>
 <p><code>key</code> (String): Your API key from Kissmetrics</p>
 <p><code>person</code> (String): An identifier for the person you&#39;ll record data about</p>
 <pre><code>km = new KissmetricsClient(API_KEY, &#39;evan@example.com&#39;)</code></pre>
@@ -149,6 +150,7 @@ for each person you record data about.</p>
               </div>
               <p>Record an &quot;event&quot; in Kissmetrics.
 <a href="http://support.kissmetrics.com/apis/common-methods#record">http://support.kissmetrics.com/apis/common-methods#record</a></p>
+<h5>Arguments</h5>
 <p><code>action</code> (String): Name of the event you&#39;re recording. This is
   usually something a person did or something that affects them.</p>
 <p><code>properties</code> (Object) <em>Optional</em>: Properties to associate with
@@ -187,6 +189,7 @@ for each person you record data about.</p>
               </div>
               <p>Set a &quot;property&quot; in Kissmetrics.
 <a href="http://support.kissmetrics.com/apis/common-methods#set">http://support.kissmetrics.com/apis/common-methods#set</a></p>
+<h5>Arguments</h5>
 <p><code>properties</code> (Object): Properties to associate with
   the person&#39;s event. Keys will be used as property names and values
   as property values.</p>
@@ -227,6 +230,7 @@ that it is required and that each property has to be sent in its own query.</p>
               </div>
               <p>Alias a person to another &quot;identity&quot; in Kissmetrics.
 <a href="http://support.kissmetrics.com/apis/common-methods#alias">http://support.kissmetrics.com/apis/common-methods#alias</a></p>
+<h5>Arguments</h5>
 <p><code>to</code> (String): A new identifier to map to the <code>@person</code> set on
 the current instance.</p>
 <pre><code>km.alias(&#39;evan+newemail@example.com&#39;)</code></pre>
@@ -263,6 +267,7 @@ the current instance.</p>
               <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
 and query string. Once the query is formed, call <code>record()</code> to send
 it to Kissmetrics.</p>
+<h5>Arguments</h5>
 <ul>
 <li><p><code>type</code> (String): Type of data being sent (<code>record</code>, <code>set</code> or <code>alias</code>).</p>
 </li>
@@ -276,9 +281,10 @@ it to Kissmetrics.</p>
 		data._k = <span class="property">@key</span>
 		data._p = <span class="property">@person</span>
 
-		queryParts = []
-		<span class="keyword">for</span> key, val <span class="keyword">of</span> data
-			queryParts.push <span class="string">"<span class="subst">#{encodeURIComponent(key)}</span>=<span class="subst">#{encodeURIComponent(val)}</span>"</span>
+		queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
+			key = encodeURIComponent key
+			val = encodeURIComponent val
+			<span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
 
 		queryString = queryParts.join <span class="string">'&amp;'</span>
 
@@ -309,6 +315,7 @@ it to Kissmetrics.</p>
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Query the Kissmetrics API</p>
+<h5>Arguments</h5>
 <p><code>endpoint</code> (String): URL path (without a leading slash) that will be used
   as a Kissmetrics API endpoint.</p>
 
