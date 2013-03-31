@@ -35,6 +35,8 @@ httpRequest = (url) ->
 # for the person you're recording data about. A new client must be created
 # for each person you record data about.
 #
+# ##### Arguments
+#
 # `key` (String): Your API key from Kissmetrics
 #
 #	`person` (String): An identifier for the person you'll record data about
@@ -57,6 +59,8 @@ class KissmetricsClient
 	# Record an "event" in Kissmetrics.
 	# http://support.kissmetrics.com/apis/common-methods#record
 	#
+	# ##### Arguments
+	#
 	# `action` (String): Name of the event you're recording. This is
 	#   usually something a person did or something that affects them.
 	#
@@ -76,6 +80,8 @@ class KissmetricsClient
 
 	# Set a "property" in Kissmetrics.
 	# http://support.kissmetrics.com/apis/common-methods#set
+	#
+	# ##### Arguments
 	#
 	# `properties` (Object): Properties to associate with
 	#   the person's event. Keys will be used as property names and values
@@ -99,6 +105,8 @@ class KissmetricsClient
 	# Alias a person to another "identity" in Kissmetrics.
 	# http://support.kissmetrics.com/apis/common-methods#alias
 	#
+	# ##### Arguments
+	#
 	# `to` (String): A new identifier to map to the `@person` set on
 	# the current instance.
 	#
@@ -116,6 +124,8 @@ class KissmetricsClient
 	# Prepare data to be sent to Kissmetrics by turning it into a URL path
 	# and query string. Once the query is formed, call `record()` to send
 	# it to Kissmetrics.
+	#
+	# ##### Arguments
 	#
 	# * `type` (String): Type of data being sent (`record`, `set` or `alias`).
 	#
@@ -137,6 +147,8 @@ class KissmetricsClient
 	# --------------
 
 	# Query the Kissmetrics API
+	#
+	# ##### Arguments
 	#
 	# `endpoint` (String): URL path (without a leading slash) that will be used
 	#   as a Kissmetrics API endpoint.
