@@ -41,7 +41,10 @@ class KissmetricsClient
 		data._k = @key
 		data._p = @person
 
-		queryParts  = ("#{encodeURIComponent(key)}=#{encodeURIComponent(val)}" for key, val of data)
+		queryParts = []
+		for key, val of data
+			queryParts.push "#{encodeURIComponent(key)}=#{encodeURIComponent(val)}"
+
 		queryString = queryParts.join '&'
 
 		@request "#{@query_types[type]}?#{queryString}"
