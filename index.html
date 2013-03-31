@@ -40,7 +40,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>ENV = <span class="keyword">if</span> <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span> <span class="keyword">then</span> <span class="string">'node'</span> <span class="keyword">else</span> <span class="string">'browser'</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>NODEJS = <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span></pre></div></div>
             
         </li>
         
@@ -58,7 +58,7 @@ content type, so the browser won&#39;t throw up any warnings.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>https = require <span class="string">'https'</span> <span class="keyword">if</span> ENV <span class="keyword">is</span> <span class="string">'node'</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>https = require <span class="string">'https'</span> <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span></pre></div></div>
             
         </li>
         
@@ -89,10 +89,7 @@ requests made in Node and in a browser.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="function"><span class="title">httpRequest</span></span> = (url) -&gt;
-	<span class="keyword">if</span> ENV <span class="keyword">is</span> <span class="string">'node'</span>
-		https.get url
-	<span class="keyword">else</span>
-		(<span class="keyword">new</span> Image()).src = url</pre></div></div>
+	<span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> https.get url <span class="keyword">else</span> (<span class="keyword">new</span> Image()).src = url</pre></div></div>
             
         </li>
         
@@ -369,7 +366,7 @@ kmClient = new window.KissmetricsClient(&#39;apiKey&#39;, &#39;evan&#39;)</code>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> ENV <span class="keyword">is</span> <span class="string">'node'</span>
+            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span>
 	exports.KissmetricsClient = KissmetricsClient
 <span class="keyword">else</span>
 	<span class="property">@KissmetricsClient</span> = KissmetricsClient</pre></div></div>
