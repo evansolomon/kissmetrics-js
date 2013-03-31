@@ -174,6 +174,17 @@ class KissmetricsClient
 
 # Make `KissmetricsClient` available either as a Node module or a property
 # on the current context in the browser.
+#
+# ```
+# // Node.js
+# KM = require('kissmetrics')
+# kmClient = new KM.KissmetricsClient('apiKey', 'evan')
+# ```
+#
+# ```
+# // Browser
+# kmClient = new window.KissmetricsClient('apiKey', 'evan')
+# ```
 
 if ENV is 'node'
 	exports.KissmetricsClient = KissmetricsClient
