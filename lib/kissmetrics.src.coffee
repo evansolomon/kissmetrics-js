@@ -189,8 +189,6 @@ global = if NODEJS is on then exports else @
 global.KissmetricsClient = KissmetricsClient
 
 # # Kissmetrics Anon
-# ------------------
-
 
 # ## Storage
 # ----------

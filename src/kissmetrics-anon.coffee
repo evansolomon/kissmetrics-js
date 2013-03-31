@@ -1,6 +1,4 @@
 # # Kissmetrics Anon
-# ------------------
-
 
 # ## Storage
 # ----------
