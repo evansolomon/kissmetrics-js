@@ -41,7 +41,7 @@ httpRequest = (url) ->
 #
 # `key` (String): Your API key from Kissmetrics
 #
-#	`person` (String): An identifier for the person you'll record data about
+# `person` (String): An identifier for the person you'll record data about
 #
 # ```
 # km = new KissmetricsClient(API_KEY, 'evan@example.com')
