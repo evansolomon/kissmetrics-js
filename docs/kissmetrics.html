@@ -281,9 +281,10 @@ it to Kissmetrics.</p>
 		data._k = <span class="property">@key</span>
 		data._p = <span class="property">@person</span>
 
-		queryParts = []
-		<span class="keyword">for</span> key, val <span class="keyword">of</span> data
-			queryParts.push <span class="string">"<span class="subst">#{encodeURIComponent(key)}</span>=<span class="subst">#{encodeURIComponent(val)}</span>"</span>
+		queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
+			key = encodeURIComponent key
+			val = encodeURIComponent val
+			<span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
 
 		queryString = queryParts.join <span class="string">'&amp;'</span>
 
