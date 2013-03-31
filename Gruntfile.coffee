@@ -50,6 +50,10 @@ module.exports = ( grunt ) ->
         options :
           interrupt: true
 
+      tests:
+        files : ['test/**/*.coffee']
+        tasks : 'mocha'
+
     coffeelint:
       files   : 'src/**/*.coffee'
       options :
