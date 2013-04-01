@@ -18,7 +18,7 @@ http = require 'http' if NODEJS is on
 
 
 # ## HTTP Request
-# ------------
+# ---------------
 
 # Generic wrapper for HTTP requests that abstracts the differences between
 # requests made in Node and in a browser.
@@ -38,7 +38,7 @@ httpRequest = (args) ->
 
 
 # ## Kissmetrics Client
-# --------------------
+# ---------------------
 
 # Wrapper for interacting with the Kissmetrics API.
 #

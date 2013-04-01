@@ -18,7 +18,7 @@ http = require 'http' if NODEJS is on
 
 
 # ## HTTP Request
-# ------------
+# ---------------
 
 # Generic wrapper for HTTP requests that abstracts the differences between
 # requests made in Node and in a browser.
@@ -38,7 +38,7 @@ httpRequest = (args) ->
 
 
 # ## Kissmetrics Client
-# --------------------
+# ---------------------
 
 # Wrapper for interacting with the Kissmetrics API.
 #
@@ -219,7 +219,7 @@ LocalStorage =
 
 
   # #### Get
-  # -------
+  # --------
 
   # Retrieve data from localStorage.
   #
@@ -232,7 +232,7 @@ LocalStorage =
 
 
   # #### Set
-  # -------
+  # --------
 
   # Save data to localStorage.
   #
@@ -247,7 +247,7 @@ LocalStorage =
 
 
   # #### Delete
-  # -------
+  # -----------
 
   # Delete data from localStorage.
   #
@@ -260,7 +260,7 @@ LocalStorage =
 
 
 # ### Cookies
-# -----------------
+# -----------
 
 # Interacts with the browser's cookies.
 
@@ -268,7 +268,7 @@ Cookie =
 
 
   # #### Get
-  # -------
+  # --------
 
   # Retrieve data from cookies.
   #
@@ -286,7 +286,7 @@ Cookie =
 
 
   # #### Set
-  # -------
+  # --------
 
   # Save data to a cookie.
   #
@@ -309,7 +309,7 @@ Cookie =
 
 
   # #### Delete
-  # -------
+  # -----------
 
   # Delete a cookie.
   #
@@ -340,7 +340,7 @@ class KissmetricsStorage
 
 
   # #### Get
-  # -------
+  # --------
 
   # Retrieve the user's logged out identifier.
 
@@ -349,7 +349,7 @@ class KissmetricsStorage
 
 
   # #### Set
-  # -------
+  # --------
 
   # Save the user's identifier.
   #
@@ -362,7 +362,7 @@ class KissmetricsStorage
 
 
   # #### Delete
-  # -------
+  # -----------
 
   # Delete the user's logged out identifier.
 
