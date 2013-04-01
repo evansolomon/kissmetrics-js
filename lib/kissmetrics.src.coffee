@@ -46,6 +46,13 @@ httpRequest = (args) ->
 # for the person you're recording data about. A new client must be created
 # for each person you record data about.
 #
+# All data methods (`record`, `set`, `alias`) are chainable.
+#
+# ```
+# km = new KissmetricsClient(API_KEY, user);
+# km.record('Changed username').alias(user.newname).set({mood: 'indecisive'});
+# ```
+#
 # ##### Arguments
 #
 # `apiKey` (String): Your API key from Kissmetrics
