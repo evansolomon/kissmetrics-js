@@ -88,6 +88,7 @@ class KissmetricsClient
   record: (action, properties = {}) ->
     properties._n = action
     @_generateQuery 'record', properties
+    return @
 
 
   # ### Set
@@ -115,6 +116,8 @@ class KissmetricsClient
       data[name] = value
       @_generateQuery 'set', data
 
+    return @
+
 
   # ### Alias
   # ---------
@@ -133,6 +136,7 @@ class KissmetricsClient
 
   alias: (to) ->
     @_generateQuery 'alias', _n: to
+    return @
 
 
   # ### Generate Query
@@ -160,7 +164,7 @@ class KissmetricsClient
 
     queryString = queryParts.join '&'
 
-    @_request "#{@query_types[type]}?#{queryString}"
+    @lastQuery = @_request "#{@query_types[type]}?#{queryString}"
 
 
   # ### Request
