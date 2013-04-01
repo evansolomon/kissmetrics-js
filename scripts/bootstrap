@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
 PROJECT_DIR=$(git rev-parse --show-toplevel)
+cd $PROJECT_DIR
 
 # Install Grunt
 npm install -g grunt-cli
+
+# Install dependencies
+npm install
+
+# Run build script
+grunt
 
 # Link scripts
 if [ -f "$PROJECT_DIR/.git/hooks/pre-push" ]; then
