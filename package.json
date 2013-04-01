@@ -1,6 +1,9 @@
 {
   "name": "kissmetrics-js",
   "version": "0.0.1",
+  "engines": {
+    "node": ">= 0.8"
+  },
   "description": "Kissmetrics JavaScript library for the client and server",
   "main": "lib/kissmetrics.js",
   "repository": {
