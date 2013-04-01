@@ -88,7 +88,7 @@
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <h4>Set</h4>
+              <h4>Get</h4>
 <hr>
 
             </div>
@@ -101,6 +101,38 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Retrieve data from localStorage.</p>
+<h5>Arguments</h5>
+<p><code>key</code> (String)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
+    window.localStorage.getItem key</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h4">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h4>Set</h4>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Save data to localStorage.</p>
 <h5>Arguments</h5>
@@ -115,45 +147,13 @@
         </li>
         
         
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <h4>Delete</h4>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Delete data from localStorage.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: (key) -&gt;
-    window.localStorage.removeItem key</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <h4>Get</h4>
+              <h4>Delete</h4>
 <hr>
 
             </div>
@@ -167,14 +167,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Retrieve data from localStorage.</p>
+              <p>Delete data from localStorage.</p>
 <h5>Arguments</h5>
 <p><code>key</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
-    window.localStorage.getItem key</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: (key) -&gt;
+    window.localStorage.removeItem key</pre></div></div>
             
         </li>
         
@@ -214,7 +214,7 @@
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <h4>Set</h4>
+              <h4>Get</h4>
 <hr>
 
             </div>
@@ -227,6 +227,43 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Retrieve data from cookies.</p>
+<h5>Arguments</h5>
+<p><code>key</code> (String)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
+    key += <span class="string">'='</span>
+    <span class="keyword">for</span> cookiePart <span class="keyword">in</span> document.cookie.split <span class="string">';'</span>
+      cleanedPart = cookiePart.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>)
+        .substring(key.length + <span class="number">1</span>, cookiePart.length)
+
+      <span class="keyword">return</span> cleanedPart <span class="keyword">if</span> cleanedPart.indexOf key <span class="keyword">is</span> <span class="number">0</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h4">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h4>Set</h4>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
@@ -244,43 +281,6 @@
         options.expires = <span class="string">"expires="</span> + date.toGMTString()
 
     document.cookie = <span class="string">"<span class="subst">#{name}</span>=<span class="subst">#{value}</span>; <span class="subst">#{options.expires}</span>; path=/"</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <h4>Get</h4>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
-              <p>Retrieve data from cookies.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
-    key += <span class="string">'='</span>
-    <span class="keyword">for</span> cookiePart <span class="keyword">in</span> document.cookie.split <span class="string">';'</span>
-      cleanedPart = cookiePart.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>)
-        .substring(key.length + <span class="number">1</span>, cookiePart.length)
-
-      <span class="keyword">return</span> cleanedPart <span class="keyword">if</span> cleanedPart.indexOf key <span class="keyword">is</span> <span class="number">0</span></pre></div></div>
             
         </li>
         
@@ -360,7 +360,7 @@ and browser cookies will be used as a fallback.</p>
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <h4>Set</h4>
+              <h4>Get</h4>
 <hr>
 
             </div>
@@ -374,14 +374,12 @@ and browser cookies will be used as a fallback.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Save the user&#39;s identifier.</p>
-<h5>Arguments</h5>
-<p><code>value</code> (String): The logged out user identity.</p>
+              <p>Retrieve the user&#39;s logged out identifier.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  set: (value) -&gt;
-    <span class="property">@store</span>.set <span class="property">@key</span>, value</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  get: -&gt;
+    <span class="property">@store</span>.get <span class="property">@key</span></pre></div></div>
             
         </li>
         
@@ -392,7 +390,7 @@ and browser cookies will be used as a fallback.</p>
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <h4>Get</h4>
+              <h4>Set</h4>
 <hr>
 
             </div>
@@ -406,12 +404,14 @@ and browser cookies will be used as a fallback.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>Retrieve the user&#39;s logged out identifier.</p>
+              <p>Save the user&#39;s identifier.</p>
+<h5>Arguments</h5>
+<p><code>value</code> (String): The logged out user identity.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  get: -&gt;
-    <span class="property">@store</span>.get <span class="property">@key</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>  set: (value) -&gt;
+    <span class="property">@store</span>.set <span class="property">@key</span>, value</pre></div></div>
             
         </li>
         
