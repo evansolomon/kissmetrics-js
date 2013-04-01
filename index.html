@@ -175,7 +175,9 @@ for the person you&#39;re recording data about. A new client must be created
 for each person you record data about.</p>
 <p>All data methods (<code>record</code>, <code>set</code>, <code>alias</code>) are chainable.</p>
 <pre><code>km = new KissmetricsClient(API_KEY, user);
-km.record(&#39;Changed username&#39;).alias(user.newname).set({mood: &#39;indecisive&#39;});</code></pre>
+km.record(&#39;Changed username&#39;)
+  .alias(user.newname)
+  .set({mood: &#39;indecisive&#39;});</code></pre>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your API key from Kissmetrics</p>
 <p><code>person</code> (String): An identifier for the person you&#39;ll record data about</p>
