@@ -50,7 +50,9 @@ httpRequest = (args) ->
 #
 # ```
 # km = new KissmetricsClient(API_KEY, user);
-# km.record('Changed username').alias(user.newname).set({mood: 'indecisive'});
+# km.record('Changed username')
+#   .alias(user.newname)
+#   .set({mood: 'indecisive'});
 # ```
 #
 # ##### Arguments
