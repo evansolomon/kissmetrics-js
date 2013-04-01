@@ -2,7 +2,7 @@
 
 # Kissmetrics JS
 
-A small library to interact with Kissmetrics that can be shared across a client (browser) and server (Node.js > 0.6).
+A small library to interact with Kissmetrics that can be shared across a client (browser) and server (Node.js).
 
 ## Annotated Source
 
