@@ -8,6 +8,26 @@ A small library to interact with Kissmetrics that can be shared across a client 
 
 In place of a more detailed readme, the [annotated source](http://evansolomon.github.com/kissmetrics-js/) is very thorough.
 
+## Installation
+
+In a browser, load the compiled JavaScript.
+
+```html
+<script src="min/kissmetrics.min.js"></script>
+<script>
+km = new KissmetricsClient(API_KEY);
+// ...
+</script>
+```
+
+In Node.js, you probably just want to require the main class.
+
+```javascript
+KM = require('./src/kissmetrics');
+km = new KM.KissmetricsClient(API_KEY);
+// ...
+```
+
 ## Usage Examples
 
 Record data about a logged **in** user.
