@@ -25,16 +25,16 @@ describe 'KM instance', ->
 		expectedOutput = /^GET \/?e\?_n=test%20event&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
-		km.record('test event').output.pop().match(expectedOutput).should.be.ok
+		km.record('test event').lastQuery.output.pop().match(expectedOutput).should.be.ok
 
 	it 'should set properties', ->
 		expectedOutput = /GET \/?s\?place=home&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
-		km.set({place: 'home'}).pop().output.pop().match(expectedOutput).should.be.ok
+		km.set({place: 'home'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
 
 	it 'should alias people', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM.KissmetricsClient 'apiKey', 'evan@example.com'
-		km.alias('notevan@example.com').output.pop().match(expectedOutput).should.be.ok
+		km.alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
