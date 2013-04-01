@@ -82,3 +82,8 @@ module.exports = ( grunt ) ->
 
   # Default task.
   grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'mocha']
+
+  # Helper tasks
+  grunt.registerTask 'build', ['coffee', 'concat', 'uglify']
+  grunt.registerTask 'docs', ['exec:docco']
+  grunt.registerTask 'test', ['mocha']
