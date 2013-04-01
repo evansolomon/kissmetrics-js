@@ -23,7 +23,17 @@ http = require 'http' if NODEJS is on
 # Generic wrapper for HTTP requests that abstracts the differences between
 # requests made in Node and in a browser.
 
-httpRequest = (url) ->
+httpRequest = (args) ->
+  # Node.js 0.6 had a different API syntax for the HTTP module
+  # If we're using ~0.6, pass the args straight away
+
+  return http.get args if NODEJS is on and process.version.match /^v0\.6/
+
+  # If we're in a browser or later version of node, form a URL
+  args.port ?= 80
+  args.path ?= ''
+  url = "http://#{args.host}:#{args.port}/#{args.path}"
+
   if NODEJS is on then http.get url else (new Image()).src = url
 
 
@@ -165,7 +175,10 @@ class KissmetricsClient
   #   as a Kissmetrics API endpoint.
 
   _request: (endpoint) ->
-    httpRequest "http://#{@host}:#{@port}/#{endpoint}"
+    httpRequest
+      host: @host
+      port: @port
+      path: endpoint
 
 
 # ### Exports
