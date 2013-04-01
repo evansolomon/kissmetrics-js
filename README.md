@@ -60,3 +60,15 @@ km.alias(user.name);
 km = new KissmetricsClient(API_KEY, user.name);
 km.record('Publish post');
 ```
+
+Data methods can be chained.
+
+```javascript
+km = new AnonKissmetricsClient(API_KEY);
+km.record('Visited front page')
+	.record('Visited signup form')
+	.record('Signed up')
+	.alias(user.name)
+	.record('Published post');
+```
+
