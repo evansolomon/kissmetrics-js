@@ -173,6 +173,9 @@ If we&#39;re using ~0.6, pass the args straight away</p>
 <p>Instantiates a new client with your Kissmetrics API key and an identifier
 for the person you&#39;re recording data about. A new client must be created
 for each person you record data about.</p>
+<p>All data methods (<code>record</code>, <code>set</code>, <code>alias</code>) are chainable.</p>
+<pre><code>km = new KissmetricsClient(API_KEY, user);
+km.record(&#39;Changed username&#39;).alias(user.newname).set({mood: &#39;indecisive&#39;});</code></pre>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your API key from Kissmetrics</p>
 <p><code>person</code> (String): An identifier for the person you&#39;ll record data about</p>
@@ -226,7 +229,8 @@ for each person you record data about.</p>
             
             <div class="content"><div class='highlight'><pre>  record: (action, properties = {}) -&gt;
     properties._n = action
-    <span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties</pre></div></div>
+    <span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties
+    <span class="keyword">return</span> @</pre></div></div>
             
         </li>
         
@@ -267,7 +271,9 @@ that it is required and that each property has to be sent in its own query.</p>
     <span class="keyword">for</span> name, value <span class="keyword">of</span> properties
       data       = {}
       data[name] = value
-      <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data</pre></div></div>
+      <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data
+
+    <span class="keyword">return</span> @</pre></div></div>
             
         </li>
         
@@ -302,7 +308,8 @@ the current instance.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  alias: (to) -&gt;
-    <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to</pre></div></div>
+    <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to
+    <span class="keyword">return</span> @</pre></div></div>
             
         </li>
         
@@ -352,7 +359,7 @@ it to Kissmetrics.</p>
 
     queryString = queryParts.join <span class="string">'&amp;'</span>
 
-    <span class="property">@_request</span> <span class="string">"<span class="subst">#{@query_types[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+    <span class="property">@lastQuery</span> = <span class="property">@_request</span> <span class="string">"<span class="subst">#{@query_types[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
             
         </li>
         
