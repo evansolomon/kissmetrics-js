@@ -218,6 +218,19 @@ global.KissmetricsClient = KissmetricsClient
 LocalStorage =
 
 
+  # #### Get
+  # -------
+
+  # Retrieve data from localStorage.
+  #
+  # ##### Arguments
+  #
+  # `key` (String)
+
+  get: (key) ->
+    window.localStorage.getItem key
+
+
   # #### Set
   # -------
 
@@ -246,25 +259,30 @@ LocalStorage =
     window.localStorage.removeItem key
 
 
-  # #### Get
-  # -------
-
-  # Retrieve data from localStorage.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
-
-  get: (key) ->
-    window.localStorage.getItem key
-
-
 # ### Cookies
 # -----------------
 
 # Interacts with the browser's cookies.
 
 Cookie =
+
+
+  # #### Get
+  # -------
+
+  # Retrieve data from cookies.
+  #
+  # ##### Arguments
+  #
+  # `key` (String)
+
+  get: (key) ->
+    key += '='
+    for cookiePart in document.cookie.split ';'
+      cleanedPart = cookiePart.replace(/^\s+/, '')
+        .substring(key.length + 1, cookiePart.length)
+
+      return cleanedPart if cleanedPart.indexOf key is 0
 
 
   # #### Set
@@ -288,24 +306,6 @@ Cookie =
         options.expires = "expires=" + date.toGMTString()
 
     document.cookie = "#{name}=#{value}; #{options.expires}; path=/"
-
-
-  # #### Get
-  # -------
-
-  # Retrieve data from cookies.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
-
-  get: (key) ->
-    key += '='
-    for cookiePart in document.cookie.split ';'
-      cleanedPart = cookiePart.replace(/^\s+/, '')
-        .substring(key.length + 1, cookiePart.length)
-
-      return cleanedPart if cleanedPart.indexOf key is 0
 
 
   # #### Delete
@@ -339,6 +339,15 @@ class KissmetricsStorage
     @store = if window.localStorage? then LocalStorage else Cookie
 
 
+  # #### Get
+  # -------
+
+  # Retrieve the user's logged out identifier.
+
+  get: ->
+    @store.get @key
+
+
   # #### Set
   # -------
 
@@ -350,15 +359,6 @@ class KissmetricsStorage
 
   set: (value) ->
     @store.set @key, value
-
-
-  # #### Get
-  # -------
-
-  # Retrieve the user's logged out identifier.
-
-  get: ->
-    @store.get @key
 
 
   # #### Delete
