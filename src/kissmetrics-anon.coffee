@@ -89,14 +89,14 @@ Cookie =
   #
   # ##### Arguments
   #
-  # `key` (String)
+  # `name` (String)
   #
   # `value` (String)
   #
   # `options` (Object): Optional, only used for deleting cookies by writing
   #   them with an expiration time in the past.
 
-  set: (key, value, options = {expires: ''}) ->
+  set: (name, value, options = {expires: ''}) ->
     unless options.expires
         date = new Date
         date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000))
