@@ -33,6 +33,12 @@ describe 'KM instance', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		km.set({place: 'home'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
 
+	it 'should set multiple properties', ->
+		expectedOutput = /GET \/?s\?place=home&otherPlace=work&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
+
+		km = new KM 'apiKey', 'evan@example.com'
+		km.set({place: 'home', otherPlace: 'work'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
+
 	it 'should alias people', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
