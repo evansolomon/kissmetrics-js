@@ -352,9 +352,12 @@ accidentally used for properties.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
-    reservedKeys = [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
+    <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">unless</span> <span class="property">@apiKey</span> <span class="keyword">and</span> <span class="property">@person</span>
+
     data._k = <span class="property">@apiKey</span>
     data._p = <span class="property">@person</span>
+
+    reservedKeys = [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
 
     queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
       <span class="keyword">continue</span> <span class="keyword">if</span> reservedKeys.indexOf(key) &gt; -<span class="number">1</span>
