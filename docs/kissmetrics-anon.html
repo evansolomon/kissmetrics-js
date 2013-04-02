@@ -356,11 +356,16 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
   constructor: (apiKey, options = {}) -&gt;
-    <span class="property">@storage</span> = <span class="keyword">switch</span> options.storage
-      <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
-      <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
-      <span class="keyword">when</span> <span class="literal">null</span> <span class="keyword">then</span> (<span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie)
-      <span class="keyword">else</span> options.storage
+    options.storage ?= <span class="literal">null</span>
+
+    <span class="property">@storage</span> =
+      <span class="keyword">if</span> options.storage
+        <span class="keyword">switch</span> options.storage
+          <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
+          <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
+          <span class="keyword">else</span> options.storage
+      <span class="keyword">else</span>
+        <span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie
 
     storageKey = options.storageKey || <span class="string">'kissmetricsAnon'</span>
 

@@ -143,11 +143,16 @@ Cookie =
 
 class AnonKissmetricsClient extends KissmetricsClient
   constructor: (apiKey, options = {}) ->
-    @storage = switch options.storage
-      when 'cookie' then Cookie
-      when 'localStorage' then LocalStorage
-      when null then (if window.localStorage? then LocalStorage else Cookie)
-      else options.storage
+    options.storage ?= null
+
+    @storage =
+      if options.storage
+        switch options.storage
+          when 'cookie' then Cookie
+          when 'localStorage' then LocalStorage
+          else options.storage
+      else
+        if window.localStorage? then LocalStorage else Cookie
 
     storageKey = options.storageKey || 'kissmetricsAnon'
 
