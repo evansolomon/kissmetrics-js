@@ -236,11 +236,9 @@
             
             <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
     key += <span class="string">'='</span>
-    <span class="keyword">for</span> cookiePart <span class="keyword">in</span> document.cookie.split <span class="string">';'</span>
-      cleanedPart = cookiePart.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>)
-        .substring(key.length + <span class="number">1</span>, cookiePart.length)
-
-      <span class="keyword">return</span> cleanedPart <span class="keyword">if</span> cleanedPart.indexOf key <span class="keyword">is</span> <span class="number">0</span></pre></div></div>
+    <span class="keyword">for</span> cookiePart <span class="keyword">in</span> document.cookie.split <span class="regexp">/;\s*/</span>
+      <span class="keyword">if</span> cookiePart.indexOf(key) <span class="keyword">is</span> <span class="number">0</span>
+        <span class="keyword">return</span> cookiePart.substring key.length</pre></div></div>
             
         </li>
         
@@ -267,8 +265,9 @@
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
-<p><code>name</code> (String)</p>
-<p><code>value</code> (String)</p>
+<p><code>name</code> (String)
+g
+<code>value</code> (String)</p>
 <p><code>options</code> (Object): Optional, only used for deleting cookies by writing
   them with an expiration time in the past.</p>
 
@@ -342,7 +341,12 @@ only difference from <code>KissmetricsClient</code> is that an identifier for th
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your Kissmetrics API key</p>
-<p><code>options</code> (Object): Optionally provide a key and storage engine</p>
+<p><code>options</code> (Object): Optionally provide a key and storage engine, or specify
+  which internal engine you want to use: <code>&#39;localStorage&#39;</code> or <code>&#39;cookie&#39;</code>. If
+  you provide your own storage engine, it <strong>must</strong> match the API&#39;s provided
+  by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and <code>delete()</code>
+  methods. The <code>get()</code> and <code>delete()</code> methods must accept a key, and <code>set()</code>
+  must accept a key and value.</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
 km.record(&#39;Visited signup form&#39;)</code></pre>
 
@@ -350,11 +354,16 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
   constructor: (apiKey, options = {}) -&gt;
-    <span class="property">@storage</span> = <span class="keyword">switch</span> options.storage
-      <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
-      <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
-      <span class="keyword">when</span> <span class="literal">null</span> <span class="keyword">then</span> (<span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie)
-      <span class="keyword">else</span> options.storage
+    options.storage ?= <span class="literal">null</span>
+
+    <span class="property">@storage</span> =
+      <span class="keyword">if</span> options.storage
+        <span class="keyword">switch</span> options.storage
+          <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
+          <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
+          <span class="keyword">else</span> options.storage
+      <span class="keyword">else</span>
+        <span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie
 
     storageKey = options.storageKey || <span class="string">'kissmetricsAnon'</span>
 
