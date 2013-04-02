@@ -131,7 +131,9 @@ class KissmetricsClient
   # ### Alias
   # ---------
 
-  # Alias a person to another "identity" in Kissmetrics.
+  # Alias a person to another "identity" in Kissmetrics. Updates the current
+  # instance's `person` attribute to the new identity.
+  #
   # http://support.kissmetrics.com/apis/common-methods#alias
   #
   # ##### Arguments
@@ -145,6 +147,7 @@ class KissmetricsClient
 
   alias: (to) ->
     @_generateQuery 'alias', _n: to
+    @person = to
     return @
 
 

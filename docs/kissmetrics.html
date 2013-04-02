@@ -300,8 +300,9 @@ that it is required and that each property has to be sent in its own query.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Alias a person to another &quot;identity&quot; in Kissmetrics.
-<a href="http://support.kissmetrics.com/apis/common-methods#alias">http://support.kissmetrics.com/apis/common-methods#alias</a></p>
+              <p>Alias a person to another &quot;identity&quot; in Kissmetrics. Updates the current
+instance&#39;s <code>person</code> attribute to the new identity.</p>
+<p><a href="http://support.kissmetrics.com/apis/common-methods#alias">http://support.kissmetrics.com/apis/common-methods#alias</a></p>
 <h5>Arguments</h5>
 <p><code>to</code> (String): A new identifier to map to the <code>@person</code> set on
 the current instance.</p>
@@ -311,6 +312,7 @@ the current instance.</p>
             
             <div class="content"><div class='highlight'><pre>  alias: (to) -&gt;
     <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to
+    <span class="property">@person</span> = to
     <span class="keyword">return</span> @</pre></div></div>
             
         </li>
