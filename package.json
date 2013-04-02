@@ -26,6 +26,7 @@
     "grunt-coffeelint": "0.0.6",
     "grunt-exec": "~0.4.0",
     "mocha": "~1.8.2",
-    "should": "~1.2.2"
+    "should": "~1.2.2",
+    "grunt-casperjs": "~1.0.6"
   }
 }

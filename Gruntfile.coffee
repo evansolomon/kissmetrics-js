@@ -6,6 +6,7 @@ module.exports = ( grunt ) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-exec'
+  grunt.loadNpmTasks 'grunt-casperjs'
 
   # Project configuration.
   grunt.initConfig
@@ -67,6 +68,10 @@ module.exports = ( grunt ) ->
       docco:
         cmd: 'docco src/*.coffee -o docs'
 
+    casperjs:
+      files: ['test/casperjs/**/*.coffee']
+
+
   grunt.registerTask 'mocha', 'Run mocha unit tests.', ->
     done = @async()
     mocha =
@@ -81,9 +86,9 @@ module.exports = ( grunt ) ->
         done()
 
   # Default task.
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'mocha']
+  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'test']
 
   # Helper tasks
   grunt.registerTask 'build', ['coffee', 'concat', 'uglify']
   grunt.registerTask 'docs', ['exec:docco']
-  grunt.registerTask 'test', ['mocha']
+  grunt.registerTask 'test', ['mocha', 'casperjs']
