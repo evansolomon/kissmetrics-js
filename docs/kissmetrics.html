@@ -268,10 +268,9 @@ reserved <code>_n</code> property name.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  set: (properties) -&gt;
-    data       = {}
-    data[name] = value <span class="keyword">for</span> name, value <span class="keyword">of</span> properties <span class="keyword">when</span> name <span class="keyword">isnt</span> <span class="string">'_n'</span>
+    <span class="keyword">delete</span> properties._n
 
-    <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data
+    <span class="property">@_generateQuery</span> <span class="string">'set'</span>, properties
     <span class="keyword">return</span> @</pre></div></div>
             
         </li>

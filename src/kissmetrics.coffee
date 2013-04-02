@@ -120,10 +120,9 @@ class KissmetricsClient
   # ```
 
   set: (properties) ->
-    data       = {}
-    data[name] = value for name, value of properties when name isnt '_n'
+    delete properties._n
 
-    @_generateQuery 'set', data
+    @_generateQuery 'set', properties
     return @
 
 
