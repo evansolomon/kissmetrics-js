@@ -38,7 +38,7 @@ echo
 
 # Cleanup
 git checkout master >/dev/null 2>&1
-npm install && grunt
+npm install && grunt build && grunt docs
 rm -rf $TEMP_PATH
 
 exit 0
