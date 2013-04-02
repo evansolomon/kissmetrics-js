@@ -72,3 +72,17 @@ km.record('Visited front page')
 	.record('Published post');
 ```
 
+Calling `alias()` updates the instance's `person` attribute, so future data is recorded using the new identity.
+
+```javascript
+km = new KissmetricsClient(API_KEY, 'evan');
+console.log(km.person);
+// evan
+
+km.alias('evansolomon');
+console.log(km.person);
+// evansolomon
+
+km.record('foobar');
+// Recorded as "evansolomon" doing "foobar"
+```
