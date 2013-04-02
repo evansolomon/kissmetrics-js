@@ -72,6 +72,15 @@ module.exports = ( grunt ) ->
       files: ['test/casperjs/**/*.coffee']
 
 
+  # Default task.
+  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'test']
+
+  # Helper tasks
+  grunt.registerTask 'build', ['coffee', 'concat', 'uglify']
+  grunt.registerTask 'docs', ['exec:docco']
+  grunt.registerTask 'test', ['mocha', 'casperjs']
+
+  # Mocha task
   grunt.registerTask 'mocha', 'Run mocha unit tests.', ->
     done = @async()
     mocha =
@@ -84,11 +93,3 @@ module.exports = ( grunt ) ->
       else
         grunt.log.ok( result.stdout ).writeln()
         done()
-
-  # Default task.
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'test']
-
-  # Helper tasks
-  grunt.registerTask 'build', ['coffee', 'concat', 'uglify']
-  grunt.registerTask 'docs', ['exec:docco']
-  grunt.registerTask 'test', ['mocha', 'casperjs']
