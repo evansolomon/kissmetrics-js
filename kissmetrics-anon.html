@@ -267,14 +267,14 @@
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
-<p><code>key</code> (String)</p>
+<p><code>name</code> (String)</p>
 <p><code>value</code> (String)</p>
 <p><code>options</code> (Object): Optional, only used for deleting cookies by writing
   them with an expiration time in the past.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  set: (key, value, options = {expires: <span class="string">''</span>}) -&gt;
+            <div class="content"><div class='highlight'><pre>  set: (name, value, options = {expires: <span class="string">''</span>}) -&gt;
     <span class="keyword">unless</span> options.expires
         date = <span class="keyword">new</span> Date
         date.setTime(date.getTime() + (<span class="number">365</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))
@@ -323,7 +323,7 @@
               <div class="pilwrap for-h2">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <h2>Kissmetrics Storage</h2>
+              <h2>Anon Kissmetrics Client</h2>
 <hr>
 
             </div>
@@ -337,135 +337,6 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>Wrap the <code>get</code>, <code>set</code>, and <code>delete</code> methods and abstract the differences
-between the storage engines.  Local Storage will be used when available,
-and browser cookies will be used as a fallback.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String): The key to associate with the logged out identity. This is
-  <em>not</em> your Kissmetrics API key.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">KissmetricsStorage</span></span>
-
-  constructor: (<span class="property">@key</span>) -&gt;
-    <span class="property">@store</span> = <span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-20">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-20">&#182;</a>
-              </div>
-              <h4>Get</h4>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-21">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <p>Retrieve the user&#39;s logged out identifier.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  get: -&gt;
-    <span class="property">@store</span>.get <span class="property">@key</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-22">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-22">&#182;</a>
-              </div>
-              <h4>Set</h4>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-23">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
-              </div>
-              <p>Save the user&#39;s identifier.</p>
-<h5>Arguments</h5>
-<p><code>value</code> (String): The logged out user identity.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  set: (value) -&gt;
-    <span class="property">@store</span>.set <span class="property">@key</span>, value</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-24">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-24">&#182;</a>
-              </div>
-              <h4>Delete</h4>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-25">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
-              </div>
-              <p>Delete the user&#39;s logged out identifier.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: -&gt;
-    <span class="property">@store</span>.<span class="keyword">delete</span> <span class="property">@key</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-26">&#182;</a>
-              </div>
-              <h2>Anon Kissmetrics Client</h2>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-27">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
-              </div>
               <p>Wrapper for interacting with the Kissmetrics API with logged out users. The
 only difference from <code>KissmetricsClient</code> is that an identifier for thie user
 will be automatically created and saved in their browser.</p>
@@ -478,22 +349,28 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
-  constructor: (apiKey, options = {storageKey: <span class="string">'kissmetricsAnon'</span>}) -&gt;
-    <span class="keyword">unless</span> <span class="property">@storage</span> = options.storage
-      <span class="property">@storage</span> = <span class="keyword">new</span> KissmetricsStorage options.storageKey
+  constructor: (apiKey, options = {}) -&gt;
+    <span class="property">@storage</span> = <span class="keyword">switch</span> options.storage
+      <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
+      <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
+      <span class="keyword">when</span> <span class="literal">null</span> <span class="keyword">then</span> (<span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie)
+      <span class="keyword">else</span> options.storage
 
-    <span class="property">@storage</span>.set(person = <span class="property">@createID</span>()) <span class="keyword">unless</span> person = <span class="property">@storage</span>.get()
+    storageKey = options.storageKey || <span class="string">'kissmetricsAnon'</span>
+
+    <span class="keyword">unless</span> person = <span class="property">@storage</span>.get storageKey
+      <span class="property">@storage</span>.set(storageKey, person = <span class="property">@createID</span>())
 
     <span class="keyword">super</span> apiKey, person</pre></div></div>
             
         </li>
         
         
-        <li id="section-28">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <h3>Create ID</h3>
 <hr>
@@ -503,11 +380,11 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Create a persistent ID for an anonymous user.</p>
 <p>Inspired by <a href="http://stackoverflow.com/a/105074/30098">http://stackoverflow.com/a/105074/30098</a></p>
@@ -523,11 +400,11 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h2>Exports</h2>
 <hr>
@@ -537,11 +414,11 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Make <code>AnonKissmetricsClient</code> available as a property
 on the current context in the browser.</p>
