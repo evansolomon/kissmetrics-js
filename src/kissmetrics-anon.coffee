@@ -75,11 +75,9 @@ Cookie =
 
   get: (key) ->
     key += '='
-    for cookiePart in document.cookie.split ';'
-      cleanedPart = cookiePart.replace(/^\s+/, '')
-        .substring(key.length + 1, cookiePart.length)
-
-      return cleanedPart if cleanedPart.indexOf key is 0
+    for cookiePart in document.cookie.split /;\s*/
+      if cookiePart.indexOf(key) is 0
+        return cookiePart.substring key.length
 
 
   # #### Set
