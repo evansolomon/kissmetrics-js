@@ -217,8 +217,8 @@ km.record(&#39;Changed username&#39;)
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Record an &quot;event&quot; in Kissmetrics.
-<a href="http://support.kissmetrics.com/apis/common-methods#record">http://support.kissmetrics.com/apis/common-methods#record</a></p>
+              <p>Record an &quot;event&quot; in Kissmetrics.</p>
+<p><a href="http://support.kissmetrics.com/apis/common-methods#record">http://support.kissmetrics.com/apis/common-methods#record</a></p>
 <h5>Arguments</h5>
 <p><code>action</code> (String): Name of the event you&#39;re recording. This is
   usually something a person did or something that affects them.</p>
@@ -257,24 +257,22 @@ km.record(&#39;Changed username&#39;)
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>Set a &quot;property&quot; in Kissmetrics.
-<a href="http://support.kissmetrics.com/apis/common-methods#set">http://support.kissmetrics.com/apis/common-methods#set</a></p>
+              <p>Set a &quot;property&quot; in Kissmetrics.</p>
+<p><a href="http://support.kissmetrics.com/apis/common-methods#set">http://support.kissmetrics.com/apis/common-methods#set</a></p>
 <h5>Arguments</h5>
 <p><code>properties</code> (Object): Properties to associate with
   the person&#39;s event. Keys will be used as property names and values
   as property values.</p>
-<p>This behaves exactly like the <code>properties</code> argument in <code>record</code> except
-that it is required and that each property has to be sent in its own query.</p>
+<p>This behaves exactly like the <code>properties</code> argument in <code>record</code>.</p>
 <pre><code>km.set({location: &#39;San Francisco&#39;, gender: &#39;male&#39;})</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  set: (properties) -&gt;
-    <span class="keyword">for</span> name, value <span class="keyword">of</span> properties
-      data       = {}
-      data[name] = value
-      <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data
+    data       = {}
+    data[name] = value <span class="keyword">for</span> name, value <span class="keyword">of</span> properties
 
+    <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data
     <span class="keyword">return</span> @</pre></div></div>
             
         </li>

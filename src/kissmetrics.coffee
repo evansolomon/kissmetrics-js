@@ -114,19 +114,17 @@ class KissmetricsClient
   #   the person's event. Keys will be used as property names and values
   #   as property values.
   #
-  # This behaves exactly like the `properties` argument in `record` except
-  # that it is required and that each property has to be sent in its own query.
+  # This behaves exactly like the `properties` argument in `record`.
   #
   # ```
   # km.set({location: 'San Francisco', gender: 'male'})
   # ```
 
   set: (properties) ->
-    for name, value of properties
-      data       = {}
-      data[name] = value
-      @_generateQuery 'set', data
+    data       = {}
+    data[name] = value for name, value of properties
 
+    @_generateQuery 'set', data
     return @
 
 
