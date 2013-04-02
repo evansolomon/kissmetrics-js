@@ -118,55 +118,6 @@ Cookie =
     Cookie.set key, '', {expires: -1}
 
 
-# ## Kissmetrics Storage
-# ----------------------
-
-# Wrap the `get`, `set`, and `delete` methods and abstract the differences
-# between the storage engines.  Local Storage will be used when available,
-# and browser cookies will be used as a fallback.
-#
-# ##### Arguments
-#
-# `key` (String): The key to associate with the logged out identity. This is
-#   *not* your Kissmetrics API key.
-
-class KissmetricsStorage
-
-  constructor: (@key) ->
-    @store = if window.localStorage? then LocalStorage else Cookie
-
-
-  # #### Get
-  # --------
-
-  # Retrieve the user's logged out identifier.
-
-  get: ->
-    @store.get @key
-
-
-  # #### Set
-  # --------
-
-  # Save the user's identifier.
-  #
-  # ##### Arguments
-  #
-  # `value` (String): The logged out user identity.
-
-  set: (value) ->
-    @store.set @key, value
-
-
-  # #### Delete
-  # -----------
-
-  # Delete the user's logged out identifier.
-
-  delete: ->
-    @store.delete @key
-
-
 # ## Anon Kissmetrics Client
 # --------------------------
 
@@ -186,11 +137,17 @@ class KissmetricsStorage
 # ```
 
 class AnonKissmetricsClient extends KissmetricsClient
-  constructor: (apiKey, options = {storageKey: 'kissmetricsAnon'}) ->
-    unless @storage = options.storage
-      @storage = new KissmetricsStorage options.storageKey
+  constructor: (apiKey, options = {}) ->
+    @storage = switch options.storage
+      when 'cookie' then Cookie
+      when 'localStorage' then LocalStorage
+      when null then (if window.localStorage? then LocalStorage else Cookie)
+      else options.storage
 
-    @storage.set(person = @createID()) unless person = @storage.get()
+    storageKey = options.storageKey || 'kissmetricsAnon'
+
+    unless person = @storage.get storageKey
+      @storage.set(storageKey, person = @createID())
 
     super apiKey, person
 
