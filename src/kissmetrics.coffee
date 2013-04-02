@@ -66,8 +66,8 @@ httpRequest = (args) ->
 
 class KissmetricsClient
   constructor: (@apiKey, @person) ->
-    @host        = 'trk.kissmetrics.com'
-    @query_types =
+    @host       = 'trk.kissmetrics.com'
+    @queryTypes =
       record : 'e'
       set    : 's'
       alias  : 'a'
@@ -180,8 +180,7 @@ class KissmetricsClient
       "#{key}=#{val}"
 
     queryString = queryParts.join '&'
-
-    @lastQuery = @_request "#{@query_types[type]}?#{queryString}"
+    @lastQuery = @_request "#{@queryTypes[type]}?#{queryString}"
 
 
   # ### Request
