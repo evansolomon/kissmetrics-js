@@ -87,7 +87,7 @@ class KissmetricsClient
   # `action` (String): Name of the event you're recording. This is
   #   usually something a person did or something that affects them.
   #
-  # `properties` (Object) *Optional*: Properties to associate with
+  # `properties` *Optional* (Object): Properties to associate with
   #   the person's event. Keys will be used as property names and values
   #   as property values.
   #
