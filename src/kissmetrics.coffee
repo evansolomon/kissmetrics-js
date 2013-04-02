@@ -110,9 +110,8 @@ class KissmetricsClient
   #
   # ##### Arguments
   #
-  # `properties` (Object): Properties to associate with
-  #   the person's event. Keys will be used as property names and values
-  #   as property values.
+  # `properties` (Object): Properties to associate with the person. Keys
+  #   will be used as property names and values as property values.
   #
   # This behaves exactly like the `properties` argument in `record`.
   #
