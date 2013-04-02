@@ -1,5 +1,5 @@
 should = require 'should'
-KM     = require '../src/kissmetrics'
+KM     = require '../../src/kissmetrics'
 
 describe 'KM module', ->
 	it 'should exist', ->

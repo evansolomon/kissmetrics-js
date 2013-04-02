@@ -71,7 +71,7 @@ module.exports = ( grunt ) ->
     done = @async()
     mocha =
       cmd: 'mocha'
-      args: ['--compilers','coffee:coffee-script','--colors','--reporter','spec']
+      args: ['test/mocha', '--compilers','coffee:coffee-script','--colors','--reporter','spec']
     grunt.util.spawn mocha, (error, result) ->
       if error
         grunt.log.ok( result.stdout ).error( result.stderr ).writeln()
