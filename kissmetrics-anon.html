@@ -543,12 +543,12 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>Make <code>AnonKissmetricsClient</code> available as a Node module or a property
+              <p>Make <code>AnonKissmetricsClient</code> available as a property
 on the current context in the browser.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>global.AnonKissmetricsClient = AnonKissmetricsClient</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="property">@AnonKissmetricsClient</span> = AnonKissmetricsClient <span class="keyword">unless</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span></pre></div></div>
             
         </li>
         
