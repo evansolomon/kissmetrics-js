@@ -21,12 +21,14 @@ describe 'KM instance', ->
 		km.should.have.property 'set'
 		km.should.have.property 'alias'
 
+describe 'Record', ->
 	it 'should record events', ->
 		expectedOutput = /^GET \/?e\?_n=test%20event&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
 		km.record('test event').lastQuery.output.pop().match(expectedOutput).should.be.ok
 
+describe 'Set', ->
 	it 'should set properties', ->
 		expectedOutput = /GET \/?s\?place=home&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
@@ -45,12 +47,14 @@ describe 'KM instance', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		km.set({foo: 'Safe', _n: 'Blocked'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
 
+describe 'Alias', ->
 	it 'should alias people', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
 		km.alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
 
+describe 'Client API', ->
 	it 'should be chainable', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
