@@ -267,8 +267,9 @@
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
-<p><code>name</code> (String)</p>
-<p><code>value</code> (String)</p>
+<p><code>name</code> (String)
+g
+<code>value</code> (String)</p>
 <p><code>options</code> (Object): Optional, only used for deleting cookies by writing
   them with an expiration time in the past.</p>
 
@@ -342,7 +343,12 @@ only difference from <code>KissmetricsClient</code> is that an identifier for th
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your Kissmetrics API key</p>
-<p><code>options</code> (Object): Optionally provide a key and storage engine</p>
+<p><code>options</code> (Object): Optionally provide a key and storage engine, or specify
+  which internal engine you want to use: <code>&#39;localStorage&#39;</code> or <code>&#39;cookie&#39;</code>. If
+  you provide your own storage engine, it <strong>must</strong> match the API&#39;s provided
+  by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and <code>delete()</code>
+  methods. The <code>get()</code> and <code>delete()</code> methods must accept a key, and <code>set()</code>
+  must accept a key and value.</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
 km.record(&#39;Visited signup form&#39;)</code></pre>
 

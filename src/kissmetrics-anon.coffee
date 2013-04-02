@@ -129,7 +129,12 @@ Cookie =
 #
 # `apiKey` (String): Your Kissmetrics API key
 #
-# `options` (Object): Optionally provide a key and storage engine
+# `options` (Object): Optionally provide a key and storage engine, or specify
+#   which internal engine you want to use: `'localStorage'` or `'cookie'`. If
+#   you provide your own storage engine, it **must** match the API's provided
+#   by `Cookie` and `LocalStorage` with `get()`, `set()` and `delete()`
+#   methods. The `get()` and `delete()` methods must accept a key, and `set()`
+#   must accept a key and value.
 #
 # ```
 # km = new AnonKissmetricsClient(API_KEY)
