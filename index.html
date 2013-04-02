@@ -260,14 +260,16 @@ km.record(&#39;Changed username&#39;)
 <h5>Arguments</h5>
 <p><code>properties</code> (Object): Properties to associate with the person. Keys
   will be used as property names and values as property values.</p>
-<p>This behaves exactly like the <code>properties</code> argument in <code>record</code>.</p>
+<p>This behaves exactly like the <code>properties</code> argument in <code>record</code>, except
+it includes an additional safety check to make sure you don&#39;t use the
+reserved <code>_n</code> property name.</p>
 <pre><code>km.set({location: &#39;San Francisco&#39;, gender: &#39;male&#39;})</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  set: (properties) -&gt;
     data       = {}
-    data[name] = value <span class="keyword">for</span> name, value <span class="keyword">of</span> properties
+    data[name] = value <span class="keyword">for</span> name, value <span class="keyword">of</span> properties <span class="keyword">when</span> name <span class="keyword">isnt</span> <span class="string">'_n'</span>
 
     <span class="property">@_generateQuery</span> <span class="string">'set'</span>, data
     <span class="keyword">return</span> @</pre></div></div>
@@ -337,6 +339,9 @@ the current instance.</p>
               <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
 and query string. Once the query is formed, call <code>record()</code> to send
 it to Kissmetrics.</p>
+<p>Automatically prevents any Kissmetrics-reserved keys from being
+accidentally used for properties.</p>
+<p><a href="http://support.kissmetrics.com/apis/specifications.html">http://support.kissmetrics.com/apis/specifications.html</a></p>
 <h5>Arguments</h5>
 <ul>
 <li><p><code>type</code> (String): Type of data being sent (<code>record</code>, <code>set</code> or <code>alias</code>).</p>
@@ -348,10 +353,12 @@ it to Kissmetrics.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
+    reservedKeys = [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
     data._k = <span class="property">@apiKey</span>
     data._p = <span class="property">@person</span>
 
     queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
+      <span class="keyword">continue</span> <span class="keyword">if</span> reservedKeys.indexOf(key) &gt; -<span class="number">1</span>
       key = encodeURIComponent key
       val = encodeURIComponent val
       <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
