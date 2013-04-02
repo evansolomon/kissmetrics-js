@@ -176,8 +176,8 @@ class KissmetricsClient
 
     queryParts = for key, val of data
       continue if reservedKeys.indexOf(key) > -1
-      key = encodeURIComponent key
-      val = encodeURIComponent val
+
+      [key, val] = (encodeURIComponent param for param in [key, val])
       "#{key}=#{val}"
 
     queryString = queryParts.join '&'
