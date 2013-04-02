@@ -54,17 +54,17 @@ describe 'Alias', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		km.alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
 
+	it 'should change person on alias', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		km.alias 'someone@example.com'
+		km.person.should.be.equal 'someone@example.com'
+
 describe 'Client API', ->
 	it 'should be chainable', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
 		km.record('foo').alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
-
-	it 'should change person on alias', ->
-		km = new KM 'apiKey', 'evan@example.com'
-		km.alias 'someone@example.com'
-		km.person.should.be.equal 'someone@example.com'
 
 	it 'should require apiKey', ->
 		km = new KM 'apiKey', 'evan@example.com'
