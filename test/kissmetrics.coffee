@@ -44,3 +44,8 @@ describe 'KM instance', ->
 
 		km = new KM 'apiKey', 'evan@example.com'
 		km.record('foo').alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
+
+	it 'should change person on alias', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		km.alias 'someone@example.com'
+		km.person.should.be.equal 'someone@example.com'
