@@ -111,7 +111,9 @@ class KissmetricsClient
   # `properties` (Object): Properties to associate with the person. Keys
   #   will be used as property names and values as property values.
   #
-  # This behaves exactly like the `properties` argument in `record`.
+  # This behaves exactly like the `properties` argument in `record`, except
+  # it includes an additional safety check to make sure you don't use the
+  # reserved `_n` property name.
   #
   # ```
   # km.set({location: 'San Francisco', gender: 'male'})
@@ -119,7 +121,7 @@ class KissmetricsClient
 
   set: (properties) ->
     data       = {}
-    data[name] = value for name, value of properties
+    data[name] = value for name, value of properties when name isnt '_n'
 
     @_generateQuery 'set', data
     return @
@@ -156,6 +158,11 @@ class KissmetricsClient
   # and query string. Once the query is formed, call `record()` to send
   # it to Kissmetrics.
   #
+  # Automatically prevents any Kissmetrics-reserved keys from being
+  # accidentally used for properties.
+  #
+  # http://support.kissmetrics.com/apis/specifications.html
+  #
   # ##### Arguments
   #
   # * `type` (String): Type of data being sent (`record`, `set` or `alias`).
@@ -163,10 +170,12 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _generateQuery: (type, data) ->
+    reservedKeys = ['_t', '_d']
     data._k = @apiKey
     data._p = @person
 
     queryParts = for key, val of data
+      continue if reservedKeys.indexOf(key) > -1
       key = encodeURIComponent key
       val = encodeURIComponent val
       "#{key}=#{val}"
