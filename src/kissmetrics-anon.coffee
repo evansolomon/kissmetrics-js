@@ -90,7 +90,7 @@ Cookie =
   # ##### Arguments
   #
   # `name` (String)
-  #
+  #g
   # `value` (String)
   #
   # `options` (Object): Optional, only used for deleting cookies by writing
