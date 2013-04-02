@@ -169,9 +169,12 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _generateQuery: (type, data) ->
-    reservedKeys = ['_t', '_d']
+    return false unless @apiKey and @person
+
     data._k = @apiKey
     data._p = @person
+
+    reservedKeys = ['_t', '_d']
 
     queryParts = for key, val of data
       continue if reservedKeys.indexOf(key) > -1

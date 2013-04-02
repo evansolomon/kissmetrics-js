@@ -61,3 +61,17 @@ describe 'KM instance', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		km.alias 'someone@example.com'
 		km.person.should.be.equal 'someone@example.com'
+
+	it 'should require apiKey', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		delete km.apiKey
+
+		lastQuery = km.record('foo')
+		lastQuery.should.not.exist
+
+	it 'should require person', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		delete km.person
+
+		lastQuery = km.record('foo')
+		lastQuery.should.not.exist
