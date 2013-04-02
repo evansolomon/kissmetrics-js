@@ -427,14 +427,16 @@ it to Kissmetrics.</p>
 on the current context in the browser.</p>
 <pre><code>// Node.js
 KM = require(&#39;kissmetrics&#39;)
-kmClient = new KM.KissmetricsClient(&#39;apiKey&#39;, &#39;evan&#39;)</code></pre>
+kmClient = new KM(&#39;apiKey&#39;, &#39;evan&#39;)</code></pre>
 <pre><code>// Browser
 kmClient = new window.KissmetricsClient(&#39;apiKey&#39;, &#39;evan&#39;)</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>global = <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> exports <span class="keyword">else</span> @
-global.KissmetricsClient = KissmetricsClient</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span>
+  module.exports = KissmetricsClient
+<span class="keyword">else</span>
+  <span class="property">@KissmetricsClient</span> = KissmetricsClient</pre></div></div>
             
         </li>
         

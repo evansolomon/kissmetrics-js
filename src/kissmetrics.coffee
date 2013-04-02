@@ -203,7 +203,7 @@ class KissmetricsClient
 # ```
 # // Node.js
 # KM = require('kissmetrics')
-# kmClient = new KM.KissmetricsClient('apiKey', 'evan')
+# kmClient = new KM('apiKey', 'evan')
 # ```
 #
 # ```
@@ -211,5 +211,7 @@ class KissmetricsClient
 # kmClient = new window.KissmetricsClient('apiKey', 'evan')
 # ```
 
-global = if NODEJS is on then exports else @
-global.KissmetricsClient = KissmetricsClient
+if NODEJS is on
+  module.exports = KissmetricsClient
+else
+  @KissmetricsClient = KissmetricsClient

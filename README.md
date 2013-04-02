@@ -24,7 +24,7 @@ In Node.js, you probably just want to require the main class.
 
 ```javascript
 KM = require('./src/kissmetrics');
-km = new KM.KissmetricsClient(API_KEY);
+km = new KM(API_KEY);
 // ...
 ```
 

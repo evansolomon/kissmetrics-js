@@ -211,7 +211,7 @@ class AnonKissmetricsClient extends KissmetricsClient
 # ## Exports
 # ----------
 
-# Make `AnonKissmetricsClient` available as a Node module or a property
+# Make `AnonKissmetricsClient` available as a property
 # on the current context in the browser.
 
-global.AnonKissmetricsClient = AnonKissmetricsClient
+@AnonKissmetricsClient = AnonKissmetricsClient unless NODEJS is on
