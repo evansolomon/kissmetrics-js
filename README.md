@@ -15,7 +15,7 @@ In a browser, load the compiled JavaScript.
 ```html
 <script src="min/kissmetrics.min.js"></script>
 <script>
-km = new KissmetricsClient(API_KEY);
+km = new KissmetricsClient(API_KEY, user.name);
 // ...
 </script>
 ```
@@ -24,7 +24,7 @@ In Node.js, you probably just want to require the main class.
 
 ```javascript
 KM = require('./src/kissmetrics');
-km = new KM(API_KEY);
+km = new KM(API_KEY, user.name);
 // ...
 ```
 
