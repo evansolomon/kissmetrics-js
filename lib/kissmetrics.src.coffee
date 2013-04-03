@@ -318,10 +318,10 @@ Cookie =
   # ##### Arguments
   #
   # `name` (String)
-  #g
+  #
   # `value` (String)
   #
-  # `options` (Object): Optional, only used for deleting cookies by writing
+  # `options` *Optional* (Object): Only used for deleting cookies by writing
   #   them with an expiration time in the past.
 
   set: (name, value, options = {expires: ''}) ->
@@ -357,12 +357,12 @@ Cookie =
 #
 # `apiKey` (String): Your Kissmetrics API key
 #
-# `options` (Object): Optionally provide a key and storage engine, or specify
-#   which internal engine you want to use: `'localStorage'` or `'cookie'`. If
-#   you provide your own storage engine, it **must** match the API's provided
-#   by `Cookie` and `LocalStorage` with `get()`, `set()` and `delete()`
-#   methods. The `get()` and `delete()` methods must accept a key, and `set()`
-#   must accept a key and value.
+# `options` *Optional* (Object): Provide a key and/or storage engine, or
+#   specif which internal engine you want to use: `'localStorage'` or
+#   `'cookie'`. If you provide your own storage engine, it **must** match the
+#   API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
+#   `delete()` methods. The `get()` and `delete()` methods must accept a key,
+#   and `set()` must accept a key and value.
 #
 # ```
 # km = new AnonKissmetricsClient(API_KEY)
