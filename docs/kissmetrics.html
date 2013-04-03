@@ -58,10 +58,13 @@
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>Keep track of what environment we&#39;re running in, Node.js or a browser.</p>
+<p>If we&#39;re in Node.js, also record whether or not it&#39;s version 0.6 so that
+we can suppor its legacy API.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>NODEJS = <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>NODEJS    = <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span>
+NODEJS_06 = NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">and</span> process.version.match <span class="regexp">/^v0\.6/</span></pre></div></div>
             
         </li>
         
@@ -292,12 +295,12 @@ requests made in Node and in a browser.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Node.js 0.6 had a different API syntax for the HTTP module
-If we&#39;re using ~0.6, pass the args straight away</p>
+              <p>Node.js 0.6 had a different API syntax for the HTTP module.
+If we&#39;re using ~0.6, pass the args straight away.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> https.get args <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">and</span> process.version.match <span class="regexp">/^v0\.6/</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> https.get args <span class="keyword">if</span> NODEJS_06 <span class="keyword">is</span> <span class="literal">on</span></pre></div></div>
             
         </li>
         
