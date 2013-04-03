@@ -206,7 +206,7 @@ class KissmetricsClient
       path: "#{@queryTypes[type]}?#{queryString}"
 
 
-# ### Exports
+# ## Exports
 # -----------
 
 # Make `KissmetricsClient` available either as a Node module or a property
