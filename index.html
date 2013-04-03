@@ -339,7 +339,8 @@ the current instance.</p>
 and query string. Once the query is formed, call <code>record()</code> to send
 it to Kissmetrics.</p>
 <p>Automatically prevents any Kissmetrics-reserved keys from being
-accidentally used for properties.</p>
+accidentally used for properties. Throws an <code>Error</code> when required
+attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
 <p><a href="http://support.kissmetrics.com/apis/specifications.html">http://support.kissmetrics.com/apis/specifications.html</a></p>
 <h5>Arguments</h5>
 <ul>
