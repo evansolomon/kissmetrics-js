@@ -103,13 +103,11 @@
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Retrieve data from localStorage.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
-    window.localStorage.getItem key</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  get: -&gt;
+    window.localStorage.getItem <span class="property">@key</span></pre></div></div>
             
         </li>
         
@@ -136,13 +134,13 @@
               </div>
               <p>Save data to localStorage.</p>
 <h5>Arguments</h5>
-<p><code>key</code> (String)</p>
 <p><code>value</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  set: (key, value) -&gt;
-    window.localStorage.setItem key, value</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  set: (value) -&gt;
+    console.log <span class="property">@storageKey</span>
+    window.localStorage.setItem <span class="property">@key</span>, value</pre></div></div>
             
         </li>
         
@@ -168,13 +166,11 @@
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Delete data from localStorage.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: (key) -&gt;
-    window.localStorage.removeItem key</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: -&gt;
+    window.localStorage.removeItem <span class="property">@key</span></pre></div></div>
             
         </li>
         
@@ -229,13 +225,11 @@
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Retrieve data from cookies.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  get: (key) -&gt;
-    key += <span class="string">'='</span>
+            <div class="content"><div class='highlight'><pre>  get: -&gt;
+    key = <span class="string">"<span class="subst">#{@key}</span>="</span>
     <span class="keyword">for</span> cookiePart <span class="keyword">in</span> document.cookie.split <span class="regexp">/;\s*/</span>
       <span class="keyword">if</span> cookiePart.indexOf(key) <span class="keyword">is</span> <span class="number">0</span>
         <span class="keyword">return</span> cookiePart.substring key.length</pre></div></div>
@@ -265,20 +259,19 @@
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
-<p><code>name</code> (String)</p>
 <p><code>value</code> (String)</p>
 <p><code>options</code> <em>Optional</em> (Object): Only used for deleting cookies by writing
   them with an expiration time in the past.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  set: (name, value, options = {expires: <span class="string">''</span>}) -&gt;
+            <div class="content"><div class='highlight'><pre>  set: (value, options = {expires: <span class="string">''</span>}) -&gt;
     <span class="keyword">unless</span> options.expires
         date = <span class="keyword">new</span> Date
         date.setTime(date.getTime() + (<span class="number">365</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))
         options.expires = <span class="string">"expires="</span> + date.toGMTString()
 
-    document.cookie = <span class="string">"<span class="subst">#{name}</span>=<span class="subst">#{value}</span>; <span class="subst">#{options.expires}</span>; path=/"</span></pre></div></div>
+    document.cookie = <span class="string">"<span class="subst">#{@key}</span>=<span class="subst">#{value}</span>; <span class="subst">#{options.expires}</span>; path=/"</span></pre></div></div>
             
         </li>
         
@@ -304,13 +297,11 @@
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Delete a cookie.</p>
-<h5>Arguments</h5>
-<p><code>key</code> (String)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: (key) -&gt;
-    Cookie.set key, <span class="string">''</span>, {expires: -<span class="number">1</span>}</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: -&gt;
+    Cookie.set <span class="property">@key</span>, <span class="string">''</span>, {expires: -<span class="number">1</span>}</pre></div></div>
             
         </li>
         
@@ -342,10 +333,13 @@ will be automatically created and saved in their browser.</p>
 <p><code>apiKey</code> (String): Your Kissmetrics API key</p>
 <p><code>options</code> <em>Optional</em> (Object): Provide a key and/or storage engine, or
   specif which internal engine you want to use: <code>&#39;localStorage&#39;</code> or
-  <code>&#39;cookie&#39;</code>. If you provide your own storage engine, it <strong>must</strong> match the
-  API&#39;s provided by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and
-  <code>delete()</code> methods. The <code>get()</code> and <code>delete()</code> methods must accept a key,
-  and <code>set()</code> must accept a key and value.</p>
+  <code>&#39;cookie&#39;</code>.</p>
+<p>If you provide your own storage engine, it <strong>must</strong> match the
+API&#39;s provided by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and
+<code>delete()</code> methods. All methods should use <code>this.storageKey</code> to reference
+the key to retreive data by, and <code>set()</code> must accept a key and value. The
+methods will always be called in the correct context by the API, such
+that <code>this.storageKey</code> will be available.</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
 km.record(&#39;Visited signup form&#39;)</code></pre>
 
@@ -364,11 +358,11 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
       <span class="keyword">else</span>
         <span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie
 
-    storageKey = options.storageKey || <span class="string">'kissmetricsAnon'</span>
+    <span class="property">@storage</span>.key = options.storageKey || <span class="string">'kissmetricsAnon'</span>
 
-    <span class="keyword">unless</span> person = <span class="property">@storage</span>.get storageKey
+    <span class="keyword">unless</span> person = <span class="property">@storage</span>.get()
       person = <span class="property">@createID</span>()
-      <span class="property">@storage</span>.set storageKey, person
+      <span class="property">@storage</span>.set person
 
     <span class="keyword">super</span> apiKey, person</pre></div></div>
             
