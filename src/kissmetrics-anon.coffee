@@ -19,13 +19,9 @@ LocalStorage =
   # --------
 
   # Retrieve data from localStorage.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
 
-  get: (key) ->
-    window.localStorage.getItem key
+  get: ->
+    window.localStorage.getItem @key
 
 
   # #### Set
@@ -35,25 +31,20 @@ LocalStorage =
   #
   # ##### Arguments
   #
-  # `key` (String)
-  #
   # `value` (String)
 
-  set: (key, value) ->
-    window.localStorage.setItem key, value
+  set: (value) ->
+    console.log @storageKey
+    window.localStorage.setItem @key, value
 
 
   # #### Delete
   # -----------
 
   # Delete data from localStorage.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
 
-  delete: (key) ->
-    window.localStorage.removeItem key
+  delete: ->
+    window.localStorage.removeItem @key
 
 
 # ### Cookies
@@ -68,13 +59,9 @@ Cookie =
   # --------
 
   # Retrieve data from cookies.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
 
-  get: (key) ->
-    key += '='
+  get: ->
+    key = "#{@key}="
     for cookiePart in document.cookie.split /;\s*/
       if cookiePart.indexOf(key) is 0
         return cookiePart.substring key.length
@@ -87,33 +74,27 @@ Cookie =
   #
   # ##### Arguments
   #
-  # `key` (String)
-  #
   # `value` (String)
   #
   # `options` *Optional* (Object): Only used for deleting cookies by writing
   #   them with an expiration time in the past.
 
-  set: (key, value, options = {expires: ''}) ->
+  set: (value, options = {expires: ''}) ->
     unless options.expires
         date = new Date
         date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000))
         options.expires = "expires=" + date.toGMTString()
 
-    document.cookie = "#{key}=#{value}; #{options.expires}; path=/"
+    document.cookie = "#{@key}=#{value}; #{options.expires}; path=/"
 
 
   # #### Delete
   # -----------
 
   # Delete a cookie.
-  #
-  # ##### Arguments
-  #
-  # `key` (String)
 
-  delete: (key) ->
-    Cookie.set key, '', {expires: -1}
+  delete: ->
+    Cookie.set @key, '', {expires: -1}
 
 
 # ## Anon Kissmetrics Client
@@ -129,10 +110,14 @@ Cookie =
 #
 # `options` *Optional* (Object): Provide a key and/or storage engine, or
 #   specif which internal engine you want to use: `'localStorage'` or
-#   `'cookie'`. If you provide your own storage engine, it **must** match the
-#   API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
-#   `delete()` methods. The `get()` and `delete()` methods must accept a key,
-#   and `set()` must accept a key and value.
+#   `'cookie'`.
+#
+# If you provide your own storage engine, it **must** match the
+# API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
+# `delete()` methods. All methods should use `this.storageKey` to reference
+# the key to retreive data by, and `set()` must accept a key and value. The
+# methods will always be called in the correct context by the API, such
+# that `this.storageKey` will be available.
 #
 # ```
 # km = new AnonKissmetricsClient(API_KEY)
@@ -152,11 +137,11 @@ class AnonKissmetricsClient extends KissmetricsClient
       else
         if window.localStorage? then LocalStorage else Cookie
 
-    storageKey = options.storageKey || 'kissmetricsAnon'
+    @storage.key = options.storageKey || 'kissmetricsAnon'
 
-    unless person = @storage.get storageKey
+    unless person = @storage.get()
       person = @createID()
-      @storage.set storageKey, person
+      @storage.set person
 
     super apiKey, person
 
