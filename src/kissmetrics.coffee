@@ -134,11 +134,11 @@ class KissmetricsClient
     return @
 
 
-  # ## HTTP Request
+  # ## HTTPS Request
   # #### (Private)
   # ---------------
 
-  # Generic wrapper for HTTP requests that abstracts the differences between
+  # Generic wrapper for HTTPS requests that abstracts the differences between
   # requests made in Node and in a browser.
   #
   # ##### Arguments
@@ -146,8 +146,8 @@ class KissmetricsClient
   # * `args` (Object): Key value pairs of URL pieces; only `host` and
   #   `path` are used, and `host` is required.
 
-  _httpRequest: (args) ->
-    # Node.js 0.6 had a different API syntax for the HTTP module.
+  _httpsRequest: (args) ->
+    # Node.js 0.6 had a different API syntax for the HTTPS module.
     # If we're using ~0.6, pass the args straight away.
 
     return https.get args if NODEJS_06 is on
@@ -210,7 +210,7 @@ class KissmetricsClient
 
     queryString = queryParts.join '&'
 
-    @lastQuery = @_httpRequest
+    @lastQuery = @_httpsRequest
       host: @host
       path: "#{@queryTypes[type]}?#{queryString}"
 
