@@ -134,7 +134,7 @@ class KissmetricsClient
     return @
 
 
-  # ## HTTPS Request
+  # ### HTTPS Request
   # #### (Private)
   # ---------------
 
