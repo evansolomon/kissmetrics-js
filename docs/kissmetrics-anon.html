@@ -367,7 +367,8 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
     storageKey = options.storageKey || <span class="string">'kissmetricsAnon'</span>
 
     <span class="keyword">unless</span> person = <span class="property">@storage</span>.get storageKey
-      <span class="property">@storage</span>.set(storageKey, person = <span class="property">@createID</span>())
+      person = <span class="property">@createID</span>()
+      <span class="property">@storage</span>.set storageKey, person
 
     <span class="keyword">super</span> apiKey, person</pre></div></div>
             

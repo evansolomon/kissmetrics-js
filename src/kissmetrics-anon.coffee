@@ -155,7 +155,8 @@ class AnonKissmetricsClient extends KissmetricsClient
     storageKey = options.storageKey || 'kissmetricsAnon'
 
     unless person = @storage.get storageKey
-      @storage.set(storageKey, person = @createID())
+      person = @createID()
+      @storage.set storageKey, person
 
     super apiKey, person
 
