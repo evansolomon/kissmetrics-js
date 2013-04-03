@@ -158,7 +158,8 @@ class KissmetricsClient
   # it to Kissmetrics.
   #
   # Automatically prevents any Kissmetrics-reserved keys from being
-  # accidentally used for properties.
+  # accidentally used for properties. Throws an `Error` when required
+  # attributes (`apiKey` or `person`) are missing.
   #
   # http://support.kissmetrics.com/apis/specifications.html
   #
