@@ -163,13 +163,9 @@ class KissmetricsClient
   # #### (Private)
   # ------------------
 
-  # Automatically prevents any Kissmetrics-reserved keys from being
-  # accidentally used for properties. Throws an `Error` when required
-  # attributes (`apiKey` or `person`) are missing.
-  #
   # Ensures that reserved keys that are used (`_k` for API key and `_p`
-  # for person) are set correctly, regardless of whether they were in the
-  # original data.
+  # for person) are present and set correctly, regardless of whether they
+  # were in the original data.
   #
   # http://support.kissmetrics.com/apis/specifications.html
   #
@@ -178,13 +174,8 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _validateData: (data) ->
-    throw new Error 'API key required' unless @apiKey
-    throw new Error 'Person required' unless @person
-
-    delete data[reservedKey] for reservedKey in ['_t', '_d']
-
-    data._k = @apiKey
-    data._p = @person
+    if @apiKey then data._k = @apiKey else throw new Error 'API key required'
+    if @person then data._p = @person else throw new Error 'Person required'
 
 
   # ### Generate Query

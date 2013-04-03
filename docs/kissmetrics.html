@@ -344,12 +344,9 @@ If we&#39;re using ~0.6, pass the args straight away.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Automatically prevents any Kissmetrics-reserved keys from being
-accidentally used for properties. Throws an <code>Error</code> when required
-attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
-<p>Ensures that reserved keys that are used (<code>_k</code> for API key and <code>_p</code>
-for person) are set correctly, regardless of whether they were in the
-original data.</p>
+              <p>Ensures that reserved keys that are used (<code>_k</code> for API key and <code>_p</code>
+for person) are present and set correctly, regardless of whether they
+were in the original data.</p>
 <p><a href="http://support.kissmetrics.com/apis/specifications.html">http://support.kissmetrics.com/apis/specifications.html</a></p>
 <h5>Arguments</h5>
 <ul>
@@ -359,13 +356,8 @@ original data.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _validateData: (data) -&gt;
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span> <span class="keyword">unless</span> <span class="property">@apiKey</span>
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'Person required'</span> <span class="keyword">unless</span> <span class="property">@person</span>
-
-    <span class="keyword">delete</span> data[reservedKey] <span class="keyword">for</span> reservedKey <span class="keyword">in</span> [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
-
-    data._k = <span class="property">@apiKey</span>
-    data._p = <span class="property">@person</span></pre></div></div>
+    <span class="keyword">if</span> <span class="property">@apiKey</span> <span class="keyword">then</span> data._k = <span class="property">@apiKey</span> <span class="keyword">else</span> <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span>
+    <span class="keyword">if</span> <span class="property">@person</span> <span class="keyword">then</span> data._p = <span class="property">@person</span> <span class="keyword">else</span> <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'Person required'</span></pre></div></div>
             
         </li>
         

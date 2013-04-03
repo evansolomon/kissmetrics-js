@@ -99,15 +99,6 @@ casper.then ->
 	exepectedQuery = "https://trk.kissmetrics.com/s?place=home&foo=bar&_k=abc123&_p=#{data.person}"
 	@test.assertEquals data.query, exepectedQuery, 'Sets multiple properties'
 
-casper.then ->
-	data = @evaluate ->
-		km = new AnonKissmetricsClient 'abc123'
-		{person: km.person, query: km.set({place: 'home', _n: 'Blocked'}).lastQuery}
-
-	exepectedQuery = "https://trk.kissmetrics.com/s?place=home&_k=abc123&_p=#{data.person}"
-	@test.assertEquals data.query, exepectedQuery, 'Blocks reserved keys'
-
-
 
 # Alias
 casper.then ->
