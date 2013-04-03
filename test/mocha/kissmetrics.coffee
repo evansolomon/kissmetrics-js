@@ -70,12 +70,10 @@ describe 'Client API', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		delete km.apiKey
 
-		lastQuery = km.record('foo')
-		lastQuery.should.not.exist
+		(-> km.record 'foo').should.throw()
 
 	it 'should require person', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		delete km.person
 
-		lastQuery = km.record('foo')
-		lastQuery.should.not.exist
+		(-> km.record 'foo').should.throw()

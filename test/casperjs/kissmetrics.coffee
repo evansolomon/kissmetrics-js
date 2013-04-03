@@ -106,19 +106,19 @@ casper.then ->
 	@test.assertTruthy lastQuery, 'Runs multiple queries when chained'
 
 casper.then ->
-	lastQuery = @evaluate ->
+	kmRecord = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
 		delete km.apiKey
-		km.record('event name').lastQuery
+		km.record
 
-	@test.assertFalsy lastQuery, 'Requires API key'
+	@test.assertRaises kmRecord, ['event name'], 'Requires API key'
 
 casper.then ->
-	lastQuery = @evaluate ->
+	kmRecord = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
 		delete km.person
-		km.record('event name').lastQuery
+		km.record
 
-	@test.assertFalsy lastQuery, 'Requires Person'
+	@test.assertRaises kmRecord, ['event name'], 'Requires Person'
 
 casper.run()
