@@ -317,20 +317,20 @@ Cookie =
   #
   # ##### Arguments
   #
-  # `name` (String)
+  # `key` (String)
   #
   # `value` (String)
   #
   # `options` *Optional* (Object): Only used for deleting cookies by writing
   #   them with an expiration time in the past.
 
-  set: (name, value, options = {expires: ''}) ->
+  set: (key, value, options = {expires: ''}) ->
     unless options.expires
         date = new Date
         date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000))
         options.expires = "expires=" + date.toGMTString()
 
-    document.cookie = "#{name}=#{value}; #{options.expires}; path=/"
+    document.cookie = "#{key}=#{value}; #{options.expires}; path=/"
 
 
   # #### Delete

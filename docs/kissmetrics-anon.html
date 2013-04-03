@@ -265,20 +265,20 @@
               </div>
               <p>Save data to a cookie.</p>
 <h5>Arguments</h5>
-<p><code>name</code> (String)</p>
+<p><code>key</code> (String)</p>
 <p><code>value</code> (String)</p>
 <p><code>options</code> <em>Optional</em> (Object): Only used for deleting cookies by writing
   them with an expiration time in the past.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  set: (name, value, options = {expires: <span class="string">''</span>}) -&gt;
+            <div class="content"><div class='highlight'><pre>  set: (key, value, options = {expires: <span class="string">''</span>}) -&gt;
     <span class="keyword">unless</span> options.expires
         date = <span class="keyword">new</span> Date
         date.setTime(date.getTime() + (<span class="number">365</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))
         options.expires = <span class="string">"expires="</span> + date.toGMTString()
 
-    document.cookie = <span class="string">"<span class="subst">#{name}</span>=<span class="subst">#{value}</span>; <span class="subst">#{options.expires}</span>; path=/"</span></pre></div></div>
+    document.cookie = <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{value}</span>; <span class="subst">#{options.expires}</span>; path=/"</span></pre></div></div>
             
         </li>
         
