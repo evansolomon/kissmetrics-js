@@ -34,7 +34,6 @@ LocalStorage =
   # `value` (String)
 
   set: (value) ->
-    console.log @storageKey
     window.localStorage.setItem @key, value
 
 
