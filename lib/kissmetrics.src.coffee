@@ -199,24 +199,10 @@ class KissmetricsClient
       "#{key}=#{val}"
 
     queryString = queryParts.join '&'
-    @lastQuery = @_request "#{@queryTypes[type]}?#{queryString}"
 
-
-  # ### Request
-  # #### (Private)
-  # --------------
-
-  # Query the Kissmetrics API
-  #
-  # ##### Arguments
-  #
-  # `endpoint` (String): URL path (without a leading slash) that will be used
-  #   as a Kissmetrics API endpoint.
-
-  _request: (endpoint) ->
-    httpRequest
+    @lastQuery = httpRequest
       host: @host
-      path: endpoint
+      path: "#{@queryTypes[type]}?#{queryString}"
 
 
 # ### Exports

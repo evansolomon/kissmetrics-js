@@ -403,7 +403,10 @@ it to Kissmetrics.</p>
       <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
 
     queryString = queryParts.join <span class="string">'&amp;'</span>
-    <span class="property">@lastQuery</span> = <span class="property">@_request</span> <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+
+    <span class="property">@lastQuery</span> = httpRequest
+      host: <span class="property">@host</span>
+      path: <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
             
         </li>
         
@@ -414,8 +417,7 @@ it to Kissmetrics.</p>
               <div class="pilwrap for-h3">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <h3>Request</h3>
-<h4>(Private)</h4>
+              <h3>Exports</h3>
 <hr>
 
             </div>
@@ -428,41 +430,6 @@ it to Kissmetrics.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <p>Query the Kissmetrics API</p>
-<h5>Arguments</h5>
-<p><code>endpoint</code> (String): URL path (without a leading slash) that will be used
-  as a Kissmetrics API endpoint.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  _request: (endpoint) -&gt;
-    httpRequest
-      host: <span class="property">@host</span>
-      path: endpoint</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-22">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-22">&#182;</a>
-              </div>
-              <h3>Exports</h3>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-23">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Make <code>KissmetricsClient</code> available either as a Node module or a property
 on the current context in the browser.</p>
