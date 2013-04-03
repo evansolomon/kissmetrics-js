@@ -353,8 +353,8 @@ attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">"API key required"</span> <span class="keyword">unless</span> <span class="property">@apiKey</span>
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">"Person required"</span> <span class="keyword">unless</span> <span class="property">@person</span>
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span> <span class="keyword">unless</span> <span class="property">@apiKey</span>
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'Person required'</span> <span class="keyword">unless</span> <span class="property">@person</span>
 
     data._k = <span class="property">@apiKey</span>
     data._p = <span class="property">@person</span>

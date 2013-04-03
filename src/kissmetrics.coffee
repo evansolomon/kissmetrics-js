@@ -170,8 +170,8 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _generateQuery: (type, data) ->
-    throw new Error "API key required" unless @apiKey
-    throw new Error "Person required" unless @person
+    throw new Error 'API key required' unless @apiKey
+    throw new Error 'Person required' unless @person
 
     data._k = @apiKey
     data._p = @person

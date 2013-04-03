@@ -76,4 +76,4 @@ describe 'Client API', ->
 		km = new KM 'apiKey', 'evan@example.com'
 		delete km.person
 
-		(-> km.record 'foo').should.throw "Person required"
+		(-> km.record 'foo').should.throw 'Person required'
