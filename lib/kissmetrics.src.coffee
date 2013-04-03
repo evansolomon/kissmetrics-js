@@ -149,6 +149,34 @@ class KissmetricsClient
     return @
 
 
+  # ### Validate Data
+  # #### (Private)
+  # ------------------
+
+  # Automatically prevents any Kissmetrics-reserved keys from being
+  # accidentally used for properties. Throws an `Error` when required
+  # attributes (`apiKey` or `person`) are missing.
+  #
+  # Ensures that reserved keys that are used (`_k` for API key and `_p`
+  # for person) are set correctly, regardless of whether they were in the
+  # original data.
+  #
+  # http://support.kissmetrics.com/apis/specifications.html
+  #
+  # ##### Arguments
+  #
+  # * `data` (Object): Specific data being recorded about this person.
+
+  _validateData: (data) ->
+    throw new Error 'API key required' unless @apiKey
+    throw new Error 'Person required' unless @person
+
+    delete data[reservedKey] for reservedKey in ['_t', '_d']
+
+    data._k = @apiKey
+    data._p = @person
+
+
   # ### Generate Query
   # #### (Private)
   # ------------------
@@ -157,12 +185,6 @@ class KissmetricsClient
   # and query string. Once the query is formed, call `record()` to send
   # it to Kissmetrics.
   #
-  # Automatically prevents any Kissmetrics-reserved keys from being
-  # accidentally used for properties. Throws an `Error` when required
-  # attributes (`apiKey` or `person`) are missing.
-  #
-  # http://support.kissmetrics.com/apis/specifications.html
-  #
   # ##### Arguments
   #
   # * `type` (String): Type of data being sent (`record`, `set` or `alias`).
@@ -170,17 +192,9 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _generateQuery: (type, data) ->
-    throw new Error 'API key required' unless @apiKey
-    throw new Error 'Person required' unless @person
-
-    data._k = @apiKey
-    data._p = @person
-
-    reservedKeys = ['_t', '_d']
+    @_validateData data
 
     queryParts = for key, val of data
-      continue if reservedKeys.indexOf(key) > -1
-
       [key, val] = (encodeURIComponent param for param in [key, val])
       "#{key}=#{val}"
 

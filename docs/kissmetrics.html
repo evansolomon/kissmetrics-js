@@ -320,7 +320,7 @@ the current instance.</p>
               <div class="pilwrap for-h3">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h3>Generate Query</h3>
+              <h3>Validate Data</h3>
 <h4>(Private)</h4>
 <hr>
 
@@ -335,40 +335,28 @@ the current instance.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
-and query string. Once the query is formed, call <code>record()</code> to send
-it to Kissmetrics.</p>
-<p>Automatically prevents any Kissmetrics-reserved keys from being
+              <p>Automatically prevents any Kissmetrics-reserved keys from being
 accidentally used for properties. Throws an <code>Error</code> when required
 attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
+<p>Ensures that reserved keys that are used (<code>_k</code> for API key and <code>_p</code>
+for person) are set correctly, regardless of whether they were in the
+original data.</p>
 <p><a href="http://support.kissmetrics.com/apis/specifications.html">http://support.kissmetrics.com/apis/specifications.html</a></p>
 <h5>Arguments</h5>
 <ul>
-<li><p><code>type</code> (String): Type of data being sent (<code>record</code>, <code>set</code> or <code>alias</code>).</p>
-</li>
-<li><p><code>data</code> (Object): Specific data being recorded about this person.</p>
-</li>
+<li><code>data</code> (Object): Specific data being recorded about this person.</li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
+            <div class="content"><div class='highlight'><pre>  _validateData: (data) -&gt;
     <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span> <span class="keyword">unless</span> <span class="property">@apiKey</span>
     <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'Person required'</span> <span class="keyword">unless</span> <span class="property">@person</span>
 
+    <span class="keyword">delete</span> data[reservedKey] <span class="keyword">for</span> reservedKey <span class="keyword">in</span> [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
+
     data._k = <span class="property">@apiKey</span>
-    data._p = <span class="property">@person</span>
-
-    reservedKeys = [<span class="string">'_t'</span>, <span class="string">'_d'</span>]
-
-    queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
-      <span class="keyword">continue</span> <span class="keyword">if</span> reservedKeys.indexOf(key) &gt; -<span class="number">1</span>
-
-      [key, val] = (encodeURIComponent param <span class="keyword">for</span> param <span class="keyword">in</span> [key, val])
-      <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
-
-    queryString = queryParts.join <span class="string">'&amp;'</span>
-    <span class="property">@lastQuery</span> = <span class="property">@_request</span> <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+    data._p = <span class="property">@person</span></pre></div></div>
             
         </li>
         
@@ -379,7 +367,7 @@ attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
               <div class="pilwrap for-h3">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <h3>Request</h3>
+              <h3>Generate Query</h3>
 <h4>(Private)</h4>
 <hr>
 
@@ -393,6 +381,53 @@ attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
+and query string. Once the query is formed, call <code>record()</code> to send
+it to Kissmetrics.</p>
+<h5>Arguments</h5>
+<ul>
+<li><p><code>type</code> (String): Type of data being sent (<code>record</code>, <code>set</code> or <code>alias</code>).</p>
+</li>
+<li><p><code>data</code> (Object): Specific data being recorded about this person.</p>
+</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _generateQuery: (type, data) -&gt;
+    <span class="property">@_validateData</span> data
+
+    queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
+      [key, val] = (encodeURIComponent param <span class="keyword">for</span> param <span class="keyword">in</span> [key, val])
+      <span class="string">"<span class="subst">#{key}</span>=<span class="subst">#{val}</span>"</span>
+
+    queryString = queryParts.join <span class="string">'&amp;'</span>
+    <span class="property">@lastQuery</span> = <span class="property">@_request</span> <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h3>Request</h3>
+<h4>(Private)</h4>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Query the Kissmetrics API</p>
 <h5>Arguments</h5>
@@ -409,11 +444,11 @@ attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h3>Exports</h3>
 <hr>
@@ -423,11 +458,11 @@ attributes (<code>apiKey</code> or <code>person</code>) are missing.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Make <code>KissmetricsClient</code> available either as a Node module or a property
 on the current context in the browser.</p>
