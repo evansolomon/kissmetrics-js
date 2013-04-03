@@ -4,6 +4,11 @@
 REMOTE="$1"
 URL="$2"
 
+# Config
+PROJECT=$(basename $(git rev-parse --show-toplevel))
+DOCS_DIR="docs"
+SET_AS_INDEX="kissmetrics.html"
+
 # Only update docs from master
 git branch | ack "^\* master" > /dev/null
 if [ $? -eq 0 ]; then
@@ -15,9 +20,9 @@ else
 fi
 
 # Save the updated docs
-TEMP_PATH=/tmp/kissmetrics-js-pre-push-docs
+TEMP_PATH="/tmp/docs-$PROJECT"
 rm -rf $TEMP_PATH
-cp -r "$(git rev-parse --show-toplevel)/docs" $TEMP_PATH
+cp -r "$(git rev-parse --show-toplevel)/$DOCS_DIR" $TEMP_PATH
 
 # Go to the GH pages branch
 git checkout gh-pages >/dev/null 2>&1
@@ -25,7 +30,7 @@ git clean -fdx >/dev/null 2>&1
 
 # Bring back the docs
 cp -r $TEMP_PATH/* .
-cp kissmetrics.html index.html
+cp $SET_AS_INDEX index.html
 
 # Commit and push
 git add .
