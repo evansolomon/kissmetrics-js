@@ -61,6 +61,14 @@ km = new KissmetricsClient(API_KEY, user.name);
 km.record('Publish post');
 ```
 
+Automatically-generated ID's are never deleted from storage by default, but you have the option to delete them when you are able to identify the user.
+
+```javascript
+km = new AnonKissmetricsClient(API_KEY);
+km.record('Signed up');
+km.alias(user.name).storage.delete();
+```
+
 Data methods can be chained.
 
 ```javascript
