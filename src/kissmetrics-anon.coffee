@@ -127,7 +127,7 @@ class AnonKissmetricsClient extends KissmetricsClient
   constructor: (apiKey, options = {}) ->
     options.storage ?= null
 
-    @storage =
+    @_storage =
       if options.storage
         switch options.storage
           when 'cookie' then Cookie
@@ -136,11 +136,11 @@ class AnonKissmetricsClient extends KissmetricsClient
       else
         if window.localStorage? then LocalStorage else Cookie
 
-    @storage.key = options.storageKey || 'kissmetricsAnon'
+    @_storage.key = options.storageKey || 'kissmetricsAnon'
 
-    unless person = @storage.get()
+    unless person = @_storage.get()
       person = @createID()
-      @storage.set person
+      @_storage.set person
 
     super apiKey, person
 
@@ -156,6 +156,31 @@ class AnonKissmetricsClient extends KissmetricsClient
       (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
 
     parts.join ''
+
+
+  # ### Alias
+  # -------------
+
+  # Identify the current user and (by default) delete the logged out
+  # identifier that was stored.
+  #
+  # ##### Arguments
+  #
+  # `to` (String): A new identifier to map to the `@person` set on
+  # the current instance.
+  #
+  # `deleteStoredID` *Optional* (Boolea): Whether or not to delete the
+  #   logged-out identity that was stored. Default `true`.
+  #
+  # ```
+  # km.alias('evan+otheremail@example.com', false)
+  # km.alias('evan+newemail@example.com')
+  # ```
+
+
+  alias: (to, deleteStoredID = true) ->
+    @_storage.delete() unless deleteStoredID is off
+    super to
 
 
 # ## Exports
