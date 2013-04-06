@@ -106,7 +106,6 @@ class KissmetricsClient
 
   set: (properties) ->
     delete properties._n
-
     @_generateQuery 'set', properties
     return @
 

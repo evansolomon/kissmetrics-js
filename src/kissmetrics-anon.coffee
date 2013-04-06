@@ -151,6 +151,7 @@ class AnonKissmetricsClient extends KissmetricsClient
   # Create a persistent ID for an anonymous user.
   #
   # Inspired by http://stackoverflow.com/a/105074/30098
+
   createID: ->
     parts = for x in [0..10]
       (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
@@ -176,7 +177,6 @@ class AnonKissmetricsClient extends KissmetricsClient
   # km.alias('evan+otheremail@example.com', false)
   # km.alias('evan+newemail@example.com')
   # ```
-
 
   alias: (to, deleteStoredID = true) ->
     @_storage.delete() unless deleteStoredID is off
