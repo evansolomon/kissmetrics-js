@@ -116,6 +116,21 @@ casper.then ->
 
 	@test.assertEquals km.person, 'notevan', 'Updates person attribute'
 
+casper.then ->
+	data = @evaluate ->
+		km = new AnonKissmetricsClient 'abc123'
+		km.alias 'username'
+		km._storage.get()
+
+	@test.assertFalsy data, 'Logged out ID is deleted by alias'
+
+casper.then ->
+	data = @evaluate ->
+		km = new AnonKissmetricsClient 'abc123'
+		km.alias 'username', false
+		km._storage.get()
+
+	@test.assertTruthy data, 'Logged out ID is retained by alias with the `false` argument'
 
 
 # # Client API
