@@ -160,7 +160,7 @@ class AnonKissmetricsClient extends KissmetricsClient
 
 
   # ### Alias
-  # -------------
+  # ---------
 
   # Identify the current user and (by default) delete the logged out
   # identifier that was stored.
