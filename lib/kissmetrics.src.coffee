@@ -9,7 +9,7 @@
 # we can suppor its legacy API.
 
 NODEJS    = typeof exports isnt 'undefined'
-NODEJS_06 = NODEJS is on and /^v0\.6/.test process.version
+NODEJS_06 = NODEJS is on and process.version.substring(0, 4) is 'v0.6'
 
 
 # If we're in Node, require the `https` module for our network requests.
