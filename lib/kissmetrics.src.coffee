@@ -51,6 +51,7 @@ https = require 'https' if NODEJS is on
 
 class KissmetricsClient
   constructor: (@apiKey, @person) ->
+    @queries    = []
     @host       = 'trk.kissmetrics.com'
     @queryTypes =
       record : 'e'
@@ -198,7 +199,7 @@ class KissmetricsClient
 
     queryString = queryParts.join '&'
 
-    @lastQuery = @_httpsRequest
+    @queries.push @_httpsRequest
       host: @host
       path: "#{@queryTypes[type]}?#{queryString}"
 

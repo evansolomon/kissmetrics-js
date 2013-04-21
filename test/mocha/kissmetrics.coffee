@@ -26,27 +26,27 @@ describe 'Record', ->
 		expectedOutput = /^GET \/?e\?_n=test%20event&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
-		km.record('test event').lastQuery.output.pop().match(expectedOutput).should.be.ok
+		km.record('test event').queries.pop().output.pop().match(expectedOutput).should.be.ok
 
 describe 'Set', ->
 	it 'should set properties', ->
 		expectedOutput = /GET \/?s\?place=home&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
-		km.set({place: 'home'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
+		km.set({place: 'home'}).queries.pop().output.pop().match(expectedOutput).should.be.ok
 
 	it 'should set multiple properties', ->
 		expectedOutput = /GET \/?s\?place=home&otherPlace=work&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
-		km.set({place: 'home', otherPlace: 'work'}).lastQuery.output.pop().match(expectedOutput).should.be.ok
+		km.set({place: 'home', otherPlace: 'work'}).queries.pop().output.pop().match(expectedOutput).should.be.ok
 
 describe 'Alias', ->
 	it 'should alias people', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
-		km.alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
+		km.alias('notevan@example.com').queries.pop().output.pop().match(expectedOutput).should.be.ok
 
 	it 'should change person on alias', ->
 		km = new KM 'apiKey', 'evan@example.com'
@@ -58,7 +58,7 @@ describe 'Client API', ->
 		expectedOutput  = /GET \/?a\?_n=notevan%40example.com&_k=apiKey&_p=evan%40example\.com HTTP\/1\.1/
 
 		km = new KM 'apiKey', 'evan@example.com'
-		km.record('foo').alias('notevan@example.com').lastQuery.output.pop().match(expectedOutput).should.be.ok
+		km.record('foo').alias('notevan@example.com').queries.pop().output.pop().match(expectedOutput).should.be.ok
 
 	it 'should require apiKey', ->
 		km = new KM 'apiKey', 'evan@example.com'

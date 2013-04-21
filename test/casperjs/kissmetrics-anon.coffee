@@ -75,7 +75,7 @@ casper.then ->
 casper.then ->
 	data = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123', 'evan'
-		{person: km.person, query: km.record('event name').lastQuery}
+		{person: km.person, query: km.record('event name').queries.pop()}
 
 	exepectedQuery = "https://trk.kissmetrics.com/e?_n=event%20name&_k=abc123&_p=#{data.person}"
 	@test.assertEquals data.query, exepectedQuery, 'Records event'
@@ -86,7 +86,7 @@ casper.then ->
 casper.then ->
 	data = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123'
-		{person: km.person, query: km.set({place: 'home'}).lastQuery}
+		{person: km.person, query: km.set({place: 'home'}).queries.pop()}
 
 	exepectedQuery = "https://trk.kissmetrics.com/s?place=home&_k=abc123&_p=#{data.person}"
 	@test.assertEquals data.query, exepectedQuery, 'Sets properties'
@@ -94,7 +94,7 @@ casper.then ->
 casper.then ->
 	data = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123'
-		{person: km.person, query: km.set({place: 'home', foo: 'bar'}).lastQuery}
+		{person: km.person, query: km.set({place: 'home', foo: 'bar'}).queries.pop()}
 
 	exepectedQuery = "https://trk.kissmetrics.com/s?place=home&foo=bar&_k=abc123&_p=#{data.person}"
 	@test.assertEquals data.query, exepectedQuery, 'Sets multiple properties'
@@ -104,7 +104,7 @@ casper.then ->
 casper.then ->
 	data = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123'
-		{person: km.person, query: km.alias('notevan').lastQuery}
+		{person: km.person, query: km.alias('notevan').queries.pop()}
 
 	exepectedQuery = "https://trk.kissmetrics.com/a?_n=notevan&_k=abc123&_p=#{data.person}"
 	@test.assertEquals data.query, exepectedQuery, 'Alias person'
@@ -144,7 +144,7 @@ casper.then ->
 casper.then ->
 	data = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123'
-		{person: km.person, query: km.record('event name').record('other event name').lastQuery}
+		{person: km.person, query: km.record('event name').record('other event name').queries.pop()}
 
 	exepectedQuery = "https://trk.kissmetrics.com/e?_n=other%20event%20name&_k=ab&_p=#{data.person}"
 	@test.assertTruthy data.query, 'Runs multiple queries when chained'
@@ -153,7 +153,7 @@ casper.then ->
 	lastQuery = @evaluate ->
 		km = new AnonKissmetricsClient 'abc123'
 		delete km.apiKey
-		km.record('event name').lastQuery
+		km.record('event name').queries.pop()
 
 	@test.assertFalsy lastQuery, 'Requires API key'
 
@@ -161,7 +161,7 @@ casper.then ->
 	lastQuery = @evaluate ->
 		km = new AnonKissmetricsClient
 		delete km.person
-		km.record('event name').lastQuery
+		km.record('event name').queries.pop()
 
 	@test.assertFalsy lastQuery, 'Requires Person'
 

@@ -38,7 +38,7 @@ casper.then ->
 	exepectedQuery = 'https://trk.kissmetrics.com/e?_n=event%20name&_k=abc123&_p=evan'
 	lastQuery = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
-		km.record('event name').lastQuery
+		km.record('event name').queries.pop()
 
 	@test.assertEquals lastQuery, exepectedQuery, 'Records event'
 
@@ -49,7 +49,7 @@ casper.then ->
 	exepectedQuery = 'https://trk.kissmetrics.com/s?place=home&_k=abc123&_p=evan'
 	lastQuery = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
-		km.set({place: 'home'}).lastQuery
+		km.set({place: 'home'}).queries.pop()
 
 	@test.assertEquals lastQuery, exepectedQuery, 'Sets properties'
 
@@ -57,7 +57,7 @@ casper.then ->
 	exepectedQuery = 'https://trk.kissmetrics.com/s?place=home&foo=bar&_k=abc123&_p=evan'
 	lastQuery = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
-		km.set({place: 'home', foo: 'bar'}).lastQuery
+		km.set({place: 'home', foo: 'bar'}).queries.pop()
 
 	@test.assertEquals lastQuery, exepectedQuery, 'Sets multiple properties'
 
@@ -67,7 +67,7 @@ casper.then ->
 	exepectedQuery = 'https://trk.kissmetrics.com/a?_n=notevan&_k=abc123&_p=evan'
 	lastQuery = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
-		km.alias('notevan').lastQuery
+		km.alias('notevan').queries.pop()
 
 	@test.assertEquals lastQuery, exepectedQuery, 'Alias person'
 
@@ -92,7 +92,7 @@ casper.then ->
 	exepectedQuery = 'https://trk.kissmetrics.com/e?_n=other%20event%20name&_k=ab&_p=evan'
 	lastQuery = @evaluate ->
 		km = new KissmetricsClient 'abc123', 'evan'
-		km.record('event name').record('other event name').lastQuery
+		km.record('event name').record('other event name').queries.pop()
 
 	@test.assertTruthy lastQuery, 'Runs multiple queries when chained'
 

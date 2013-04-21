@@ -125,6 +125,7 @@ km.record(&#39;Changed username&#39;)
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">KissmetricsClient</span></span>
   constructor: (<span class="property">@apiKey</span>, <span class="property">@person</span>) -&gt;
+    <span class="property">@queries</span>    = []
     <span class="property">@host</span>       = <span class="string">'trk.kissmetrics.com'</span>
     <span class="property">@queryTypes</span> =
       record : <span class="string">'e'</span>
@@ -402,7 +403,7 @@ it to Kissmetrics.</p>
 
     queryString = queryParts.join <span class="string">'&amp;'</span>
 
-    <span class="property">@lastQuery</span> = <span class="property">@_httpsRequest</span>
+    <span class="property">@queries</span>.push <span class="property">@_httpsRequest</span>
       host: <span class="property">@host</span>
       path: <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span>
 
