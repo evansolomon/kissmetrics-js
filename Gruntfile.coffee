@@ -26,6 +26,7 @@ module.exports = ( grunt ) ->
       options:
         banner: '<%= meta.banner %>'
 
+      # This seemingly-useless concatenation is used to prepend the banner
       dist:
         src  : 'lib/kissmetrics.js'
         dest : 'lib/kissmetrics.js'
