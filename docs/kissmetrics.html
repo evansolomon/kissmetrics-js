@@ -168,8 +168,7 @@ km.record(&#39;Changed username&#39;)
             
             <div class="content"><div class='highlight'><pre>  record: (action, properties = {}) -&gt;
     properties._n = action
-    <span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties
-    <span class="keyword">return</span> @</pre></div></div>
+    <span class="property">@_generateQuery</span> <span class="string">'record'</span>, properties</pre></div></div>
             
         </li>
         
@@ -208,8 +207,7 @@ reserved <code>_n</code> property name.</p>
             
             <div class="content"><div class='highlight'><pre>  set: (properties) -&gt;
     <span class="keyword">delete</span> properties._n
-    <span class="property">@_generateQuery</span> <span class="string">'set'</span>, properties
-    <span class="keyword">return</span> @</pre></div></div>
+    <span class="property">@_generateQuery</span> <span class="string">'set'</span>, properties</pre></div></div>
             
         </li>
         
@@ -245,9 +243,9 @@ the current instance.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  alias: (to) -&gt;
-    <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to
+    _<span class="keyword">return</span> = <span class="property">@_generateQuery</span> <span class="string">'alias'</span>, _n: to
     <span class="property">@person</span> = to
-    <span class="keyword">return</span> @</pre></div></div>
+    <span class="keyword">return</span> _<span class="keyword">return</span></pre></div></div>
             
         </li>
         
@@ -406,7 +404,9 @@ it to Kissmetrics.</p>
 
     <span class="property">@lastQuery</span> = <span class="property">@_httpsRequest</span>
       host: <span class="property">@host</span>
-      path: <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span></pre></div></div>
+      path: <span class="string">"<span class="subst">#{@queryTypes[type]}</span>?<span class="subst">#{queryString}</span>"</span>
+
+    <span class="keyword">return</span> @</pre></div></div>
             
         </li>
         

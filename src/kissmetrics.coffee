@@ -81,7 +81,6 @@ class KissmetricsClient
   record: (action, properties = {}) ->
     properties._n = action
     @_generateQuery 'record', properties
-    return @
 
 
   # ### Set
@@ -107,7 +106,6 @@ class KissmetricsClient
   set: (properties) ->
     delete properties._n
     @_generateQuery 'set', properties
-    return @
 
 
   # ### Alias
@@ -128,9 +126,9 @@ class KissmetricsClient
   # ```
 
   alias: (to) ->
-    @_generateQuery 'alias', _n: to
+    _return = @_generateQuery 'alias', _n: to
     @person = to
-    return @
+    return _return
 
 
   # ### HTTPS Request
@@ -203,6 +201,8 @@ class KissmetricsClient
     @lastQuery = @_httpsRequest
       host: @host
       path: "#{@queryTypes[type]}?#{queryString}"
+
+    return @
 
 
 # ## Exports
