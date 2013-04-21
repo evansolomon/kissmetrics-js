@@ -6,7 +6,7 @@
 # Keep track of what environment we're running in, Node.js or a browser.
 #
 # If we're in Node.js, also record whether or not it's version 0.6 so that
-# we can suppor its legacy API.
+# we can support its legacy API.
 
 NODEJS    = typeof exports isnt 'undefined'
 NODEJS_06 = NODEJS is on and process.version.substring(0, 4) is 'v0.6'
