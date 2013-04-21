@@ -71,3 +71,18 @@ describe 'Client API', ->
 		delete km.person
 
 		(-> km.record 'foo').should.throw 'Person required'
+
+describe 'Query log', ->
+	it 'should log all queries', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		km.record('foo').record('bar').set({foo: 'bar'}).alias('someone else')
+
+		km.queries.length.should.be.equal 4
+
+	it 'should log queries in order', ->
+		km = new KM 'apiKey', 'evan@example.com'
+		km.record('foo')
+		firstQueryLogged = km.queries[0]
+
+		km.record('bar').set({foo: 'bar'}).alias('someone else')
+		km.queries[0].should.be.equal firstQueryLogged

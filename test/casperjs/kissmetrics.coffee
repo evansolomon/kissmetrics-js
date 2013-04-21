@@ -79,6 +79,23 @@ casper.then ->
 	@test.assertEquals km.person, 'notevan', 'Updates person attribute'
 
 
+# Query log
+casper.then ->
+	queries = @evaluate ->
+		km = new KissmetricsClient 'abc123', 'evan'
+		km.record('event name').set({foo: 'bar'}).queries
+
+	@test.assertEquals 2, queries.length, 'Logs all queries'
+
+casper.then ->
+	queries = @evaluate ->
+		km = new KissmetricsClient 'abc123', 'evan'
+		firstLoggedQuery = km.record('event name').queries[0]
+		km.record('foo')
+		{first: firstLoggedQuery, all: km.queries}
+
+	@test.assertEquals queries.first, queries.all[0], 'Logs queries in order'
+
 
 # Client API
 casper.then ->
