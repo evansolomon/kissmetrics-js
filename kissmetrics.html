@@ -58,13 +58,10 @@
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>Keep track of what environment we&#39;re running in, Node.js or a browser.</p>
-<p>If we&#39;re in Node.js, also record whether or not it&#39;s version 0.6 so that
-we can support its legacy API.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>NODEJS    = <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span>
-NODEJS_06 = NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">and</span> process.version.substring(<span class="number">0</span>, <span class="number">4</span>) <span class="keyword">is</span> <span class="string">'v0.6'</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>NODEJS    = <span class="keyword">typeof</span> exports <span class="keyword">isnt</span> <span class="string">'undefined'</span></pre></div></div>
             
         </li>
         
@@ -293,22 +290,6 @@ requests made in Node and in a browser.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Node.js 0.6 had a different API syntax for the HTTPS module.
-If we&#39;re using ~0.6, pass the args straight away.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> https.get args <span class="keyword">if</span> NODEJS_06 <span class="keyword">is</span> <span class="literal">on</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
               <p>If we&#39;re in a browser or later version of node, form a URL</p>
 
             </div>
@@ -321,11 +302,11 @@ If we&#39;re using ~0.6, pass the args straight away.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h3>Validate Data</h3>
 <h4>(Private)</h4>
@@ -336,11 +317,11 @@ If we&#39;re using ~0.6, pass the args straight away.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Ensures that reserved keys that are used (<code>_k</code> for API key and <code>_p</code>
 for person) are present and set correctly, regardless of whether they
@@ -360,11 +341,11 @@ were in the original data.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h3>Generate Query</h3>
 <h4>(Private)</h4>
@@ -375,11 +356,11 @@ were in the original data.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
 and query string. Once the query is formed, call <code>record()</code> to send
@@ -412,11 +393,11 @@ it to Kissmetrics.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <h2>Exports</h2>
 <hr>
@@ -426,11 +407,11 @@ it to Kissmetrics.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Make <code>KissmetricsClient</code> available either as a Node module or a property
 on the current context in the browser.</p>
