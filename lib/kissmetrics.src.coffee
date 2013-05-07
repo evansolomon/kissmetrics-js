@@ -5,7 +5,7 @@
 
 # Keep track of what environment we're running in, Node.js or a browser.
 
-NODEJS    = typeof exports isnt 'undefined'
+NODEJS = typeof exports isnt 'undefined'
 
 
 # If we're in Node, require the `https` module for our network requests.
