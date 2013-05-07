@@ -4,12 +4,8 @@
 # -------------
 
 # Keep track of what environment we're running in, Node.js or a browser.
-#
-# If we're in Node.js, also record whether or not it's version 0.6 so that
-# we can support its legacy API.
 
 NODEJS    = typeof exports isnt 'undefined'
-NODEJS_06 = NODEJS is on and process.version.substring(0, 4) is 'v0.6'
 
 
 # If we're in Node, require the `https` module for our network requests.
@@ -145,10 +141,6 @@ class KissmetricsClient
   #   `path` are used, and `host` is required.
 
   _httpsRequest: (args) ->
-    # Node.js 0.6 had a different API syntax for the HTTPS module.
-    # If we're using ~0.6, pass the args straight away.
-
-    return https.get args if NODEJS_06 is on
 
     # If we're in a browser or later version of node, form a URL
     args.path ?= ''
