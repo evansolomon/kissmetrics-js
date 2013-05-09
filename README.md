@@ -4,6 +4,8 @@
 
 A small library to interact with Kissmetrics that can be shared across a client (browser) and server (Node.js).
 
+The minified source is under 3k, compared to about 20k for the version served by Kissmetrics. If you gzip the minified source, it is about 1k (Kissmetrics does not gzip their JavaScript for backward compatability reasons with older browsers). The only feature missing is the "automatic" events that Kissmetrics will record for you. These are things like page views or site visits. Since only Kissmetrics has access to the options you've sent, it's not possible to know which events you want to record automatically without using their JavaScript. For that trade off you save 95% of the file size *and* can use the same library on the client and server.
+
 ## Annotated Source
 
 In place of a more detailed readme, the [annotated source](http://evansolomon.github.com/kissmetrics-js/) is very thorough.
