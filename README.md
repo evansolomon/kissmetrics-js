@@ -10,6 +10,8 @@ In place of a more detailed readme, the [annotated source](http://evansolomon.gi
 
 ## Installation
 
+Install from NPM with: `npm install kissmetrics-js`
+
 In a browser, load the compiled JavaScript.
 
 ```html
@@ -20,10 +22,10 @@ km = new KissmetricsClient(API_KEY, user.name);
 </script>
 ```
 
-In Node.js, you probably just want to require the main class.
+In Node.js, you probably just want to require the module.
 
 ```javascript
-KM = require('./src/kissmetrics');
+KM = require('kissmetrics-js');
 km = new KM(API_KEY, user.name);
 // ...
 ```
