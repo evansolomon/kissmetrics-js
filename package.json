@@ -28,6 +28,7 @@
     "mocha": "~1.8.2",
     "should": "~1.2.2",
     "grunt-casperjs": "~1.0.6",
-    "docco": "~0.6.2"
+    "docco": "~0.6.2",
+    "grunt-contrib-connect": "~0.3.0"
   }
 }

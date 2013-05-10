@@ -7,6 +7,7 @@ module.exports = ( grunt ) ->
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-exec'
   grunt.loadNpmTasks 'grunt-casperjs'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
 
   # Project configuration.
   grunt.initConfig
@@ -72,6 +73,12 @@ module.exports = ( grunt ) ->
     casperjs:
       files: ['test/casperjs/**/*.coffee']
 
+    connect:
+      server:
+        options:
+          port: 9000
+          base: 'test'
+
 
   # Default task.
   grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify', 'exec', 'test']
@@ -79,7 +86,7 @@ module.exports = ( grunt ) ->
   # Helper tasks
   grunt.registerTask 'build', ['coffee', 'concat', 'uglify']
   grunt.registerTask 'docs', ['exec:docco']
-  grunt.registerTask 'test', ['mocha', 'casperjs']
+  grunt.registerTask 'test', ['mocha', 'connect', 'casperjs']
 
   # Mocha task
   grunt.registerTask 'mocha', 'Run mocha unit tests.', ->

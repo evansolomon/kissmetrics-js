@@ -1,5 +1,5 @@
 # The page doesn't actually matter
-casper.start 'http://google.com'
+casper.start 'http://localhost:9000/index.html'
 
 casper.then ->
 	# Injections are relative to the project root
