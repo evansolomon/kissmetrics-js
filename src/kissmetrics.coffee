@@ -141,8 +141,7 @@ class KissmetricsClient
   #   `path` are used, and `host` is required.
 
   _httpsRequest: (args) ->
-    args.path ?= ''
-    url = "https://#{args.host}/#{args.path}"
+    url = "https://#{args.host}/#{args.path || ''}"
 
     if NODEJS is on then https.get url else (new Image()).src = url
 
