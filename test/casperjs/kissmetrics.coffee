@@ -129,4 +129,5 @@ casper.then ->
 
 	@test.assertRaises kmRecord, ['event name'], 'Requires Person'
 
-casper.run()
+casper.run ->
+	@test.done()

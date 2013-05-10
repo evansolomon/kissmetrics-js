@@ -165,4 +165,5 @@ casper.then ->
 
 	@test.assertFalsy lastQuery, 'Requires Person'
 
-casper.run()
+casper.run ->
+	@test.done()
