@@ -279,7 +279,10 @@ requests made in Node and in a browser.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _httpsRequest: (args) -&gt;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  _httpsRequest: (args) -&gt;
+    url = <span class="string">"https://<span class="subst">#{args.host}</span>/<span class="subst">#{args.path || ''}</span>"</span>
+
+    <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> https.get url <span class="keyword">else</span> (<span class="keyword">new</span> Image()).src = url</pre></div></div>
             
         </li>
         
@@ -287,26 +290,8 @@ requests made in Node and in a browser.</p>
         <li id="section-14">
             <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <p>If we&#39;re in a browser or later version of node, form a URL</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    args.path ?= <span class="string">''</span>
-    url = <span class="string">"https://<span class="subst">#{args.host}</span>/<span class="subst">#{args.path}</span>"</span>
-
-    <span class="keyword">if</span> NODEJS <span class="keyword">is</span> <span class="literal">on</span> <span class="keyword">then</span> https.get url <span class="keyword">else</span> (<span class="keyword">new</span> Image()).src = url</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <h3>Validate Data</h3>
 <h4>(Private)</h4>
@@ -317,11 +302,11 @@ requests made in Node and in a browser.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Ensures that reserved keys that are used (<code>_k</code> for API key and <code>_p</code>
 for person) are present and set correctly, regardless of whether they
@@ -341,11 +326,11 @@ were in the original data.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h3>Generate Query</h3>
 <h4>(Private)</h4>
@@ -356,11 +341,11 @@ were in the original data.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Prepare data to be sent to Kissmetrics by turning it into a URL path
 and query string. Once the query is formed, call <code>record()</code> to send
@@ -393,11 +378,11 @@ it to Kissmetrics.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <h2>Exports</h2>
 <hr>
@@ -407,11 +392,11 @@ it to Kissmetrics.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Make <code>KissmetricsClient</code> available either as a Node module or a property
 on the current context in the browser.</p>
