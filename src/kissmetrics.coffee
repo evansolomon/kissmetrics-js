@@ -141,8 +141,6 @@ class KissmetricsClient
   #   `path` are used, and `host` is required.
 
   _httpsRequest: (args) ->
-
-    # If we're in a browser or later version of node, form a URL
     args.path ?= ''
     url = "https://#{args.host}/#{args.path}"
 
