@@ -46,8 +46,8 @@ https = require 'https' if NODEJS is on
 # ```
 
 class KissmetricsClient
-  @HOST = 'trk.kissmetrics.com'
-  @QUERY_TYPES =
+  @HOST: 'trk.kissmetrics.com'
+  @QUERY_TYPES:
     record : 'e'
     set    : 's'
     alias  : 'a'
