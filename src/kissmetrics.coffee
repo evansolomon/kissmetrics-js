@@ -52,8 +52,12 @@ class KissmetricsClient
     set    : 's'
     alias  : 'a'
 
-  constructor: (@apiKey, @person) ->
+  constructor: (@apiKey, @person, @options = {}) ->
     @queries = []
+
+    if NODEJS is on and options.batchRequests is on
+      BatchClient = require 'kissmetrics-batch'
+      @batchClient = new BatchClient options.queue
 
 
   # ### Record
@@ -183,16 +187,24 @@ class KissmetricsClient
   _generateQuery: (type, data) ->
     @_validateData data
 
-    queryParts = for key, val of data
-      [key, val] = (encodeURIComponent param for param in [key, val])
-      "#{key}=#{val}"
+    if options.batch
+      timestamp      = Math.round((new Date).getTime() / 1000)
+      batchData      = data
+      batchData.type = type
 
-    queryString = queryParts.join '&'
-    queryType   = KissmetricsClient.QUERY_TYPES[type]
+      @batchClient.add timestamp, batchData
 
-    @queries.push @_httpsRequest
-      host: KissmetricsClient.HOST
-      path: "#{queryType}?#{queryString}"
+    else
+      queryParts = for key, val of data
+        [key, val] = (encodeURIComponent param for param in [key, val])
+        "#{key}=#{val}"
+
+      queryString = queryParts.join '&'
+      queryType   = KissmetricsClient.QUERY_TYPES[type]
+
+      @queries.push @_httpsRequest
+        host: KissmetricsClient.HOST
+        path: "#{queryType}?#{queryString}"
 
     return @
 
