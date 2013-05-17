@@ -30,6 +30,8 @@ class BatchKissmetricsClient
       data.alias = data._n
       delete data._n
 
+    delete data.type
+
   _validate_queue: ->
     for method in ['add', 'get']
       unless typeof @queue[method] is 'function'
