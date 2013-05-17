@@ -4,6 +4,9 @@ class BatchKissmetricsClient
   @HOST: 'api.kissmetrics.com'
   @HTTP_METHOD: 'POST'
 
+  @process: (apiKey) ->
+    queue = @get()
+
   constructor: (@options) ->
     @queue = options.queue
     @_validate_queue @queue
@@ -16,9 +19,6 @@ class BatchKissmetricsClient
 
   get: ->
     @queue.get()
-
-  process: ->
-    queue = @get()
 
   _transformData: (data) ->
     data.identity = data._p
