@@ -21,10 +21,11 @@ describe 'KM batch instance', ->
       get: ->
         @queue
 
-    failToInstantiate = ->
-      new KM 'apiKey', 'evan@example.com', {batch: {queue: failedQueue}}
+    failToAdd = ->
+      km = new KM 'apiKey', 'evan@example.com', {batch: {queue: failedQueue}}
+      km.record('foo')
 
-    failToInstantiate.should.throw()
+    failToAdd.should.throw()
 
 
 describe 'Use the queue', ->

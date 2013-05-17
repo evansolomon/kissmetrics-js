@@ -9,7 +9,6 @@ class BatchKissmetricsClient
 
   constructor: (@options) ->
     @queue = options.queue
-    @_validate_queue @queue
 
   add: (timestamp, data) ->
     data.timestamp = timestamp
@@ -30,9 +29,5 @@ class BatchKissmetricsClient
       delete data._n
 
     delete data.type
-
-  _validate_queue: ->
-    unless typeof @queue.add is 'function'
-      throw new Error "Missing method: #{required_method}"
 
 module.exports = BatchKissmetricsClient
