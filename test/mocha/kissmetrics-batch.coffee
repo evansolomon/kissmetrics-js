@@ -24,7 +24,7 @@ describe 'KM batch instance', ->
     failToInstantiate = ->
       new KM 'apiKey', 'evan@example.com', {batch: {queue: failedQueue}}
 
-    failToInstantiate.should.throw
+    failToInstantiate.should.throw()
 
 
 describe 'Use the queue', ->
