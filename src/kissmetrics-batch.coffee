@@ -2,9 +2,10 @@
 
 class BatchKissmetricsClient
   @HOST: 'api.kissmetrics.com'
+  @HTTP_METHOD: 'POST'
 
-  constructor: (@queue) ->
-    @_validate_queue @queue
+  constructor: (@options) ->
+    @_validate_queue @options.queue
 
   add: (timestamp, data) ->
     data.timestamp = timestamp
