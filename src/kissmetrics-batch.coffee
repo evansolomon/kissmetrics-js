@@ -3,9 +3,31 @@
 class BatchKissmetricsClient
   @HOST: 'api.kissmetrics.com'
   @HTTP_METHOD: 'POST'
+  @API_VERSION: 'v1'
 
-  @process: (apiKey, queue) ->
-    queue = queue.get()
+  @process: (queue, apiKey, apiSecret, productGUID) ->
+    http = require 'http'
+
+    apiVersion = BatchKissmetricsClient.API_VERSION
+    urlPath    = "#{apiVersion}/products/#{productGUID}/tracking/e"
+    baseUrl    = "http://#{BatchKissmetricsClient.HOST}/#{urlPath}"
+    signature  = BatchKissmetricsClient._generateSignature baseUrl, apiSecret
+    # return "#{baseUrl}?_signature=#{signature}"
+
+    request = http.request
+      host: BatchKissmetricsClient.HOST
+      path: "#{baseUrl}?_signature=#{signature}"
+      headers:
+        'X-KM-ApiKey': apiKey
+
+    requestBody = JSON.stringify {data: queue.get()}
+    request.write requestBody
+
+    queue.clear()
+    return request
+
+  @_generateSignature: (url, apiSecret) ->
+    'temporary-signature'
 
   constructor: (@options) ->
     @queue = options.queue
