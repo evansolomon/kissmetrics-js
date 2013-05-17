@@ -5,7 +5,8 @@ class BatchKissmetricsClient
   @HTTP_METHOD: 'POST'
 
   constructor: (@options) ->
-    @_validate_queue @options.queue
+    @queue = options.queue
+    @_validate_queue @queue
 
   add: (timestamp, data) ->
     data.timestamp = timestamp
