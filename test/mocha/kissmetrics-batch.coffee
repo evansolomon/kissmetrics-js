@@ -1,5 +1,6 @@
 should = require 'should'
 KM     = require '../../src/kissmetrics'
+Batch  = require '../../src/kissmetrics-batch'
 
 testQueue =
   queue: []
@@ -7,6 +8,8 @@ testQueue =
     @queue.push data
   get: ->
     @queue
+  clear: ->
+    @queue = []
 
 describe 'KM batch instance', ->
   it 'should initialize', ->
@@ -78,3 +81,45 @@ describe 'Process batch API data', ->
     km.record('foo')
 
     should.not.exist testQueue.get()[0].type
+
+describe 'Send batch data', ->
+  it 'should generate endpoint', ->
+    testQueue.queue = []
+    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km.record('these').record('should').record('batch')
+
+    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    endpoint = request.output.pop().split(/\n/)[0].trim()
+    endpoint.should.equal 'GET http://api.kissmetrics.com/v1/products/exProductGUID/tracking/e?_signature=temporary-signature HTTP/1.1'
+
+  it 'should send API key header', ->
+    testQueue.queue = []
+    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km.record('these').record('should').record('batch')
+
+    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    request.output.pop().should.match /X-KM-ApiKey: exApiKey/
+
+  it 'should use API host', ->
+    testQueue.queue = []
+    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km.record('these').record('should').record('batch')
+
+    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    request.output.pop().should.match /Host: api.kissmetrics.com/
+
+  it 'should stringify data', ->
+    testQueue.queue = []
+    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km.record('these').record('should').record('batch')
+
+    expectedOutput = """
+      {"data":[{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"these"},{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"should"},{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"batch"}]}
+      """
+
+    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    output = request.output.pop().split(/\n/).pop()
+
+    outputTimestamp = output.match(/timestamp":([0-9]+)/).pop()
+    expectedOutput = expectedOutput.replace /_TIMESTAMP_/g, outputTimestamp
+    output.should.equal expectedOutput
