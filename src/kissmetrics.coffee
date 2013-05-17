@@ -56,7 +56,7 @@ class KissmetricsClient
     @queries = []
 
     if NODEJS is on and @options.batch
-      BatchClient = require 'kissmetrics-batch'
+      BatchClient = require './kissmetrics-batch'
       @batchClient = new BatchClient options.batch
 
 
