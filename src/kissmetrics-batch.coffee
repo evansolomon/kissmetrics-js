@@ -4,8 +4,8 @@ class BatchKissmetricsClient
   @HOST: 'api.kissmetrics.com'
   @HTTP_METHOD: 'POST'
 
-  @process: (apiKey) ->
-    queue = @get()
+  @process: (apiKey, queue) ->
+    queue = queue.get()
 
   constructor: (@options) ->
     @queue = options.queue
@@ -16,9 +16,6 @@ class BatchKissmetricsClient
     @_transformData data
 
     @queue.add data
-
-  get: ->
-    @queue.get()
 
   _transformData: (data) ->
     data.identity = data._p
@@ -35,9 +32,7 @@ class BatchKissmetricsClient
     delete data.type
 
   _validate_queue: ->
-    for required_method in ['add', 'get']
-      unless typeof @queue[required_method] is 'function'
-        throw new Error "Missing method: #{required_method}"
-
+    unless typeof @queue.add is 'function'
+      throw new Error "Missing method: #{required_method}"
 
 module.exports = BatchKissmetricsClient
