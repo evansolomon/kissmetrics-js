@@ -55,9 +55,9 @@ class KissmetricsClient
   constructor: (@apiKey, @person, @options = {}) ->
     @queries = []
 
-    if NODEJS is on and @options.batchRequests is on
+    if NODEJS is on and @options.batch
       BatchClient = require 'kissmetrics-batch'
-      @batchClient = new BatchClient options.queue
+      @batchClient = new BatchClient @apiKey, options.batch
 
 
   # ### Record
@@ -187,7 +187,7 @@ class KissmetricsClient
   _generateQuery: (type, data) ->
     @_validateData data
 
-    if @options.batchRequests
+    if @batchClient
       timestamp      = Math.round((new Date).getTime() / 1000)
       batchData      = data
       batchData.type = type
