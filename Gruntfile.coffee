@@ -28,9 +28,12 @@ module.exports = ( grunt ) ->
         banner: '<%= meta.banner %>'
 
       # This seemingly-useless concatenation is used to prepend the banner
-      dist:
+      main:
         src  : 'lib/kissmetrics.js'
         dest : 'lib/kissmetrics.js'
+      batch:
+        src  : 'lib/kissmetrics-batch.js'
+        dest : 'lib/kissmetrics-batch.js'
 
     uglify:
       options:
@@ -47,6 +50,7 @@ module.exports = ( grunt ) ->
       compile:
         files:
           'lib/kissmetrics.js' : ['src/kissmetrics.coffee', 'src/kissmetrics-anon.coffee']
+          'lib/kissmetrics-batch.js' : 'src/kissmetrics-batch.coffee'
 
     watch:
       scripts:
