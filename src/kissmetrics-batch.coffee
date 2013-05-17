@@ -35,8 +35,8 @@ class BatchKissmetricsClient
     delete data.type
 
   _validate_queue: ->
-    for method in ['add', 'get']
-      unless typeof @queue[method] is 'function'
+    for required_method in ['add', 'get']
+      unless typeof @queue[required_method] is 'function'
         throw new Error "Missing method: #{required_method}"
 
 
