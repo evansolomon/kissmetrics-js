@@ -32,7 +32,8 @@ class BatchKissmetricsClient
 
   _validate_queue: ->
     for method in ['add', 'get']
-      throw new Error "Missing method: #{required_method}" unless typeof @queue[method] is 'function'
+      unless typeof @queue[method] is 'function'
+        throw new Error "Missing method: #{required_method}"
 
 
 module.exports = BatchKissmetricsClient
