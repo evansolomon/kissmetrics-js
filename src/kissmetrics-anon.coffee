@@ -142,7 +142,7 @@ class AnonKissmetricsClient extends KissmetricsClient
       person = @createID()
       @_storage.set person
 
-    super apiKey, person, options
+    super apiKey, person
 
 
   # ### Create ID
