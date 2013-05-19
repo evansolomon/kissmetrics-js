@@ -18,11 +18,12 @@ class BatchKissmetricsClient
       path: "#{baseUrl}?_signature=#{signature}"
       headers:
         'X-KM-ApiKey': apiKey
+    , ->
+      queue.done()
 
     requestBody = JSON.stringify {data: queue.get()}
     request.write requestBody
 
-    queue.done()
     return request
 
   @_generateSignature: (baseUrl, apiSecret) =>
