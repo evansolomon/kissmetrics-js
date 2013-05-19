@@ -13,7 +13,7 @@ testQueue =
 
 describe 'KM batch instance', ->
   it 'should initialize', ->
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.apiKey.should.equal 'apiKey'
     km.person.should.equal 'evan@example.com'
 
@@ -25,7 +25,7 @@ describe 'KM batch instance', ->
         @queue
 
     failToAdd = ->
-      km = new KM 'apiKey', 'evan@example.com', {batch: {queue: failedQueue}}
+      km = new KM 'apiKey', 'evan@example.com', {queue: failedQueue}
       km.record('foo')
 
     failToAdd.should.throw()
@@ -33,20 +33,20 @@ describe 'KM batch instance', ->
 
 describe 'Use the queue', ->
   it 'should add queries to queue', ->
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record 'did foo'
 
     testQueue.queue.length.should.equal 1
 
   it 'should not add queued queries to query list', ->
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record 'did foo'
 
     km.queries.length.should.equal 0
 
   it 'should get queries from queue', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('foo').record('bar').alias('another person').set({home: 'neverland'})
 
     testQueue.get().length.should.equal 4
@@ -54,7 +54,7 @@ describe 'Use the queue', ->
 describe 'Process batch API data', ->
   it 'should transform event names', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('some kind of event')
 
     testQueue.get()[0].event.should.be.ok
@@ -62,14 +62,14 @@ describe 'Process batch API data', ->
 
   it 'should add timestamps', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('some kind of event')
 
     testQueue.get()[0].timestamp.should.be.a 'number'
 
   it 'should transform alias event', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.alias('tyler durden')
 
     testQueue.get()[0].alias.should.be.ok
@@ -77,14 +77,14 @@ describe 'Process batch API data', ->
 
   it 'should remove type property', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('foo')
 
     should.not.exist testQueue.get()[0].type
 
 describe 'Send batch data', ->
   it 'should generate endpoint', ->
-    km = new KM 'fakeApiKey', 'test@example.com', {batch: {queue: testQueue}}
+    km = new KM 'fakeApiKey', 'test@example.com', {queue: testQueue}
     testQueue.queue[0].timestamp = 1364563642
     km.record 'Visited Homepage'
 
@@ -95,7 +95,7 @@ describe 'Send batch data', ->
 
   it 'should send API key header', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('these').record('should').record('batch')
 
     request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
@@ -103,7 +103,7 @@ describe 'Send batch data', ->
 
   it 'should use API host', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('these').record('should').record('batch')
 
     request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
@@ -111,7 +111,7 @@ describe 'Send batch data', ->
 
   it 'should stringify data', ->
     testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
+    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('these').record('should').record('batch')
 
     expectedOutput = """

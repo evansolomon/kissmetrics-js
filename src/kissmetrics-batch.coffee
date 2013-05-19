@@ -32,8 +32,7 @@ class BatchKissmetricsClient
     encodedRequest = [@HTTP_METHOD, encodeURIComponent baseUrl].join('&')
     encodeURIComponent signer.update(encodedRequest).digest('base64')
 
-  constructor: (@options) ->
-    @queue = options.queue
+  constructor: (@queue) ->
 
   add: (timestamp, data) ->
     data.timestamp = timestamp

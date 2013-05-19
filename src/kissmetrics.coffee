@@ -55,9 +55,9 @@ class KissmetricsClient
   constructor: (@apiKey, @person, @options = {}) ->
     @queries = []
 
-    if NODEJS is on and @options.batch
+    if NODEJS is on and @options.queue
       BatchClient = require './kissmetrics-batch'
-      @batchClient = new BatchClient options.batch
+      @batchClient = new BatchClient options.queue
 
 
   # ### Record
