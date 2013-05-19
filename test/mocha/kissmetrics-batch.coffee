@@ -91,7 +91,7 @@ describe 'Send batch data', ->
 
     request = Batch.process testQueue, 'fakeApiKey', 'fakeApiSecret', 'fakeProductGUID'
     endpoint = request.output.pop().split(/\n/)[0].trim()
-    endpoint.should.equal 'POST http://api.kissmetrics.com/v1/products/fakeProductGUID/tracking/e?_signature=L5JAfOuh62iWmHCZMa2iT03L4doPGMM4kSOhoJNNIoM%3D HTTP/1.1'
+    endpoint.should.equal 'POST /v1/products/fakeProductGUID/tracking/e?_signature=L5JAfOuh62iWmHCZMa2iT03L4doPGMM4kSOhoJNNIoM%3D HTTP/1.1'
 
   it 'should send API key header', ->
     testQueue.queue = []
