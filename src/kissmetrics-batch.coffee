@@ -13,6 +13,7 @@ class BatchKissmetricsClient
     signature = @_generateSignature baseUrl, apiSecret
 
     request = http.request
+      method: @HTTP_METHOD
       host: @HOST
       path: "#{baseUrl}?_signature=#{signature}"
       headers:
