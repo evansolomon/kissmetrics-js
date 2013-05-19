@@ -84,13 +84,14 @@ describe 'Process batch API data', ->
 
 describe 'Send batch data', ->
   it 'should generate endpoint', ->
-    testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {batch: {queue: testQueue}}
-    km.record('these').record('should').record('batch')
+    km = new KM 'fakeApiKey', 'test@example.com', {batch: {queue: testQueue}}
+    testQueue.queue[0].timestamp = 1364563642
+    km.record 'Visited Homepage'
 
-    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+
+    request = Batch.process testQueue, 'fakeApiKey', 'fakeApiSecret', 'fakeProductGUID'
     endpoint = request.output.pop().split(/\n/)[0].trim()
-    endpoint.should.equal 'GET http://api.kissmetrics.com/v1/products/exProductGUID/tracking/e?_signature=temporary-signature HTTP/1.1'
+    endpoint.should.equal 'POST http://api.kissmetrics.com/v1/products/fakeProductGUID/tracking/e?_signature=L5JAfOuh62iWmHCZMa2iT03L4doPGMM4kSOhoJNNIoM%3D HTTP/1.1'
 
   it 'should send API key header', ->
     testQueue.queue = []
@@ -118,7 +119,8 @@ describe 'Send batch data', ->
       """
 
     request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
-    output = request.output.pop().split(/\n/).pop()
+    output = request.output.pop().split(/\n/)
+    output = output[output.length - 2].trim()
 
     outputTimestamp = output.match(/timestamp":([0-9]+)/).pop()
     expectedOutput = expectedOutput.replace /_TIMESTAMP_/g, outputTimestamp
