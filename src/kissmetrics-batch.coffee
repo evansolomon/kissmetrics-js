@@ -15,16 +15,14 @@ class BatchKissmetricsClient
     request = http.request
       method: @HTTP_METHOD
       host: @HOST
-      path: "#{baseUrl}?_signature=#{signature}"
+      path: "/#{urlPath}?_signature=#{signature}"
       headers:
         'X-KM-ApiKey': apiKey
-    , ->
-      queue.done()
+        'Connection': 'close'
 
-    requestBody = JSON.stringify {data: queue.get()}
-    request.write requestBody
-
-    return request
+    request.end JSON.stringify(queue.get())
+    queue.done()
+    request
 
   @_generateSignature: (baseUrl, apiSecret) =>
     crypto = require 'crypto'
