@@ -8,7 +8,7 @@ testQueue =
     @queue.push data
   get: ->
     @queue
-  clear: ->
+  done: ->
     @queue = []
 
 describe 'KM batch instance', ->

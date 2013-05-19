@@ -22,7 +22,7 @@ class BatchKissmetricsClient
     requestBody = JSON.stringify {data: queue.get()}
     request.write requestBody
 
-    queue.clear()
+    queue.done()
     return request
 
   @_generateSignature: (baseUrl, apiSecret) =>
