@@ -108,20 +108,3 @@ describe 'Send batch data', ->
 
     request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
     request.output.pop().should.match /Host: api.kissmetrics.com/
-
-  it 'should stringify data', ->
-    testQueue.queue = []
-    km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
-    km.record('these').record('should').record('batch')
-
-    expectedOutput = """
-      {"data":[{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"these"},{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"should"},{"_k":"apiKey","timestamp":_TIMESTAMP_,"identity":"evan@example.com","event":"batch"}]}
-      """
-
-    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
-    output = request.output.pop().split(/\n/)
-    output = output[output.length - 2].trim()
-
-    outputTimestamp = output.match(/timestamp":([0-9]+)/).pop()
-    expectedOutput = expectedOutput.replace /_TIMESTAMP_/g, outputTimestamp
-    output.should.equal expectedOutput
