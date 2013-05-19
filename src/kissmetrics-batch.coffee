@@ -30,7 +30,7 @@ class BatchKissmetricsClient
     signer = crypto.createHmac 'sha256', apiSecret
 
     encodedRequest = [@HTTP_METHOD, encodeURIComponent baseUrl].join('&')
-    signer.update(encodedRequest).digest('base64')
+    encodeURIComponent signer.update(encodedRequest).digest('base64')
 
   constructor: (@options) ->
     @queue = options.queue
