@@ -5,17 +5,15 @@ class BatchKissmetricsClient
   @HTTP_METHOD: 'POST'
   @API_VERSION: 'v1'
 
-  @process: (queue, apiKey, apiSecret, productGUID) ->
+  @process: (queue, apiKey, apiSecret, productGUID) =>
     http = require 'http'
 
-    apiVersion = BatchKissmetricsClient.API_VERSION
-    urlPath    = "#{apiVersion}/products/#{productGUID}/tracking/e"
-    baseUrl    = "http://#{BatchKissmetricsClient.HOST}/#{urlPath}"
-    signature  = BatchKissmetricsClient._generateSignature baseUrl, apiSecret
-    # return "#{baseUrl}?_signature=#{signature}"
+    urlPath   = "#{@API_VERSION}/products/#{productGUID}/tracking/e"
+    baseUrl   = "http://#{@HOST}/#{urlPath}"
+    signature = @_generateSignature baseUrl, apiSecret
 
     request = http.request
-      host: BatchKissmetricsClient.HOST
+      host: @HOST
       path: "#{baseUrl}?_signature=#{signature}"
       headers:
         'X-KM-ApiKey': apiKey
@@ -26,8 +24,12 @@ class BatchKissmetricsClient
     queue.clear()
     return request
 
-  @_generateSignature: (url, apiSecret) ->
-    'temporary-signature'
+  @_generateSignature: (baseUrl, apiSecret) =>
+    crypto = require 'crypto'
+    signer = crypto.createHmac 'sha256', apiSecret
+
+    encodedRequest = [@HTTP_METHOD, encodeURIComponent baseUrl].join('&')
+    signer.update(encodedRequest).digest('base64')
 
   constructor: (@options) ->
     @queue = options.queue
