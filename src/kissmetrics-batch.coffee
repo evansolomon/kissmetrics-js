@@ -99,7 +99,7 @@ class BatchKissmetricsClient
         'X-KM-ApiKey': apiKey
         'Connection': 'close'
 
-    request.end JSON.stringify(queue.get())
+    request.end JSON.stringify({data: queue.get()})
     queue.done()
     request
 
