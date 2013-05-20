@@ -135,6 +135,7 @@ class BatchKissmetricsClient
   #
   # * `_p` (person) is replaced by `identity`
   # * `_t` (timestamp) is replaced by `timestamp`
+  # * `_d` (date provided) is ignored because all batch queries provide dates
   # * `record` queries use the `event` property instead of `_n`
   # * `alias` queries use the `alias` property instead of `_n`
   # * `_k` (API key) is replaced by an HTTP header
@@ -156,6 +157,7 @@ class BatchKissmetricsClient
     delete data._n
     delete data._p
     delete data._t
+    delete data._d
     delete data.type
 
 
