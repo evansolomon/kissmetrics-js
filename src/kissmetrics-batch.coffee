@@ -1,5 +1,5 @@
-# # Batch Kissmetrics Client
-# --------------------------
+# # Batch Kissmetrics
+# -------------------
 
 # Wrapper for queuing batch queries and processing the batch queue. It's
 # unlikely you should create instances of this class directly. It is used
