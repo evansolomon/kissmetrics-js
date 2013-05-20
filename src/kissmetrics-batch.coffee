@@ -46,9 +46,9 @@ class BatchKissmetricsClient
   # batch.add({name: 'Evan', home: 'San Francisco'}, 482698020);
   # ```
 
-  add: (data, timestamp = Math.round((new Date).getTime() / 1000)) ->
-    data.timestamp = timestamp
+  add: (data, timestamp) ->
     @_transformData data
+    data.timestamp ?= Math.round((new Date).getTime() / 1000)
 
     @queue.add data
 
@@ -134,6 +134,7 @@ class BatchKissmetricsClient
   # HTTP API.
   #
   # * `_p` (person) is replaced by `identity`
+  # * `_t` (timestamp) is replaced by `timestamp`
   # * `record` queries use the `event` property instead of `_n`
   # * `alias` queries use the `alias` property instead of `_n`
   # * `_k` (API key) is replaced by an HTTP header
@@ -145,6 +146,7 @@ class BatchKissmetricsClient
 
   _transformData: (data) ->
     data.identity = data._p
+    data.timestamp = data._t if data._t
 
     switch data.type
       when 'record' then data.event = data._n
@@ -153,6 +155,7 @@ class BatchKissmetricsClient
     delete data._k
     delete data._n
     delete data._p
+    delete data._t
     delete data.type
 
 
