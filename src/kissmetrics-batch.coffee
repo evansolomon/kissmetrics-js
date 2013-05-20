@@ -12,9 +12,12 @@
 #   be retrievable as objects.
 #
 # ```
-# batch = new BatchKissmetricsClient({add: function(obj) {
-#   someQueue.add({key: 'kissmetrics', data: obj});
-# }});
+# queue = {
+#   add: function(obj) {
+#     someQueue.add({key: 'kissmetrics', data: obj});
+#   }
+# };
+# batch = new BatchKissmetricsClient(queue);
 # ```
 
 class BatchKissmetricsClient
