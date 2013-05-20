@@ -118,9 +118,9 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  add: (data, timestamp = Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)) -&gt;
-    data.timestamp = timestamp
+            <div class="content"><div class='highlight'><pre>  add: (data, timestamp) -&gt;
     <span class="property">@_transformData</span> data
+    data.timestamp ?= Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)
 
     <span class="property">@queue</span>.add data</pre></div></div>
             
@@ -256,6 +256,8 @@ UriSigner library: <a href="https://github.com/kissmetrics/uri_signer">https://g
 HTTP API.</p>
 <ul>
 <li><code>_p</code> (person) is replaced by <code>identity</code></li>
+<li><code>_t</code> (timestamp) is replaced by <code>timestamp</code></li>
+<li><code>_d</code> (date provided) is ignored because all batch queries provide dates</li>
 <li><code>record</code> queries use the <code>event</code> property instead of <code>_n</code></li>
 <li><code>alias</code> queries use the <code>alias</code> property instead of <code>_n</code></li>
 <li><code>_k</code> (API key) is replaced by an HTTP header</li>
@@ -268,6 +270,7 @@ HTTP API.</p>
             
             <div class="content"><div class='highlight'><pre>  _transformData: (data) -&gt;
     data.identity = data._p
+    data.timestamp = data._t <span class="keyword">if</span> data._t
 
     <span class="keyword">switch</span> data.type
       <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
@@ -276,6 +279,8 @@ HTTP API.</p>
     <span class="keyword">delete</span> data._k
     <span class="keyword">delete</span> data._n
     <span class="keyword">delete</span> data._p
+    <span class="keyword">delete</span> data._t
+    <span class="keyword">delete</span> data._d
     <span class="keyword">delete</span> data.type</pre></div></div>
             
         </li>
