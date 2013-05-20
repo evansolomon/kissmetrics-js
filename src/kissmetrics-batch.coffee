@@ -32,17 +32,18 @@ class BatchKissmetricsClient
   #
   # ##### Arguments
   #
-  # `timestamp` (Integer): Unix timestamp from the time the event occurred.
-  #
   # `data` (Object): Key/value pairs of Kissmetrics properties. Some
   #   properties will be renamed in `_transformData()` based on `data.type`
   #   due to differences between Kissmetrics' batch API and regular HTTP API.
   #
+  # `timestamp` Optional (Integer): Unix timestamp from the time the event
+  #   occurred. Defaults to the current time.
+  #
   # ```
-  # batch.add((new Date).getTime(), {name: 'Evan', home: 'San Francisco'});
+  # batch.add({name: 'Evan', home: 'San Francisco'}, 482698020);
   # ```
 
-  add: (timestamp, data) ->
+  add: (data, timestamp = Math.round((new Date).getTime() / 1000)) ->
     data.timestamp = timestamp
     @_transformData data
 
