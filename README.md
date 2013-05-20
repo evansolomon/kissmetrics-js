@@ -4,7 +4,7 @@
 
 A small library to interact with Kissmetrics that can be shared across a client (browser) and server (Node.js).
 
-The minified source is under 3k, compared to about 20k for the version served by Kissmetrics. If you gzip the minified source, it is about 1k (Kissmetrics does not gzip their JavaScript for backward compatability reasons with older browsers). The only feature missing is the "automatic" events that Kissmetrics will record for you. These are things like page views or site visits. Since only Kissmetrics has access to the options you've sent, it's not possible to know which events you want to record automatically without using their JavaScript. For that trade off you save 95% of the file size *and* can use the same library on the client and server.
+The minified source is about 3k, compared to about 20k for the version served by Kissmetrics. If you gzip the minified source, it is about 1k (Kissmetrics does not gzip their JavaScript for backward compatability reasons with older browsers). The only feature missing is the "automatic" events that Kissmetrics will record for you. These are things like page views or site visits. Since only Kissmetrics has access to the options you've sent, it's not possible to know which events you want to record automatically without using their JavaScript. For that trade off you save 95% of the file size *and* can use the same library on the client and server.
 
 ## Annotated Source
 
@@ -104,3 +104,39 @@ console.log(km.person);
 km.record('foobar');
 // Recorded as "evansolomon" doing "foobar"
 ```
+
+## Batching
+
+The library support's Kissmetrics' batch API in Node.js (not in browsers). Batching queries works in two parts, adding to the batch queue and processing the batch queue.
+
+To add queries to the queue, you need to pass in a queue object to the `KissmetricsClient` constructor when you create your instance.
+
+```javascript
+myQueueObject = {
+  add: function(data) {
+    someQueue.add('kissmetrics', data);
+  },
+  get: function() {
+    this.queue = someQueue.get('kissmetrics');
+    return this.queue.data;
+  },
+  done: function() {
+    this.queue.clear();
+  }
+};
+
+KM = require('kissmetrics');
+client = new KM(null, 'Evan', {queue: myQueueObject});
+client.record('This event will be batched').set({addedToQueue: 'yup'});
+```
+
+The queue object you provide to `KissmetricsClient` must expose a method called `add()` that accepts an object and adds it to your queue. Once your instance of `KissmetricsClient` is created, you can use it normally to record events, properties and aliases. The difference is that those queries will not be sent to Kissmetrics immediately, they'll be formed into objects and added to your queue. You'll also notice that I didn't pass in an API key when I created my client instance. Batch requests send the API key when the batch is processed, and all queries in a batch must use the same API key. You can pass in an API key if you want, like a normal client, it will just be silently ignored.
+
+When you're ready to process the queue, you need to use the `BatchKissmetricsClient` class' `process()` method. You'll need to pass in your a queue object, API key, API secret, and product GUID. Note that the last two are *different* than your normal API key, and all come from Kissmetrics.
+
+```javascript
+Batch = require('kissmetrics-batch');
+Batch.process(myQueueObject, 'yourApiKey', 'yourApiSecret', 'product-guid');
+```
+
+The queue object you provid must expose `get()` and `done()` methods. It's possible to provide an entirely different queue object to `Batch.process()` than you do to `KissmetricsClient`, though for simplicity's sake you may use the same one. The `get()` method should return all of the objects that were added to the queue by `KissmetricsClient`. The `done()` method will be called after the request is sent. It can be used to clear those items from the queue. Note that managing race conditions is your responsibility and will not be done by the library. It's a good idea to keep track of this in the queue object that you provide.
