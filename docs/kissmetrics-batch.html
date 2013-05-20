@@ -68,9 +68,12 @@ internally by the <code>KissmetricsClient</code> class.</p>
 <p><code>queue</code> (Object): An object with an <code>add()</code> method that can append queries
   to the batch queue. Queries will be passed as objects and must
   be retrievable as objects.</p>
-<pre><code>batch = new BatchKissmetricsClient({add: function(obj) {
-  someQueue.add({key: &#39;kissmetrics&#39;, data: obj});
-}});</code></pre>
+<pre><code>queue = {
+  add: function(obj) {
+    someQueue.add({key: &#39;kissmetrics&#39;, data: obj});
+  }
+};
+batch = new BatchKissmetricsClient(queue);</code></pre>
 
             </div>
             
@@ -153,6 +156,16 @@ internally by the <code>KissmetricsClient</code> class.</p>
 <p><code>apiKey</code> (String): Your API key from Kissmetrics.</p>
 <p><code>apiSecret</code> (String): Your API secret from Kissmetrics.</p>
 <p><code>productGUID</code> (String): Your Product GUID from Kissmetrics.</p>
+<pre><code>queue = {
+  get: function() {
+    this.queue = someQueue.get(&#39;kissmetrics&#39;);
+    return this.queue.data;
+  },
+  done: function() {
+    this.queue.clear();
+  }
+};
+Batch.process(queue, &#39;key&#39;, &#39;secret-key&#39;, &#39;SOME-PRODUCT&#39;);</code></pre>
 
             </div>
             
@@ -160,8 +173,8 @@ internally by the <code>KissmetricsClient</code> class.</p>
     http = require <span class="string">'http'</span>
 
     urlPath   = <span class="string">"<span class="subst">#{@API_VERSION}</span>/products/<span class="subst">#{productGUID}</span>/tracking/e"</span>
-    baseUrl   = <span class="string">"http://<span class="subst">#{@HOST}</span>/<span class="subst">#{urlPath}</span>"</span>
-    signature = <span class="property">@_generateSignature</span> baseUrl, apiSecret
+    urlToSign = <span class="string">"http://<span class="subst">#{@HOST}</span>/<span class="subst">#{urlPath}</span>"</span>
+    signature = <span class="property">@_generateSignature</span> urlToSign, apiSecret
 
     request = http.request
       method: <span class="property">@HTTP_METHOD</span>
@@ -171,7 +184,7 @@ internally by the <code>KissmetricsClient</code> class.</p>
         <span class="string">'X-KM-ApiKey'</span>: apiKey
         <span class="string">'Connection'</span>: <span class="string">'close'</span>
 
-    request.end JSON.stringify(queue.get())
+    request.end JSON.stringify({data: queue.get()})
     queue.done()
     request</pre></div></div>
             
@@ -202,17 +215,17 @@ internally by the <code>KissmetricsClient</code> class.</p>
               <p>Generate a signature for a batch request URL. Based on Kissmetrics&#39;
 UriSigner library: <a href="https://github.com/kissmetrics/uri_signer">https://github.com/kissmetrics/uri_signer</a></p>
 <h5>Arguments</h5>
-<p><code>baseUrl</code> (String): The URL (including path) that the request will
+<p><code>urlToSign</code> (String): The URL (including path) that the request will
   be sent to.</p>
 <p><code>apiSecret</code> (String): Your API secret from Kissmetrics.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="property">@_generateSignature</span>: (baseUrl, apiSecret) =&gt;
+            <div class="content"><div class='highlight'><pre>  <span class="property">@_generateSignature</span>: (urlToSign, apiSecret) =&gt;
     crypto = require <span class="string">'crypto'</span>
     signer = crypto.createHmac <span class="string">'sha256'</span>, apiSecret
 
-    encodedRequest = [<span class="property">@HTTP_METHOD</span>, encodeURIComponent baseUrl].join(<span class="string">'&amp;'</span>)
+    encodedRequest = [<span class="property">@HTTP_METHOD</span>, encodeURIComponent urlToSign].join(<span class="string">'&amp;'</span>)
     encodeURIComponent signer.update(encodedRequest).digest(<span class="string">'base64'</span>)</pre></div></div>
             
         </li>
