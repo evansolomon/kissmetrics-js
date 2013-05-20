@@ -88,8 +88,8 @@ class BatchKissmetricsClient
     http = require 'http'
 
     urlPath   = "#{@API_VERSION}/products/#{productGUID}/tracking/e"
-    baseUrl   = "http://#{@HOST}/#{urlPath}"
-    signature = @_generateSignature baseUrl, apiSecret
+    urlToSign = "http://#{@HOST}/#{urlPath}"
+    signature = @_generateSignature urlToSign, apiSecret
 
     request = http.request
       method: @HTTP_METHOD
@@ -113,16 +113,16 @@ class BatchKissmetricsClient
   #
   # ##### Arguments
   #
-  # `baseUrl` (String): The URL (including path) that the request will
+  # `urlToSign` (String): The URL (including path) that the request will
   #   be sent to.
   #
   # `apiSecret` (String): Your API secret from Kissmetrics.
 
-  @_generateSignature: (baseUrl, apiSecret) =>
+  @_generateSignature: (urlToSign, apiSecret) =>
     crypto = require 'crypto'
     signer = crypto.createHmac 'sha256', apiSecret
 
-    encodedRequest = [@HTTP_METHOD, encodeURIComponent baseUrl].join('&')
+    encodedRequest = [@HTTP_METHOD, encodeURIComponent urlToSign].join('&')
     encodeURIComponent signer.update(encodedRequest).digest('base64')
 
 
