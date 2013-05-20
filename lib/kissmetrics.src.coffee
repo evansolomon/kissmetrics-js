@@ -41,18 +41,31 @@ https = require 'https' if NODEJS is on
 #
 # `person` (String): An identifier for the person you'll record data about
 #
+# `options` *Optional* (Object):
+#   * `queue`: Indicates you want to batch queries. Must be an object with
+#     an `add()` method. All queries recorded on instances that defined this
+#     option will be added to the queue and *not* sent immediately. This
+#     option is *only* supported on the server. Currently the `apiKey`
+#     argument is ignored when requests are batched because an API key is
+#     specified in the batch request headers.
+#
 # ```
 # km = new KissmetricsClient(API_KEY, 'evan@example.com')
 # ```
 
 class KissmetricsClient
-  constructor: (@apiKey, @person) ->
-    @queries    = []
-    @host       = 'trk.kissmetrics.com'
-    @queryTypes =
-      record : 'e'
-      set    : 's'
-      alias  : 'a'
+  @HOST: 'trk.kissmetrics.com'
+  @QUERY_TYPES:
+    record : 'e'
+    set    : 's'
+    alias  : 'a'
+
+  constructor: (@apiKey, @person, options = {}) ->
+    @queries = []
+
+    if NODEJS is on and options.queue
+      BatchClient = require './kissmetrics-batch'
+      @batchClient = new BatchClient options.queue
 
 
   # ### Record
@@ -169,9 +182,9 @@ class KissmetricsClient
   # #### (Private)
   # ------------------
 
-  # Prepare data to be sent to Kissmetrics by turning it into a URL path
-  # and query string. Once the query is formed, call `record()` to send
-  # it to Kissmetrics.
+  # Prepare data to be sent to Kissmetrics. For immediate queries, we convert
+  # to a URL path and query string, then make the HTTP request. For batch
+  # queries, we add a timestamp and append the query object to the queue.
   #
   # ##### Arguments
   #
@@ -182,15 +195,24 @@ class KissmetricsClient
   _generateQuery: (type, data) ->
     @_validateData data
 
-    queryParts = for key, val of data
-      [key, val] = (encodeURIComponent param for param in [key, val])
-      "#{key}=#{val}"
+    if @batchClient
+      timestamp      = Math.round((new Date).getTime() / 1000)
+      batchData      = data
+      batchData.type = type
 
-    queryString = queryParts.join '&'
+      @batchClient.add timestamp, batchData
 
-    @queries.push @_httpsRequest
-      host: @host
-      path: "#{@queryTypes[type]}?#{queryString}"
+    else
+      queryParts = for key, val of data
+        [key, val] = (encodeURIComponent param for param in [key, val])
+        "#{key}=#{val}"
+
+      queryString = queryParts.join '&'
+      queryType   = KissmetricsClient.QUERY_TYPES[type]
+
+      @queries.push @_httpsRequest
+        host: KissmetricsClient.HOST
+        path: "#{queryType}?#{queryString}"
 
     return @
 
