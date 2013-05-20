@@ -116,22 +116,26 @@ class BatchKissmetricsClient
   # Rename keys that differ between Kissmetrics' batch API and regular
   # HTTP API.
   #
+  # * `_p` (person) is replaced by `identity`
+  # * `record` queries use the `event` property instead of `_n`
+  # * `alias` queries use the `alias` property instead of `_n`
+  # * `_k` (API key) is replaced by an HTTP header
+  # * `type` is only used internally
+  #
   # ##### Arguments
   #
   # `data` (Object): Key/value pairs of properties to send to Kissmetrics.
 
   _transformData: (data) ->
     data.identity = data._p
+
+    switch data.type
+      when 'record' then data.event = data._n
+      when 'alias' then data.alias = data._n
+
+    delete data._k
+    delete data._n
     delete data._p
-
-    if data.type is 'record'
-      data.event = data._n
-      delete data._n
-
-    if data.type is 'alias'
-      data.alias = data._n
-      delete data._n
-
     delete data.type
 
 
