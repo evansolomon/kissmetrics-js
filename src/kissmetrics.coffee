@@ -174,7 +174,11 @@ class KissmetricsClient
   # * `data` (Object): Specific data being recorded about this person.
 
   _validateData: (data) ->
-    if @apiKey then data._k = @apiKey else throw new Error 'API key required'
+    if @apiKey
+      data._k = @apiKey
+    else
+      throw new Error 'API key required' unless @batchClient
+
     if @person then data._p = @person else throw new Error 'Person required'
 
 
