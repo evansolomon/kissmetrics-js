@@ -70,6 +70,19 @@ class BatchKissmetricsClient
   # `apiSecret` (String): Your API secret from Kissmetrics.
   #
   # `productGUID` (String): Your Product GUID from Kissmetrics.
+  #
+  # ```
+  # queue = {
+  #   get: function() {
+  #     this.queue = someQueue.get('kissmetrics');
+  #     return this.queue.data;
+  #   },
+  #   done: function() {
+  #     this.queue.clear();
+  #   }
+  # };
+  # Batch.process(queue, 'key', 'secret-key', 'SOME-PRODUCT');
+  # ```
 
   @process: (queue, apiKey, apiSecret, productGUID) =>
     http = require 'http'
