@@ -41,6 +41,14 @@ https = require 'https' if NODEJS is on
 #
 # `person` (String): An identifier for the person you'll record data about
 #
+# `options` *Optional* (Object):
+#   * `queue`: Indicates you want to batch queries. Must be an object with
+#     an `add()` method. All queries recorded on instances that defined this
+#     option will be added to the queue and *not* sent immediately. This
+#     option is *only* supported on the server. Currently the `apiKey`
+#     argument is ignored when requests are batched because an API key is
+#     specified in the batch request headers.
+#
 # ```
 # km = new KissmetricsClient(API_KEY, 'evan@example.com')
 # ```
@@ -174,9 +182,9 @@ class KissmetricsClient
   # #### (Private)
   # ------------------
 
-  # Prepare data to be sent to Kissmetrics by turning it into a URL path
-  # and query string. Once the query is formed, call `record()` to send
-  # it to Kissmetrics.
+  # Prepare data to be sent to Kissmetrics. For immediate queries, we convert
+  # to a URL path and query string, then make the HTTP request. For batch
+  # queries, we add a timestamp and append the query object to the queue.
   #
   # ##### Arguments
   #
