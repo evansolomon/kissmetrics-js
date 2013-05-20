@@ -106,15 +106,16 @@ internally by the <code>KissmetricsClient</code> class.</p>
               </div>
               <p>Add a query to the queue.</p>
 <h5>Arguments</h5>
-<p><code>timestamp</code> (Integer): Unix timestamp from the time the event occurred.</p>
 <p><code>data</code> (Object): Key/value pairs of Kissmetrics properties. Some
   properties will be renamed in <code>_transformData()</code> based on <code>data.type</code>
   due to differences between Kissmetrics&#39; batch API and regular HTTP API.</p>
-<pre><code>batch.add((new Date).getTime(), {name: &#39;Evan&#39;, home: &#39;San Francisco&#39;});</code></pre>
+<p><code>timestamp</code> Optional (Integer): Unix timestamp from the time the event
+  occurred. Defaults to the current time.</p>
+<pre><code>batch.add({name: &#39;Evan&#39;, home: &#39;San Francisco&#39;}, 482698020);</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  add: (timestamp, data) -&gt;
+            <div class="content"><div class='highlight'><pre>  add: (data, timestamp = Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)) -&gt;
     data.timestamp = timestamp
     <span class="property">@_transformData</span> data
 
@@ -240,6 +241,13 @@ UriSigner library: <a href="https://github.com/kissmetrics/uri_signer">https://g
               </div>
               <p>Rename keys that differ between Kissmetrics&#39; batch API and regular
 HTTP API.</p>
+<ul>
+<li><code>_p</code> (person) is replaced by <code>identity</code></li>
+<li><code>record</code> queries use the <code>event</code> property instead of <code>_n</code></li>
+<li><code>alias</code> queries use the <code>alias</code> property instead of <code>_n</code></li>
+<li><code>_k</code> (API key) is replaced by an HTTP header</li>
+<li><code>type</code> is only used internally</li>
+</ul>
 <h5>Arguments</h5>
 <p><code>data</code> (Object): Key/value pairs of properties to send to Kissmetrics.</p>
 
@@ -247,16 +255,14 @@ HTTP API.</p>
             
             <div class="content"><div class='highlight'><pre>  _transformData: (data) -&gt;
     data.identity = data._p
+
+    <span class="keyword">switch</span> data.type
+      <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
+      <span class="keyword">when</span> <span class="string">'alias'</span> <span class="keyword">then</span> data.alias = data._n
+
+    <span class="keyword">delete</span> data._k
+    <span class="keyword">delete</span> data._n
     <span class="keyword">delete</span> data._p
-
-    <span class="keyword">if</span> data.type <span class="keyword">is</span> <span class="string">'record'</span>
-      data.event = data._n
-      <span class="keyword">delete</span> data._n
-
-    <span class="keyword">if</span> data.type <span class="keyword">is</span> <span class="string">'alias'</span>
-      data.alias = data._n
-      <span class="keyword">delete</span> data._n
-
     <span class="keyword">delete</span> data.type</pre></div></div>
             
         </li>

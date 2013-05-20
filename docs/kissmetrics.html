@@ -337,7 +337,11 @@ were in the original data.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  _validateData: (data) -&gt;
-    <span class="keyword">if</span> <span class="property">@apiKey</span> <span class="keyword">then</span> data._k = <span class="property">@apiKey</span> <span class="keyword">else</span> <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span>
+    <span class="keyword">if</span> <span class="property">@apiKey</span>
+      data._k = <span class="property">@apiKey</span>
+    <span class="keyword">else</span>
+      <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'API key required'</span> <span class="keyword">unless</span> <span class="property">@batchClient</span>
+
     <span class="keyword">if</span> <span class="property">@person</span> <span class="keyword">then</span> data._p = <span class="property">@person</span> <span class="keyword">else</span> <span class="keyword">throw</span> <span class="keyword">new</span> Error <span class="string">'Person required'</span></pre></div></div>
             
         </li>
@@ -381,11 +385,10 @@ queries, we add a timestamp and append the query object to the queue.</p>
     <span class="property">@_validateData</span> data
 
     <span class="keyword">if</span> <span class="property">@batchClient</span>
-      timestamp      = Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)
       batchData      = data
       batchData.type = type
 
-      <span class="property">@batchClient</span>.add timestamp, batchData
+      <span class="property">@batchClient</span>.add batchData
 
     <span class="keyword">else</span>
       queryParts = <span class="keyword">for</span> key, val <span class="keyword">of</span> data
