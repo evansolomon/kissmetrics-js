@@ -134,7 +134,7 @@ class BatchKissmetricsClient
   # * `record` queries use the `event` property instead of `_n`
   # * `alias` queries use the `alias` property instead of `_n`
   # * `_k` (API key) is replaced by an HTTP header
-  # * `type` is only used internally
+  # * `__type` is only used internally
   #
   # ##### Arguments
   #
@@ -144,7 +144,7 @@ class BatchKissmetricsClient
     data.identity = data._p
     data.timestamp = data._t if data._t
 
-    switch data.type
+    switch data.__type
       when 'record' then data.event = data._n
       when 'alias' then data.alias = data._n
 
@@ -153,7 +153,7 @@ class BatchKissmetricsClient
     delete data._p
     delete data._t
     delete data._d
-    delete data.type
+    delete data.__type
 
 
 # ## Exports
