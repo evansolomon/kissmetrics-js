@@ -145,12 +145,8 @@ class BatchKissmetricsClient
       when 'record' then data.event = data._n
       when 'alias' then data.alias = data._n
 
-    delete data._k
-    delete data._n
-    delete data._p
-    delete data._t
-    delete data._d
-    delete data.__type
+    reservedKeys = ['_k', '_n', '_p', '_t', '_d', '__type']
+    delete data[reservedKey] for reservedKey in reservedKeys
 
     data
 
