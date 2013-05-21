@@ -49,11 +49,8 @@ class BatchKissmetricsClient
   # batch.add({name: 'Evan', home: 'San Francisco'}, 482698020);
   # ```
 
-  add: (data, timestamp) ->
-    @_transformData data
-    data.timestamp ?= Math.round((new Date).getTime() / 1000)
-
-    @queue.add data
+  add: (data) ->
+    @queue.add @_transformData data
 
 
   # ### Process
@@ -148,7 +145,7 @@ class BatchKissmetricsClient
 
   _transformData: (data) ->
     data.identity = data._p
-    data.timestamp = data._t if data._t
+    data.timestamp = data._t || Math.round((new Date).getTime() / 1000)
 
     switch data.__type
       when 'record' then data.event = data._n
@@ -160,6 +157,8 @@ class BatchKissmetricsClient
     delete data._t
     delete data._d
     delete data.__type
+
+    data
 
 
 # ## Exports
