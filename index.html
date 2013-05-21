@@ -385,8 +385,8 @@ queries, we add a timestamp and append the query object to the queue.</p>
     <span class="property">@_validateData</span> data
 
     <span class="keyword">if</span> <span class="property">@batchClient</span>
-      batchData      = data
-      batchData.type = type
+      batchData        = data
+      batchData.__type = type
 
       <span class="property">@batchClient</span>.add batchData
 

@@ -256,7 +256,7 @@ HTTP API.</p>
 <li><code>record</code> queries use the <code>event</code> property instead of <code>_n</code></li>
 <li><code>alias</code> queries use the <code>alias</code> property instead of <code>_n</code></li>
 <li><code>_k</code> (API key) is replaced by an HTTP header</li>
-<li><code>type</code> is only used internally</li>
+<li><code>__type</code> is only used internally</li>
 </ul>
 <h5>Arguments</h5>
 <p><code>data</code> (Object): Key/value pairs of properties to send to Kissmetrics.</p>
@@ -267,7 +267,7 @@ HTTP API.</p>
     data.identity = data._p
     data.timestamp = data._t <span class="keyword">if</span> data._t
 
-    <span class="keyword">switch</span> data.type
+    <span class="keyword">switch</span> data.__type
       <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
       <span class="keyword">when</span> <span class="string">'alias'</span> <span class="keyword">then</span> data.alias = data._n
 
@@ -276,7 +276,7 @@ HTTP API.</p>
     <span class="keyword">delete</span> data._p
     <span class="keyword">delete</span> data._t
     <span class="keyword">delete</span> data._d
-    <span class="keyword">delete</span> data.type</pre></div></div>
+    <span class="keyword">delete</span> data.__type</pre></div></div>
             
         </li>
         
