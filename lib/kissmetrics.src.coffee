@@ -200,8 +200,8 @@ class KissmetricsClient
     @_validateData data
 
     if @batchClient
-      batchData      = data
-      batchData.type = type
+      batchData        = data
+      batchData.__type = type
 
       @batchClient.add batchData
 
