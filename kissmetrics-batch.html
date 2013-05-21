@@ -120,11 +120,8 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  add: (data, timestamp) -&gt;
-    <span class="property">@_transformData</span> data
-    data.timestamp ?= Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)
-
-    <span class="property">@queue</span>.add data</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  add: (data) -&gt;
+    <span class="property">@queue</span>.add <span class="property">@_transformData</span> data</pre></div></div>
             
         </li>
         
@@ -270,7 +267,7 @@ HTTP API.</p>
             
             <div class="content"><div class='highlight'><pre>  _transformData: (data) -&gt;
     data.identity = data._p
-    data.timestamp = data._t <span class="keyword">if</span> data._t
+    data.timestamp = data._t || Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)
 
     <span class="keyword">switch</span> data.__type
       <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
@@ -281,7 +278,9 @@ HTTP API.</p>
     <span class="keyword">delete</span> data._p
     <span class="keyword">delete</span> data._t
     <span class="keyword">delete</span> data._d
-    <span class="keyword">delete</span> data.__type</pre></div></div>
+    <span class="keyword">delete</span> data.__type
+
+    data</pre></div></div>
             
         </li>
         
