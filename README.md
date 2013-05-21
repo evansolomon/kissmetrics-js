@@ -117,11 +117,7 @@ myQueueObject = {
     someQueue.add('kissmetrics', data);
   },
   get: function() {
-    this.queue = someQueue.get('kissmetrics');
-    return this.queue.data;
-  },
-  done: function() {
-    this.queue.clear();
+    return someQueue.get('kissmetrics');
   }
 };
 
@@ -139,4 +135,4 @@ Batch = require('kissmetrics-batch');
 Batch.process(myQueueObject, 'yourApiKey', 'yourApiSecret', 'product-guid');
 ```
 
-The queue object you provid must expose `get()` and `done()` methods. It's possible to provide an entirely different queue object to `Batch.process()` than you do to `KissmetricsClient`, though for simplicity's sake you may use the same one. The `get()` method should return all of the objects that were added to the queue by `KissmetricsClient`. The `done()` method will be called after the request is sent. It can be used to clear those items from the queue. Note that managing race conditions is your responsibility and will not be done by the library. It's a good idea to keep track of this in the queue object that you provide.
+The queue object you provid must expose a `get()` method. It's possible to provide an entirely different queue object to `Batch.process()` than you do to `KissmetricsClient`, though for simplicity's sake you may use the same one. The `get()` method should return all of the objects that were added to the queue by `KissmetricsClient`. Note that managing race conditions is your responsibility and will not be done by the library. It's a good idea to keep track of this in the queue object that you provide.

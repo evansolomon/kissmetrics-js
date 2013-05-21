@@ -61,9 +61,8 @@ class BatchKissmetricsClient
   #
   # ##### Arguments
   #
-  # `queue` (Object): Must have a `get()` and `done()` method. `get()` should
-  #   return an array of queued queries. `done()` is called after a request is
-  #   sent and can be used to remove the queries from the queue.
+  # `queue` (Object): Must have a `get()` method and it should
+  #   return an array of queued queries.
   #
   # `apiKey` (String): Your API key from Kissmetrics.
   #
@@ -76,9 +75,6 @@ class BatchKissmetricsClient
   #   get: function() {
   #     this.queue = someQueue.get('kissmetrics');
   #     return this.queue.data;
-  #   },
-  #   done: function() {
-  #     this.queue.clear();
   #   }
   # };
   # Batch.process(queue, 'key', 'secret-key', 'SOME-PRODUCT');
@@ -100,7 +96,6 @@ class BatchKissmetricsClient
         'Connection': 'close'
 
     request.end JSON.stringify({data: queue.get()})
-    queue.done()
     request
 
 

@@ -8,8 +8,6 @@ testQueue =
     @queue.push data
   get: ->
     @queue
-  done: ->
-    @queue = []
 
 describe 'KM batch instance', ->
   it 'should initialize', ->
