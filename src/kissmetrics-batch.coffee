@@ -40,7 +40,10 @@ class BatchKissmetricsClient
   #   due to differences between Kissmetrics' batch API and regular HTTP API.
   #
   # `timestamp` Optional (Integer): Unix timestamp from the time the event
-  #   occurred. Defaults to the current time.
+  #   occurred. Defaults to the current time. This is intentionally not set
+  #   as a default argument because it can also be set by transforming the
+  #   `_t` property.
+
   #
   # ```
   # batch.add({name: 'Evan', home: 'San Francisco'}, 482698020);
