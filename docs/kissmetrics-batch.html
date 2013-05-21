@@ -263,7 +263,7 @@ HTTP API.</p>
             
             <div class="content"><div class='highlight'><pre>  _transformData: (data) -&gt;
     data.identity = data._p
-    data.timestamp = data._t || Math.round((<span class="keyword">new</span> Date).getTime() / <span class="number">1000</span>)
+    data.timestamp = data._t || Math.round(Date.now() / <span class="number">1000</span>)
 
     <span class="keyword">switch</span> data.__type
       <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
