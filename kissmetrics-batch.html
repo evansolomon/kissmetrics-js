@@ -174,6 +174,8 @@ Batch.process(queue, &#39;key&#39;, &#39;secret-key&#39;, &#39;SOME-PRODUCT&#39;
     urlToSign = <span class="string">"http://<span class="subst">#{@HOST}</span>/<span class="subst">#{urlPath}</span>"</span>
     signature = <span class="property">@_generateSignature</span> urlToSign, apiSecret
 
+    requestBody = JSON.stringify {data: queue.get()}
+
     request = http.request
       method: <span class="property">@HTTP_METHOD</span>
       host: <span class="property">@HOST</span>
@@ -181,8 +183,9 @@ Batch.process(queue, &#39;key&#39;, &#39;secret-key&#39;, &#39;SOME-PRODUCT&#39;
       headers:
         <span class="string">'X-KM-ApiKey'</span>: apiKey
         <span class="string">'Connection'</span>: <span class="string">'close'</span>
+        <span class="string">'Content-Length'</span>: requestBody.length
 
-    request.end JSON.stringify({data: queue.get()})
+    request.end requestBody
     request</pre></div></div>
             
         </li>
