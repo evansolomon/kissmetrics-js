@@ -139,7 +139,7 @@ class BatchKissmetricsClient
 
   _transformData: (data) ->
     data.identity = data._p
-    data.timestamp = data._t || Math.round((new Date).getTime() / 1000)
+    data.timestamp = data._t || Math.round(Date.now() / 1000)
 
     switch data.__type
       when 'record' then data.event = data._n
