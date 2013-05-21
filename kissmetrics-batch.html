@@ -150,9 +150,8 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
               </div>
               <p>Process the queue of batched queries by sending them to Kissmetrics.</p>
 <h5>Arguments</h5>
-<p><code>queue</code> (Object): Must have a <code>get()</code> and <code>done()</code> method. <code>get()</code> should
-  return an array of queued queries. <code>done()</code> is called after a request is
-  sent and can be used to remove the queries from the queue.</p>
+<p><code>queue</code> (Object): Must have a <code>get()</code> method and it should
+  return an array of queued queries.</p>
 <p><code>apiKey</code> (String): Your API key from Kissmetrics.</p>
 <p><code>apiSecret</code> (String): Your API secret from Kissmetrics.</p>
 <p><code>productGUID</code> (String): Your Product GUID from Kissmetrics.</p>
@@ -160,9 +159,6 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
   get: function() {
     this.queue = someQueue.get(&#39;kissmetrics&#39;);
     return this.queue.data;
-  },
-  done: function() {
-    this.queue.clear();
   }
 };
 Batch.process(queue, &#39;key&#39;, &#39;secret-key&#39;, &#39;SOME-PRODUCT&#39;);</code></pre>
@@ -185,7 +181,6 @@ Batch.process(queue, &#39;key&#39;, &#39;secret-key&#39;, &#39;SOME-PRODUCT&#39;
         <span class="string">'Connection'</span>: <span class="string">'close'</span>
 
     request.end JSON.stringify({data: queue.get()})
-    queue.done()
     request</pre></div></div>
             
         </li>
