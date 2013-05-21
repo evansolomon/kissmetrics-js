@@ -269,12 +269,8 @@ HTTP API.</p>
       <span class="keyword">when</span> <span class="string">'record'</span> <span class="keyword">then</span> data.event = data._n
       <span class="keyword">when</span> <span class="string">'alias'</span> <span class="keyword">then</span> data.alias = data._n
 
-    <span class="keyword">delete</span> data._k
-    <span class="keyword">delete</span> data._n
-    <span class="keyword">delete</span> data._p
-    <span class="keyword">delete</span> data._t
-    <span class="keyword">delete</span> data._d
-    <span class="keyword">delete</span> data.__type
+    reservedKeys = [<span class="string">'_k'</span>, <span class="string">'_n'</span>, <span class="string">'_p'</span>, <span class="string">'_t'</span>, <span class="string">'_d'</span>, <span class="string">'__type'</span>]
+    <span class="keyword">delete</span> data[reservedKey] <span class="keyword">for</span> reservedKey <span class="keyword">in</span> reservedKeys
 
     data</pre></div></div>
             
