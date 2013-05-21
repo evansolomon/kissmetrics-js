@@ -90,6 +90,8 @@ class BatchKissmetricsClient
     urlToSign = "http://#{@HOST}/#{urlPath}"
     signature = @_generateSignature urlToSign, apiSecret
 
+    requestBody = JSON.stringify {data: queue.get()}
+
     request = http.request
       method: @HTTP_METHOD
       host: @HOST
@@ -97,8 +99,9 @@ class BatchKissmetricsClient
       headers:
         'X-KM-ApiKey': apiKey
         'Connection': 'close'
+        'Content-Length': requestBody.length
 
-    request.end JSON.stringify({data: queue.get()})
+    request.end requestBody
     request
 
 
