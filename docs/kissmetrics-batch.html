@@ -112,10 +112,6 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
 <p><code>data</code> (Object): Key/value pairs of Kissmetrics properties. Some
   properties will be renamed in <code>_transformData()</code> based on <code>data.type</code>
   due to differences between Kissmetrics&#39; batch API and regular HTTP API.</p>
-<p><code>timestamp</code> Optional (Integer): Unix timestamp from the time the event
-  occurred. Defaults to the current time. This is intentionally not set
-  as a default argument because it can also be set by transforming the
-  <code>_t</code> property.</p>
 <pre><code>batch.add({name: &#39;Evan&#39;, home: &#39;San Francisco&#39;}, 482698020);</code></pre>
 
             </div>
