@@ -147,7 +147,8 @@ batch = new BatchKissmetricsClient(queue);</code></pre>
 <h5>Arguments</h5>
 <p><code>queue</code> (Object): Must have a <code>get()</code> method and it should
   return an array of queued queries.</p>
-<p><code>apiKey</code> (String): Your API key from Kissmetrics.</p>
+<p><code>apiKey</code> (String): Your API key from Kissmetrics. This is specific to
+  the batch API and <em>different</em> than your regular Kissmetrics API key.</p>
 <p><code>apiSecret</code> (String): Your API secret from Kissmetrics.</p>
 <p><code>productGUID</code> (String): Your Product GUID from Kissmetrics.</p>
 <pre><code>queue = {

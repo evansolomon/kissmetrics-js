@@ -58,7 +58,8 @@ class BatchKissmetricsClient
   # `queue` (Object): Must have a `get()` method and it should
   #   return an array of queued queries.
   #
-  # `apiKey` (String): Your API key from Kissmetrics.
+  # `apiKey` (String): Your API key from Kissmetrics. This is specific to
+  #   the batch API and *different* than your regular Kissmetrics API key.
   #
   # `apiSecret` (String): Your API secret from Kissmetrics.
   #
