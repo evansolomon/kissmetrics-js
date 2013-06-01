@@ -1,6 +1,5 @@
 should = require 'should'
 KM     = require '../../src/kissmetrics'
-Batch  = require '../../src/kissmetrics-batch'
 
 testQueue =
   queue: []
@@ -87,7 +86,7 @@ describe 'Send batch data', ->
     km.record 'Visited Homepage'
 
 
-    request = Batch.process testQueue, 'fakeApiKey', 'fakeApiSecret', 'fakeProductGUID'
+    request = KM.batchProcess testQueue, 'fakeApiKey', 'fakeApiSecret', 'fakeProductGUID'
     endpoint = request.output.pop().split(/\n/)[0].trim()
     endpoint.should.equal 'POST /v1/products/fakeProductGUID/tracking/e?_signature=L5JAfOuh62iWmHCZMa2iT03L4doPGMM4kSOhoJNNIoM%3D HTTP/1.1'
 
@@ -96,7 +95,7 @@ describe 'Send batch data', ->
     km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('these').record('should').record('batch')
 
-    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    request = KM.batchProcess testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
     request.output.pop().should.match /X-KM-ApiKey: exApiKey/
 
   it 'should use API host', ->
@@ -104,5 +103,5 @@ describe 'Send batch data', ->
     km = new KM 'apiKey', 'evan@example.com', {queue: testQueue}
     km.record('these').record('should').record('batch')
 
-    request = Batch.process testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
+    request = KM.batchProcess testQueue, 'exApiKey', 'exApiSecret', 'exProductGUID'
     request.output.pop().should.match /Host: api.kissmetrics.com/
