@@ -128,11 +128,11 @@ client.record('This event will be batched').set({addedToQueue: 'yup'});
 
 The queue object you provide to `KissmetricsClient` must expose a method called `add()` that accepts an object and adds it to your queue. Once your instance of `KissmetricsClient` is created, you can use it normally to record events, properties and aliases. The difference is that those queries will not be sent to Kissmetrics immediately, they'll be formed into objects and added to your queue. You'll also notice that I didn't pass in an API key when I created my client instance. Batch requests send the API key when the batch is processed, and all queries in a batch must use the same API key. You can pass in an API key if you want, like a normal client, it will just be silently ignored.
 
-When you're ready to process the queue, you need to use the `BatchKissmetricsClient` class' `process()` method. You'll need to pass in your a queue object, API key, API secret, and product GUID. Note that these credential are all *different* than your normal API key, and all come from Kissmetrics.
+When you're ready to process the queue, you need to use the `batchProcess()` method. You'll need to pass in your a queue object, API key, API secret, and product GUID. Note that these credential are all *different* than your normal API key, and all come from Kissmetrics.
 
 ```javascript
-Batch = require('kissmetrics-batch');
-Batch.process(myQueueObject, 'clientKey', 'clientApiSecret', 'product-guid');
+KM = require('kissmetrics');
+KM.batchProcess(myQueueObject, 'clientKey', 'clientApiSecret', 'product-guid');
 ```
 
 The queue object you provid must expose a `get()` method. It's possible to provide an entirely different queue object to `Batch.process()` than you do to `KissmetricsClient`, though for simplicity's sake you may use the same one. The `get()` method should return all of the objects that were added to the queue by `KissmetricsClient`. Note that managing race conditions is your responsibility and will not be done by the library. It's a good idea to keep track of this in the queue object that you provide.
