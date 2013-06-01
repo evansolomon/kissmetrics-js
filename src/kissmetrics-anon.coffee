@@ -37,12 +37,12 @@ LocalStorage =
     window.localStorage.setItem @key, value
 
 
-  # #### Delete
-  # -----------
+  # #### Clear
+  # ----------
 
-  # Delete data from localStorage.
+  # Clear data from localStorage.
 
-  delete: ->
+  clear: ->
     window.localStorage.removeItem @key
 
 
@@ -87,12 +87,12 @@ Cookie =
     document.cookie = "#{@key}=#{value}; #{options.expires}; path=/"
 
 
-  # #### Delete
-  # -----------
+  # #### Clear
+  # ----------
 
-  # Delete a cookie.
+  # Clear a cookie.
 
-  delete: ->
+  clear: ->
     Cookie.set @key, '', {expires: -1}
 
 
@@ -113,7 +113,7 @@ Cookie =
 #
 # If you provide your own storage engine, it **must** match the
 # API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
-# `delete()` methods. All methods should use `this.storageKey` to reference
+# `clear()` methods. All methods should use `this.storageKey` to reference
 # the key to retrieve data by, and `set()` must accept a key and value. The
 # methods will always be called in the correct context by the API, such
 # that `this.storageKey` will be available.
@@ -179,7 +179,7 @@ class AnonKissmetricsClient extends KissmetricsClient
   # ```
 
   alias: (newIdentity, deleteStoredID = true) ->
-    @_storage.delete() unless deleteStoredID is off
+    @_storage.clear() unless deleteStoredID is off
     super newIdentity
 
 
