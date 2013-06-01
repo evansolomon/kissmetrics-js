@@ -68,6 +68,23 @@ class KissmetricsClient
       @batchClient = new BatchClient options.queue
 
 
+  # ### Batch Process
+  # #### (Static)
+  # -----------------
+
+  # Syntactic helper to access process batch events without specifically
+  # loading the batch module specifically. Refer to the **Batch Kissmetrics**
+  # documentation for `BatchKissmetricsClient.process()` to see what the
+  # method actually does.
+  #
+  # Like the rest of the `BatchKissmetricsClient` class, this method is
+  # only accessible in Node.js, *not* in the browser.
+
+  @batchProcess: (batchProcessArgs...) ->
+    return unless NODEJS is on
+    require('./kissmetrics-batch').process batchProcessArgs...
+
+
   # ### Record
   # ----------
 
@@ -128,17 +145,17 @@ class KissmetricsClient
   #
   # ##### Arguments
   #
-  # `to` (String): A new identifier to map to the `@person` set on
+  # `newIdentity` (String): A new identifier to map to the `@person` set on
   # the current instance.
   #
   # ```
   # km.alias('evan+newemail@example.com')
   # ```
 
-  alias: (to) ->
-    _return = @_generateQuery 'alias', _n: to
-    @person = to
-    return _return
+  alias: (newIdentity) ->
+    instanceToReturn = @_generateQuery 'alias', _n: newIdentity
+    @person = newIdentity
+    return instanceToReturn
 
 
   # ### HTTPS Request
@@ -281,12 +298,12 @@ LocalStorage =
     window.localStorage.setItem @key, value
 
 
-  # #### Delete
-  # -----------
+  # #### Clear
+  # ----------
 
-  # Delete data from localStorage.
+  # Clear data from localStorage.
 
-  delete: ->
+  clear: ->
     window.localStorage.removeItem @key
 
 
@@ -331,12 +348,12 @@ Cookie =
     document.cookie = "#{@key}=#{value}; #{options.expires}; path=/"
 
 
-  # #### Delete
-  # -----------
+  # #### Clear
+  # ----------
 
-  # Delete a cookie.
+  # Clear a cookie.
 
-  delete: ->
+  clear: ->
     Cookie.set @key, '', {expires: -1}
 
 
@@ -344,7 +361,7 @@ Cookie =
 # --------------------------
 
 # Wrapper for interacting with the Kissmetrics API with logged out users. The
-# only difference from `KissmetricsClient` is that an identifier for thie user
+# only difference from `KissmetricsClient` is that an identifier for the user
 # will be automatically created and saved in their browser.
 #
 # ##### Arguments
@@ -352,13 +369,13 @@ Cookie =
 # `apiKey` (String): Your Kissmetrics API key
 #
 # `options` *Optional* (Object): Provide a key and/or storage engine, or
-#   specif which internal engine you want to use: `'localStorage'` or
+#   specify which internal engine you want to use: `'localStorage'` or
 #   `'cookie'`.
 #
 # If you provide your own storage engine, it **must** match the
 # API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
-# `delete()` methods. All methods should use `this.storageKey` to reference
-# the key to retreive data by, and `set()` must accept a key and value. The
+# `clear()` methods. All methods should use `this.storageKey` to reference
+# the key to retrieve data by, and `set()` must accept a key and value. The
 # methods will always be called in the correct context by the API, such
 # that `this.storageKey` will be available.
 #
@@ -411,10 +428,10 @@ class AnonKissmetricsClient extends KissmetricsClient
   #
   # ##### Arguments
   #
-  # `to` (String): A new identifier to map to the `@person` set on
+  # `newIdentity` (String): A new identifier to map to the `@person` set on
   # the current instance.
   #
-  # `deleteStoredID` *Optional* (Boolea): Whether or not to delete the
+  # `deleteStoredID` *Optional* (Boolean): Whether or not to delete the
   #   logged-out identity that was stored. Default `true`.
   #
   # ```
@@ -422,9 +439,9 @@ class AnonKissmetricsClient extends KissmetricsClient
   # km.alias('evan+newemail@example.com')
   # ```
 
-  alias: (to, deleteStoredID = true) ->
-    @_storage.delete() unless deleteStoredID is off
-    super to
+  alias: (newIdentity, deleteStoredID = true) ->
+    @_storage.clear() unless deleteStoredID is off
+    super newIdentity
 
 
 # ## Exports

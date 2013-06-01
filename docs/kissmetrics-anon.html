@@ -155,7 +155,7 @@
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <h4>Delete</h4>
+              <h4>Clear</h4>
 <hr>
 
             </div>
@@ -169,11 +169,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Delete data from localStorage.</p>
+              <p>Clear data from localStorage.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: -&gt;
+            <div class="content"><div class='highlight'><pre>  clear: -&gt;
     window.localStorage.removeItem <span class="property">@key</span></pre></div></div>
             
         </li>
@@ -286,7 +286,7 @@
               <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h4>Delete</h4>
+              <h4>Clear</h4>
 <hr>
 
             </div>
@@ -300,11 +300,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Delete a cookie.</p>
+              <p>Clear a cookie.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">delete</span>: -&gt;
+            <div class="content"><div class='highlight'><pre>  clear: -&gt;
     Cookie.set <span class="property">@key</span>, <span class="string">''</span>, {expires: -<span class="number">1</span>}</pre></div></div>
             
         </li>
@@ -331,17 +331,17 @@
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Wrapper for interacting with the Kissmetrics API with logged out users. The
-only difference from <code>KissmetricsClient</code> is that an identifier for thie user
+only difference from <code>KissmetricsClient</code> is that an identifier for the user
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your Kissmetrics API key</p>
 <p><code>options</code> <em>Optional</em> (Object): Provide a key and/or storage engine, or
-  specif which internal engine you want to use: <code>&#39;localStorage&#39;</code> or
+  specify which internal engine you want to use: <code>&#39;localStorage&#39;</code> or
   <code>&#39;cookie&#39;</code>.</p>
 <p>If you provide your own storage engine, it <strong>must</strong> match the
 API&#39;s provided by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and
-<code>delete()</code> methods. All methods should use <code>this.storageKey</code> to reference
-the key to retreive data by, and <code>set()</code> must accept a key and value. The
+<code>clear()</code> methods. All methods should use <code>this.storageKey</code> to reference
+the key to retrieve data by, and <code>set()</code> must accept a key and value. The
 methods will always be called in the correct context by the API, such
 that <code>this.storageKey</code> will be available.</p>
 <pre><code>km = new AnonKissmetricsClient(API_KEY)
@@ -430,18 +430,18 @@ km.record(&#39;Visited signup form&#39;)</code></pre>
               <p>Identify the current user and (by default) delete the logged out
 identifier that was stored.</p>
 <h5>Arguments</h5>
-<p><code>to</code> (String): A new identifier to map to the <code>@person</code> set on
+<p><code>newIdentity</code> (String): A new identifier to map to the <code>@person</code> set on
 the current instance.</p>
-<p><code>deleteStoredID</code> <em>Optional</em> (Boolea): Whether or not to delete the
+<p><code>deleteStoredID</code> <em>Optional</em> (Boolean): Whether or not to delete the
   logged-out identity that was stored. Default <code>true</code>.</p>
 <pre><code>km.alias(&#39;evan+otheremail@example.com&#39;, false)
 km.alias(&#39;evan+newemail@example.com&#39;)</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  alias: (to, deleteStoredID = <span class="literal">true</span>) -&gt;
-    <span class="property">@_storage</span>.<span class="keyword">delete</span>() <span class="keyword">unless</span> deleteStoredID <span class="keyword">is</span> <span class="literal">off</span>
-    <span class="keyword">super</span> to</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  alias: (newIdentity, deleteStoredID = <span class="literal">true</span>) -&gt;
+    <span class="property">@_storage</span>.clear() <span class="keyword">unless</span> deleteStoredID <span class="keyword">is</span> <span class="literal">off</span>
+    <span class="keyword">super</span> newIdentity</pre></div></div>
             
         </li>
         
