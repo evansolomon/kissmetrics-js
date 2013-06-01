@@ -100,7 +100,7 @@ Cookie =
 # --------------------------
 
 # Wrapper for interacting with the Kissmetrics API with logged out users. The
-# only difference from `KissmetricsClient` is that an identifier for thie user
+# only difference from `KissmetricsClient` is that an identifier for the user
 # will be automatically created and saved in their browser.
 #
 # ##### Arguments
@@ -114,7 +114,7 @@ Cookie =
 # If you provide your own storage engine, it **must** match the
 # API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
 # `delete()` methods. All methods should use `this.storageKey` to reference
-# the key to retreive data by, and `set()` must accept a key and value. The
+# the key to retrieve data by, and `set()` must accept a key and value. The
 # methods will always be called in the correct context by the API, such
 # that `this.storageKey` will be available.
 #
@@ -170,7 +170,7 @@ class AnonKissmetricsClient extends KissmetricsClient
   # `newIdentity` (String): A new identifier to map to the `@person` set on
   # the current instance.
   #
-  # `deleteStoredID` *Optional* (Boolea): Whether or not to delete the
+  # `deleteStoredID` *Optional* (Boolean): Whether or not to delete the
   #   logged-out identity that was stored. Default `true`.
   #
   # ```
