@@ -108,7 +108,7 @@ Cookie =
 # `apiKey` (String): Your Kissmetrics API key
 #
 # `options` *Optional* (Object): Provide a key and/or storage engine, or
-#   specif which internal engine you want to use: `'localStorage'` or
+#   specify which internal engine you want to use: `'localStorage'` or
 #   `'cookie'`.
 #
 # If you provide your own storage engine, it **must** match the
