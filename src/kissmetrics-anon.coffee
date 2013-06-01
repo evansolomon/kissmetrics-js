@@ -167,7 +167,7 @@ class AnonKissmetricsClient extends KissmetricsClient
   #
   # ##### Arguments
   #
-  # `to` (String): A new identifier to map to the `@person` set on
+  # `newIdentity` (String): A new identifier to map to the `@person` set on
   # the current instance.
   #
   # `deleteStoredID` *Optional* (Boolea): Whether or not to delete the
@@ -178,9 +178,9 @@ class AnonKissmetricsClient extends KissmetricsClient
   # km.alias('evan+newemail@example.com')
   # ```
 
-  alias: (to, deleteStoredID = true) ->
+  alias: (newIdentity, deleteStoredID = true) ->
     @_storage.delete() unless deleteStoredID is off
-    super to
+    super newIdentity
 
 
 # ## Exports

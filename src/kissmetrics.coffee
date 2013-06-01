@@ -145,17 +145,17 @@ class KissmetricsClient
   #
   # ##### Arguments
   #
-  # `to` (String): A new identifier to map to the `@person` set on
+  # `newIdentity` (String): A new identifier to map to the `@person` set on
   # the current instance.
   #
   # ```
   # km.alias('evan+newemail@example.com')
   # ```
 
-  alias: (to) ->
-    _return = @_generateQuery 'alias', _n: to
-    @person = to
-    return _return
+  alias: (newIdentity) ->
+    instanceToReturn = @_generateQuery 'alias', _n: newIdentity
+    @person = newIdentity
+    return instanceToReturn
 
 
   # ### HTTPS Request
