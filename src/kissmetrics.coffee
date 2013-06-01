@@ -68,6 +68,23 @@ class KissmetricsClient
       @batchClient = new BatchClient options.queue
 
 
+  # ### Batch Process
+  # #### (Static)
+  # -----------------
+
+  # Syntactic helper to access process batch events without specifically
+  # loading the batch module specifically. Refer to the **Batch Kissmetrics**
+  # documentation for `BatchKissmetricsClient.process()` to see what the
+  # method actually does.
+  #
+  # Like the rest of the `BatchKissmetricsClient` class, this method is
+  # only accessible in Node.js, *not* in the browser.
+
+  @batchProcess: (batchProcessArgs...) ->
+    return unless NODEJS is on
+    require('./kissmetrics-batch').process batchProcessArgs...
+
+
   # ### Record
   # ----------
 
