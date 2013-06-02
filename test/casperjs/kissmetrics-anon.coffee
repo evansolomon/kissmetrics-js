@@ -41,12 +41,29 @@ casper.then ->
 	@test.assertTruthy ID, 'ID is stored in localStorage'
 
 casper.then ->
+	ID = @evaluate ->
+		new window.AnonKissmetricsClient 'abc123', {storageKey: 'customKey'}
+		window.localStorage.getItem 'customKey'
+
+	@test.assertTruthy ID, 'ID is stored in localStorage with custom storage key'
+
+casper.then ->
 	data = @evaluate ->
 		km = new window.AnonKissmetricsClient 'abc123', {storage: 'cookie'}
 		{cookies: document.cookie, person: km.person}
 
 	matchString = "kissmetricsAnon=#{data.person}"
 	@test.assertTruthy data.cookies.match matchString, 'Cookie is saved'
+
+casper.then ->
+	data = @evaluate ->
+		km = new window.AnonKissmetricsClient 'abc123',
+			storage: 'cookie'
+			storageKey: 'somethingCustom'
+		{cookies: document.cookie, person: km.person}
+
+	matchString = "somethingCustom=#{data.person}"
+	@test.assertTruthy data.cookies.match matchString, 'Cookie is saved with custom storage key'
 
 casper.then ->
 	originalPerson = @evaluate ->
@@ -61,6 +78,23 @@ casper.then ->
 
 casper.then ->
 	originalPerson = @evaluate ->
+		km = new window.AnonKissmetricsClient 'abc123',
+			storage: 'cookie'
+			storageKey: 'somethingCustom'
+
+		km.person
+
+	newPerson = @evaluate ->
+		km = new window.AnonKissmetricsClient 'abc123',
+			storage: 'cookie'
+			storageKey: 'somethingCustom'
+
+		km.person
+
+	@test.assertEquals originalPerson, newPerson, 'Person is persistent in cookies with custom storage key'
+
+casper.then ->
+	originalPerson = @evaluate ->
 		km = new window.AnonKissmetricsClient 'abc123', {storage: 'localStorage'}
 		km.person
 
@@ -69,6 +103,21 @@ casper.then ->
 		km.person
 
 	@test.assertEquals originalPerson, newPerson, 'Person is persistent in localStorage'
+
+casper.then ->
+	originalPerson = @evaluate ->
+		km = new window.AnonKissmetricsClient 'abc123',
+			storage: 'localStorage'
+			storageKey: 'customKey'
+		km.person
+
+	newPerson = @evaluate ->
+		km = new window.AnonKissmetricsClient 'abc123',
+			storage: 'localStorage'
+			storageKey: 'customKey'
+		km.person
+
+	@test.assertEquals originalPerson, newPerson, 'Person is persistent in localStorage with custom storage key'
 
 
 # Record
