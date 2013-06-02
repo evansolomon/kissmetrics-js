@@ -368,34 +368,30 @@ Cookie =
 #
 # `apiKey` (String): Your Kissmetrics API key
 #
-# `options` *Optional* (Object): Provide a key and/or storage engine, or
-#   specify which internal engine you want to use: `'localStorage'` or
-#   `'cookie'`.
+# `options` *Optional* (Object):
 #
-# If you provide your own storage engine, it **must** match the
-# API's provided by `Cookie` and `LocalStorage` with `get()`, `set()` and
-# `clear()` methods. All methods should use `this.storageKey` to reference
-# the key to retrieve data by, and `set()` must accept a key and value. The
-# methods will always be called in the correct context by the API, such
-# that `this.storageKey` will be available.
+#  * `storage`: Specify which internal engine you want to
+#    use: `'localStorage'` or `'cookie'`. Default is `'localStorage'`
+#  * `storageKey`: Specify what key you want the assigned ID to be
+#    stored under. Default is `'kissmetricsAnon'`
 #
 # ```
-# km = new AnonKissmetricsClient(API_KEY)
+# km = new AnonKissmetricsClient(API_KEY, {
+#   storage: 'cookie',
+#   storageKey: 'myKissmetricsAnon'
+# })
 # km.record('Visited signup form')
 # ```
 
 class AnonKissmetricsClient extends KissmetricsClient
   constructor: (apiKey, options = {}) ->
-    options.storage ?= null
-
     @_storage =
       if options.storage
         switch options.storage
           when 'cookie' then Cookie
           when 'localStorage' then LocalStorage
-          else options.storage
       else
-        if window.localStorage? then LocalStorage else Cookie
+        if window.localStorage then LocalStorage else Cookie
 
     @_storage.key = options.storageKey || 'kissmetricsAnon'
 

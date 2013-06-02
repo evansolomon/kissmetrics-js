@@ -335,32 +335,30 @@ only difference from <code>KissmetricsClient</code> is that an identifier for th
 will be automatically created and saved in their browser.</p>
 <h5>Arguments</h5>
 <p><code>apiKey</code> (String): Your Kissmetrics API key</p>
-<p><code>options</code> <em>Optional</em> (Object): Provide a key and/or storage engine, or
-  specify which internal engine you want to use: <code>&#39;localStorage&#39;</code> or
-  <code>&#39;cookie&#39;</code>.</p>
-<p>If you provide your own storage engine, it <strong>must</strong> match the
-API&#39;s provided by <code>Cookie</code> and <code>LocalStorage</code> with <code>get()</code>, <code>set()</code> and
-<code>clear()</code> methods. All methods should use <code>this.storageKey</code> to reference
-the key to retrieve data by, and <code>set()</code> must accept a key and value. The
-methods will always be called in the correct context by the API, such
-that <code>this.storageKey</code> will be available.</p>
-<pre><code>km = new AnonKissmetricsClient(API_KEY)
+<p><code>options</code> <em>Optional</em> (Object):</p>
+<ul>
+<li><code>storage</code>: Specify which internal engine you want to
+use: <code>&#39;localStorage&#39;</code> or <code>&#39;cookie&#39;</code>. Default is <code>&#39;localStorage&#39;</code></li>
+<li><code>storageKey</code>: Specify what key you want the assigned ID to be
+stored under. Default is <code>&#39;kissmetricsAnon&#39;</code></li>
+</ul>
+<pre><code>km = new AnonKissmetricsClient(API_KEY, {
+  storage: &#39;cookie&#39;,
+  storageKey: &#39;myKissmetricsAnon&#39;
+})
 km.record(&#39;Visited signup form&#39;)</code></pre>
 
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">AnonKissmetricsClient</span> <span class="keyword">extends</span> <span class="title">KissmetricsClient</span></span>
   constructor: (apiKey, options = {}) -&gt;
-    options.storage ?= <span class="literal">null</span>
-
     <span class="property">@_storage</span> =
       <span class="keyword">if</span> options.storage
         <span class="keyword">switch</span> options.storage
           <span class="keyword">when</span> <span class="string">'cookie'</span> <span class="keyword">then</span> Cookie
           <span class="keyword">when</span> <span class="string">'localStorage'</span> <span class="keyword">then</span> LocalStorage
-          <span class="keyword">else</span> options.storage
       <span class="keyword">else</span>
-        <span class="keyword">if</span> window.localStorage? <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie
+        <span class="keyword">if</span> window.localStorage <span class="keyword">then</span> LocalStorage <span class="keyword">else</span> Cookie
 
     <span class="property">@_storage</span>.key = options.storageKey || <span class="string">'kissmetricsAnon'</span>
 
