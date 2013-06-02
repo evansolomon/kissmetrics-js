@@ -107,11 +107,18 @@ Cookie =
 #
 # `apiKey` (String): Your Kissmetrics API key
 #
-# `options` *Optional* (Object): Specify which internal engine you want
-# to use: `'localStorage'` or `'cookie'`.
+# `options` *Optional* (Object):
+#
+#  * `storage`: Specify which internal engine you want to
+#    use: `'localStorage'` or `'cookie'`. Default is `'localStorage'`
+#  * `storageKey`: Specify what key you want the assigned ID to be
+#    stored under. Default is `'kissmetricsAnon'`
 #
 # ```
-# km = new AnonKissmetricsClient(API_KEY)
+# km = new AnonKissmetricsClient(API_KEY, {
+#   storage: 'cookie',
+#   storageKey: 'myKissmetricsAnon'
+# })
 # km.record('Visited signup form')
 # ```
 
