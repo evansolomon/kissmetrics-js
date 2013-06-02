@@ -76,6 +76,10 @@ module.exports = ( grunt ) ->
 
     casperjs:
       files: ['test/casperjs/**/*.coffee']
+      options:
+        async:
+          parallel: true
+
 
     connect:
       server:
