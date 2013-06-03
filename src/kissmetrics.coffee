@@ -42,6 +42,7 @@ https = require 'https' if NODEJS is on
 # `person` (String): An identifier for the person you'll record data about
 #
 # `options` *Optional* (Object):
+#
 #   * `queue`: Indicates you want to batch queries. Must be an object with
 #     an `add()` method. All queries recorded on instances that defined this
 #     option will be added to the queue and *not* sent immediately. This
