@@ -1,6 +1,6 @@
 {
   "name": "kissmetrics-js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Kissmetrics JavaScript library for the client and server",
   "main": "lib/kissmetrics.js",
   "repository": {
