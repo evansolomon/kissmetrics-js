@@ -74,8 +74,9 @@ class KissmetricsClient
   # -----------------
 
   # Syntactic helper to access process batch events without specifically
-  # loading the batch module specifically. Refer to the **Batch Kissmetrics**
-  # documentation for `BatchKissmetricsClient.process()` to see what the
+  # loading the batch module specifically. Refer to the
+  # [Batch Kissmetrics](kissmetrics-batch.html) documentation for
+  # `BatchKissmetricsClient.process()` to see what the
   # method actually does.
   #
   # Like the rest of the `BatchKissmetricsClient` class, this method is
